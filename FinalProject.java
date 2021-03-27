@@ -318,8 +318,7 @@ public class FinalProject {
             results = myStmt.executeQuery("SELECT * FROM "+tableName+" WHERE Type='"+type+"'");
             while (results.next()){
                 count++;
-            }
-            System.out.println(count);
+            }          
             if(tableName.equals("chair"))
             {
                 return chairSelect(type,count);
