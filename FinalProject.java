@@ -2,6 +2,7 @@ package edu.ucalgary.ensf409;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class FinalProject {
     public final String DBURL; //store the database url information
