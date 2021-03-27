@@ -127,7 +127,7 @@ public class FinalProject {
         checkValidItem(item);
     }
 
-    public String selecttable(String tablename) {
+    public String selectTable(String tablename) {
         StringBuffer all = new StringBuffer();
         try {
             Statement myStmt = dbconnect.createStatement();
@@ -171,7 +171,7 @@ public class FinalProject {
         }
         return all.toString();
     }
-    public void filingselect(String type, int count){
+    public String[][] filingSelect(String type, int count){
         String[][] filing2d = new String[count][7];
         try
         {
@@ -189,22 +189,23 @@ public class FinalProject {
                 filing2d[i][6] = results.getString("ManuID");
                 i=i+1;
             }
-            for(int j=0;j<count;j++)
+            /*for(int j=0;j<count;j++)
             {
                 for(int k=0;k<7;k++)
                 {
                     System.out.print(filing2d[j][k]+" ");
                 }
                 System.out.println(" ");
-            }
+            }*/
             myStmt.close();
         }
         catch (SQLException ex)
         {
             System.out.println("Unable to connect to database");
         }
+        return filing2d;
     }
-    public void lampselect(String type, int count){
+    public String[][] lampSelect(String type, int count){
         String[][] lamp2d = new String[count][6];
         try
         {
@@ -221,22 +222,23 @@ public class FinalProject {
                 lamp2d[i][5] = results.getString("ManuID");
                 i++;
             }
-            for(int j=0;j<count;j++)
+            /*for(int j=0;j<count;j++)
             {
                 for(int k=0;k<6;k++)
                 {
                     System.out.print(lamp2d[j][k]+" ");
                 }
                 System.out.println(" ");
-            }
+            }*/
             myStmt.close();
         }
         catch (SQLException ex)
         {
             System.out.println("Unable to connect to database");
         }
+        return lamp2d;
     }
-    public void deskselect(String type, int count){
+    public String[][] deskSelect(String type, int count){
         String[][] desk2d = new String[count][7];
         try
         {
@@ -254,21 +256,23 @@ public class FinalProject {
                 desk2d[i][6] = results.getString("ManuID");
                 i++;
             }
-            for(int j=0;j<count;j++)
+            /*for(int j=0;j<count;j++)
             {
                 for(int k=0;k<7;k++)
                 {
                     System.out.print(desk2d[j][k]+" ");
                 }
                 System.out.println(" ");
-            }
+            }*/
             myStmt.close();
         }
         catch (SQLException ex)
         {
             System.out.println("Unable to connect to database");
-        }}
-    public void chairselect(String type, int count){
+        }
+    return desk2d;
+    }
+    public String[][] chairSelect(String type, int count){
         String[][] chair2d = new String[count][8];
         try
         {
@@ -287,20 +291,21 @@ public class FinalProject {
                 chair2d[i][7] = results.getString("ManuID");
                 i++;
             }
-            for(int j=0;j<count;j++)
+            /*for(int j=0;j<count;j++)
             {
                 for(int k=0;k<8;k++)
                 {
                     System.out.print(chair2d[j][k]+" ");
                 }
                 System.out.println(" ");
-            }
+            }*/
             myStmt.close();
         }
         catch (SQLException ex)
         {
             System.out.println("Unable to connect to database");
         }
+        return chair2d;
     }
     public void selectFurnitureType(String type, String tableName)
     {
@@ -308,7 +313,7 @@ public class FinalProject {
         try
         {
             Statement myStmt = dbconnect.createStatement();
-            results = myStmt.executeQuery("SELECT COUNT(ID) FROM "+tableName+" WHERE Type='"+type+"'");
+            //results = myStmt.executeQuery("SELECT COUNT(ID) FROM "+tableName+" WHERE Type='"+type+"'");
             results = myStmt.executeQuery("SELECT * FROM "+tableName+" WHERE Type='"+type+"'");
             while (results.next()){
                 count++;
@@ -316,19 +321,19 @@ public class FinalProject {
             System.out.println(count);
             if(tableName.equals("chair"))
             {
-                chairselect(type,count);
+                chairSelect(type,count);
             }
             if(tableName.equals("desk"))
             {
-                deskselect(type,count);
+                deskSelect(type,count);
             }
             if(tableName.equals("filing"))
             {
-                filingselect(type,count);
+                filingSelect(type,count);
             }
             if(tableName.equals("lamp"))
             {
-                lampselect(type,count);
+                lampSelect(type,count);
             }
 
         } catch (SQLException e) {
