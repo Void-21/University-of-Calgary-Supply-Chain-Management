@@ -333,6 +333,15 @@ public class FinalProject {
         FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","NUMAN","TIGER");
         myJDBC.initializeConnection();
         //myJDBC.selectFurnitureType("Mesh","chair");
+        System.out.println("Enter the item you would like to purchase : ");
+        String item = myScanner.nextLine();
+        System.out.println("Enter the number of items to purchase : ");
+        String numItems = myScanner.nextLine();
+
+        System.out.println("Item : "+item);
+        System.out.println("Quantity : " + numItems);
+
+        System.out.println("Item exists? : "+checkValidItem(item));
         myJDBC.selectFurnitureType("Small","filing");
         myJDBC.selectFurnitureType("Adjustable","desk");
         myJDBC.selectFurnitureType("Mesh","chair");
