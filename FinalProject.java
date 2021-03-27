@@ -80,8 +80,6 @@ public class FinalProject {
             table="lamp";
         }
 
-        setItemTable(table);
-        setItemType(itemType);
 
         int count=0;
         try {
@@ -94,15 +92,23 @@ public class FinalProject {
             }
             if(count>0)
             {
-                return true;
+                setItemTable(table);
+                setItemType(itemType);
+                return;
+                //return true;
             }
-            return false;
+
+            userInput();
+            //return false;
 
         }
         catch (SQLException ex)
         {
-            System.out.println("Item does not exists"); //remove later
-            return false;
+            System.out.println();
+            System.out.println("Item does not exists please enter a valid item"); //remove later
+            System.out.println();
+            userInput();
+            //return false;
         }
     }
 
@@ -118,7 +124,7 @@ public class FinalProject {
         System.out.println("Item : "+item);
         System.out.println("Quantity : " + numItems);
 
-        System.out.println("Item exists? : "+checkValidItem(item));
+        checkValidItem(item);
     }
     
     public String selecttable(String tablename) {
