@@ -353,6 +353,16 @@ public class FinalProject {
 
         myJDBC.selectFurnitureType(myJDBC.getItemType(),myJDBC.getItemTable());
 
+        System.out.println();
+        for(int i =0;i<result.length;i++)
+        {
+            for(int j=0;j<result[i].length;j++)
+            {
+                System.out.print(result[i][j]+" ");
+            }
+            System.out.println();
+        }
+        
         /*System.out.println(myJDBC.selecttable("chair"));
         System.out.println(myJDBC.selecttable("desk"));
         System.out.println(myJDBC.selecttable("filing"));
