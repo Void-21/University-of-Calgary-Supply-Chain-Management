@@ -97,49 +97,58 @@ public class FinalProject {
 
             if(tableName.equals("chair"))
             {
+                chairList1D.add(results.getString(type));
                 while( results.next() )
                 {
+                    chairList1D.add(results.getString("ID"));
                     chairList1D.add( results.getString("Legs") );
                     chairList1D.add( results.getString("Arms") );
                     chairList1D.add( results.getString("Seat") );
                     chairList1D.add( results.getString("Cushion") );
                     chairList1D.add( String.valueOf(results.getInt("Price")) );
+                    chairList1D.add( results.getString("ManuID") );
                     //chairList1D.add("\n");
                 }
                 System.out.println(chairList1D);
             }
             if(tableName.equals("desk"))
             {
+                deskList1D.add(results.getString(type));
                 while(results.next())
                 {
-
+                    deskList1D.add(results.getString("ID"));
                     deskList1D.add( results.getString("Legs") );
                     deskList1D.add( results.getString("Top") );
                     deskList1D.add( results.getString("Drawer") );
                     deskList1D.add( String.valueOf(results.getInt("Price")) );
+                    deskList1D.add( results.getString("ManuID") );
                 }
                 System.out.println(deskList1D);
             }
             if(tableName.equals("filing"))
             {
+                filingList1D.add(results.getString(type));
                 while( results.next() )
                 {
-
+                    filingList1D.add(results.getString("ID"));
                     filingList1D.add( results.getString("Rails") );
                     filingList1D.add( results.getString("Drawers") );
                     filingList1D.add( results.getString("Cabinet") );
                     filingList1D.add( String.valueOf(results.getInt("Price")) );
+                    filingList1D.add( results.getString("ManuID") );
                 }
                 System.out.println(filingList1D);
             }
             if(tableName.equals("lamp"))
             {
+                lampList1D.add(results.getString(type));
                 while( results.next() )
                 {
-                    lampList1D.add( results.getString(type) );
+                    lampList1D.add(results.getString("ID"));
                     lampList1D.add( results.getString("Base") );
                     lampList1D.add( results.getString("Bulb") );
                     lampList1D.add( String.valueOf(results.getInt("Price")) );
+                    lampList1D.add( results.getString("ManuID") );
                 }
                 System.out.println(lampList1D);
             }
