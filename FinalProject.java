@@ -12,7 +12,7 @@ public class FinalProject {
     private ResultSet results;
     private String itemType; //Type of item user wishes to buy
     private String itemTable; //contains the table of the item which the user wishes to buy
-    
+
     public FinalProject(String DBURL, String USERNAME, String PASSWORD) {
         this.DBURL = DBURL;
         this.USERNAME = USERNAME;
@@ -29,7 +29,7 @@ public class FinalProject {
     public String getPassword() {           //getter for password
         return PASSWORD;
     }
-    
+
     public void setItemType(String itemType) {
         this.itemType = itemType;
     }
@@ -45,7 +45,7 @@ public class FinalProject {
     public void setItemTable(String itemTable) {
         this.itemTable = itemTable;
     }
-    
+
     public void initializeConnection(){         //this creates a connection between the java files and the database
         try{
             dbconnect = DriverManager.getConnection(getDburl(),getUsername(),getPassword());
@@ -61,7 +61,7 @@ public class FinalProject {
             e.printStackTrace();
         }
     }
-    
+
     public void checkValidItem(String itemName)
     {
         String table ;    // table name for that item in the database
@@ -83,7 +83,7 @@ public class FinalProject {
 
         int count=0;
         try {
-            Statement myStmt = connection.createStatement();
+            Statement myStmt = dbconnect.createStatement();
 
             results = myStmt.executeQuery("SELECT * FROM "+table+" WHERE type = '"+ itemType + "'");
             while (results.next())
@@ -126,7 +126,7 @@ public class FinalProject {
 
         checkValidItem(item);
     }
-    
+
     public String selecttable(String tablename) {
         StringBuffer all = new StringBuffer();
         try {
@@ -177,18 +177,18 @@ public class FinalProject {
         {
             Statement myStmt = dbconnect.createStatement();
             results = myStmt.executeQuery("SELECT * FROM filing WHERE Type ='"+type+"'");
-                int i=0;
-                while(results.next())
-                {
-                    filing2d[i][0] = results.getString("ID");
-                    filing2d[i][1] = results.getString("Type");
-                    filing2d[i][2] = results.getString("Rails");
-                    filing2d[i][3] = results.getString("Drawers");
-                    filing2d[i][4] = results.getString("Cabinet");
-                    filing2d[i][5] = String.valueOf(results.getInt("Price"));
-                    filing2d[i][6] = results.getString("ManuID");
-                    i=i+1;
-                }
+            int i=0;
+            while(results.next())
+            {
+                filing2d[i][0] = results.getString("ID");
+                filing2d[i][1] = results.getString("Type");
+                filing2d[i][2] = results.getString("Rails");
+                filing2d[i][3] = results.getString("Drawers");
+                filing2d[i][4] = results.getString("Cabinet");
+                filing2d[i][5] = String.valueOf(results.getInt("Price"));
+                filing2d[i][6] = results.getString("ManuID");
+                i=i+1;
+            }
             for(int j=0;j<count;j++)
             {
                 for(int k=0;k<7;k++)
@@ -314,37 +314,37 @@ public class FinalProject {
                 count++;
             }
             System.out.println(count);
-        if(tableName.equals("chair"))
-        {
-            chairselect(type,count);
-        }
-        if(tableName.equals("desk"))
-        {
-            deskselect(type,count);
-        }
-        if(tableName.equals("filing"))
-        {
-            filingselect(type,count);
-        }
-        if(tableName.equals("lamp"))
-        {
-            lampselect(type,count);
-        }
+            if(tableName.equals("chair"))
+            {
+                chairselect(type,count);
+            }
+            if(tableName.equals("desk"))
+            {
+                deskselect(type,count);
+            }
+            if(tableName.equals("filing"))
+            {
+                filingselect(type,count);
+            }
+            if(tableName.equals("lamp"))
+            {
+                lampselect(type,count);
+            }
 
-    } catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-        public static void main(String[] args)
+    public static void main(String[] args)
     {
         FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","NUMAN","TIGER");
         myJDBC.initializeConnection();
         //myJDBC.selectFurnitureType("Mesh","chair")
 
         myJDBC.userInput();
-        
+
         myJDBC.selectFurnitureType(myJDBC.getItemType(),myJDBC.getItemTable());
-        
+
         /*System.out.println(myJDBC.selecttable("chair"));
         System.out.println(myJDBC.selecttable("desk"));
         System.out.println(myJDBC.selecttable("filing"));
