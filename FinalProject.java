@@ -337,10 +337,8 @@ public class FinalProject {
 
         myJDBC.userInput();
         
-        myJDBC.selectFurnitureType("Small","filing");
-        myJDBC.selectFurnitureType("Adjustable","desk");
-        myJDBC.selectFurnitureType("Mesh","chair");
-        myJDBC.selectFurnitureType("Desk","lamp");
+        myJDBC.selectFurnitureType(getItemType(),getItemTable());
+        
         /*System.out.println(myJDBC.selecttable("chair"));
         System.out.println(myJDBC.selecttable("desk"));
         System.out.println(myJDBC.selecttable("filing"));
