@@ -310,6 +310,7 @@ public class FinalProject {
     public void selectFurnitureType(String type, String tableName)
     {
         int count=0;
+
         try
         {
             Statement myStmt = dbconnect.createStatement();
@@ -321,24 +322,27 @@ public class FinalProject {
             System.out.println(count);
             if(tableName.equals("chair"))
             {
-                chairSelect(type,count);
+                return chairSelect(type,count);
             }
             if(tableName.equals("desk"))
             {
-                deskSelect(type,count);
+                return deskSelect(type,count);
             }
             if(tableName.equals("filing"))
             {
-                filingSelect(type,count);
+                return filingSelect(type,count);
             }
             if(tableName.equals("lamp"))
             {
-                lampSelect(type,count);
+                return lampSelect(type,count);
             }
+
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return null;
     }
     public static void main(String[] args)
     {
