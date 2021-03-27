@@ -343,7 +343,7 @@ public class FinalProject {
 
         myJDBC.userInput();
         
-        myJDBC.selectFurnitureType(getItemType(),getItemTable());
+        myJDBC.selectFurnitureType(myJDBC.getItemType(),myJDBC.getItemTable());
         
         /*System.out.println(myJDBC.selecttable("chair"));
         System.out.println(myJDBC.selecttable("desk"));
