@@ -84,8 +84,8 @@ public class FinalProject {
         }
         return all.toString();
     }
-    public void filingselect(String type){
-        String[][] filing2d = new String[10][6];
+    public void filingselect(String type, int count){
+        String[][] filing2d = new String[count][6];
         try
         {
             Statement myStmt = dbconnect.createStatement();
@@ -101,7 +101,7 @@ public class FinalProject {
                     filing2d[i][5] = results.getString("ManuID");
                     i=i+1;
                 }
-            for(int j=0;j<10;j++)
+            for(int j=0;j<count;j++)
             {
                 for(int k=0;k<6;k++)
                 {
@@ -116,8 +116,8 @@ public class FinalProject {
             System.out.println("Unable to connect to database");
         }
     }
-    public void lampselect(String type){
-        String[][] lamp2d = new String[10][6];
+    public void lampselect(String type, int count){
+        String[][] lamp2d = new String[count][6];
         try
         {
             Statement myStmt = dbconnect.createStatement();
@@ -132,7 +132,7 @@ public class FinalProject {
                 lamp2d[i][4] = results.getString("ManuID");
                 i++;
             }
-            for(int j=0;j<10;j++)
+            for(int j=0;j<count;j++)
             {
                 for(int k=0;k<6;k++)
                 {
@@ -147,8 +147,8 @@ public class FinalProject {
             System.out.println("Unable to connect to database");
         }
     }
-    public void deskselect(String type){
-        String[][] desk2d = new String[10][5];
+    public void deskselect(String type, int count){
+        String[][] desk2d = new String[count][5];
         try
         {
             Statement myStmt = dbconnect.createStatement();
@@ -165,7 +165,7 @@ public class FinalProject {
                 desk2d[i][4] = results.getString("ManuID");
                 i++;
             }
-            for(int j=0;j<10;j++)
+            for(int j=0;j<count;j++)
             {
                 for(int k=0;k<4;k++)
                 {
@@ -179,8 +179,8 @@ public class FinalProject {
         {
             System.out.println("Unable to connect to database");
         }}
-    public void chairselect(String type){
-        String[][] chair2d = new String[10][7];
+    public void chairselect(String type, int count){
+        String[][] chair2d = new String[count][7];
         try
         {
             Statement myStmt = dbconnect.createStatement();
@@ -198,7 +198,7 @@ public class FinalProject {
                 chair2d[i][6] = results.getString("ManuID");
                 i++;
             }
-            for(int j=0;j<10;j++)
+            for(int j=0;j<count;j++)
             {
                 for(int k=0;k<7;k++)
                 {
@@ -215,25 +215,31 @@ public class FinalProject {
     }
     public void selectFurnitureType(String type, String tableName)
     {
+        int count=0;
         try
         {
             Statement myStmt = dbconnect.createStatement();
             results = myStmt.executeQuery("SELECT COUNT(ID) FROM "+tableName+" WHERE Type='"+type+"'");
-        if(tableName.equals("chair"))
+            results = myStmt.executeQuery("SELECT * FROM "+tableName+" WHERE Type='"+type+"'");
+            while (results.next()){
+                count++;
+            }
+            System.out.println(count);
+            if(tableName.equals("chair"))
         {
-            chairselect(type);
+            chairselect(type,count);
         }
         if(tableName.equals("desk"))
         {
-            deskselect(type);
+            deskselect(type,count);
         }
         if(tableName.equals("filing"))
         {
-            filingselect(type);
+            filingselect(type,count);
         }
         if(tableName.equals("lamp"))
         {
-            lampselect(type);
+            lampselect(type,count);
         }
 
     } catch (SQLException e) {
@@ -247,7 +253,7 @@ public class FinalProject {
         //myJDBC.selectFurnitureType("Mesh","chair");
         myJDBC.selectFurnitureType("Small","filing");
         myJDBC.selectFurnitureType("Desk","lamp");
-        myJDBC.selectFurnitureType("Task","chair");
+        myJDBC.selectFurnitureType("Mesh","chair");
         myJDBC.selectFurnitureType("Standing","desk");
         /*System.out.println(myJDBC.selecttable("chair"));
         System.out.println(myJDBC.selecttable("desk"));
