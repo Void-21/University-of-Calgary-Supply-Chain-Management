@@ -47,31 +47,31 @@ public class FinalProject {
             results = myStmt.executeQuery("SELECT * FROM " + tablename);
             all.append(tablename);
             all.append("\n");
-            if (tablename == "lamp") {
+            if (tablename.equals("lamp")) {
                 while (results.next()) {
                     all.append("(" + results.getString("ID") + " // " + results.getString("TYPE") + " // " + results.getString("Base") + " // " + results.getString("Bulb") + " // " + results.getString("Price") + " // " + results.getString("ManuID") + ")");
                     all.append("\n");
                 }
             }
-            if (tablename == "manufacturer") {
+            if (tablename.equals("manufacturer")) {
                 while (results.next()) {
                     all.append("(" + results.getString("ManuID") + " // " + results.getString("Name") + " // " + results.getString("Phone") + " // " + results.getString("Province") + ")");
                     all.append("\n");
                 }
             }
-            if (tablename == "filing") {
+            if (tablename.equals("filing")) {
                 while (results.next()) {
                     all.append("(" + results.getString("ID") + " // " + results.getString("TYPE") + " // " + results.getString("Rails") + " // " + results.getString("Drawers") + " // " + results.getString("Cabinet") + " // " + results.getString("Price") + " // " + results.getString("ManuID") + ")");
                     all.append("\n");
                 }
             }
-            if (tablename == "desk") {
+            if (tablename.equals("desk")) {
                 while (results.next()) {
                     all.append("(" + results.getString("ID") + " // " + results.getString("TYPE") + " // " + results.getString("Legs") + " // " + results.getString("Top") + " // " + results.getString("Drawer") + " // " + results.getString("Price") + " // " + results.getString("ManuID") + ")");
                     all.append("\n");
                 }
             }
-            if (tablename == "chair") {
+            if (tablename.equals("chair")) {
                 while (results.next()) {
                     all.append("(" + results.getString("ID") + " // " + results.getString("TYPE") + " // " + results.getString("Legs") + " // " + results.getString("Arms") + " // " + results.getString("Seat") + " // " + results.getString("Cushion") + " // " + results.getString("Price") + " // " + results.getString("ManuID") + ")");
                     all.append("\n");
@@ -84,73 +84,30 @@ public class FinalProject {
         }
         return all.toString();
     }
-    public void selectFurnitureType(String type, String tableName){
-        List<List> chairList2D = new ArrayList <List>();
-        List<String> chairList1D = new ArrayList<String>();
-        List<String> deskList1D = new ArrayList<String>();
-        List<String> filingList1D = new ArrayList<String>();
-        List<String> lampList1D = new ArrayList<String>();
+    public void filingselect(String type){
+        String[][] filing2d = new String[10][6];
         try
         {
             Statement myStmt = dbconnect.createStatement();
-            results = myStmt.executeQuery("SELECT * FROM "+ tableName +" WHERE Type ='"+type+"'");
-
-            if(tableName.equals("chair"))
-            {
-                chairList1D.add(results.getString(type));
-                while( results.next() )
-                {
-                    chairList1D.add(results.getString("ID"));
-                    chairList1D.add( results.getString("Legs") );
-                    chairList1D.add( results.getString("Arms") );
-                    chairList1D.add( results.getString("Seat") );
-                    chairList1D.add( results.getString("Cushion") );
-                    chairList1D.add( String.valueOf(results.getInt("Price")) );
-                    chairList1D.add( results.getString("ManuID") );
-                    //chairList1D.add("\n");
-                }
-                System.out.println(chairList1D);
-            }
-            if(tableName.equals("desk"))
-            {
-                deskList1D.add(results.getString(type));
+            results = myStmt.executeQuery("SELECT * FROM filing WHERE Type ='"+type+"'");
+                int i=0;
                 while(results.next())
                 {
-                    deskList1D.add(results.getString("ID"));
-                    deskList1D.add( results.getString("Legs") );
-                    deskList1D.add( results.getString("Top") );
-                    deskList1D.add( results.getString("Drawer") );
-                    deskList1D.add( String.valueOf(results.getInt("Price")) );
-                    deskList1D.add( results.getString("ManuID") );
+                    filing2d[i][0] = results.getString("ID");
+                    filing2d[i][1] = results.getString("Rails");
+                    filing2d[i][2] = results.getString("Drawers");
+                    filing2d[i][3] = results.getString("Cabinet");
+                    filing2d[i][4] = String.valueOf(results.getInt("Price"));
+                    filing2d[i][5] = results.getString("ManuID");
+                    i=i+1;
                 }
-                System.out.println(deskList1D);
-            }
-            if(tableName.equals("filing"))
+            for(int j=0;j<10;j++)
             {
-                filingList1D.add(results.getString(type));
-                while( results.next() )
+                for(int k=0;k<6;k++)
                 {
-                    filingList1D.add(results.getString("ID"));
-                    filingList1D.add( results.getString("Rails") );
-                    filingList1D.add( results.getString("Drawers") );
-                    filingList1D.add( results.getString("Cabinet") );
-                    filingList1D.add( String.valueOf(results.getInt("Price")) );
-                    filingList1D.add( results.getString("ManuID") );
+                    System.out.print(filing2d[j][k]+" ");
                 }
-                System.out.println(filingList1D);
-            }
-            if(tableName.equals("lamp"))
-            {
-                lampList1D.add(results.getString(type));
-                while( results.next() )
-                {
-                    lampList1D.add(results.getString("ID"));
-                    lampList1D.add( results.getString("Base") );
-                    lampList1D.add( results.getString("Bulb") );
-                    lampList1D.add( String.valueOf(results.getInt("Price")) );
-                    lampList1D.add( results.getString("ManuID") );
-                }
-                System.out.println(lampList1D);
+                System.out.println(" ");
             }
             myStmt.close();
         }
@@ -158,13 +115,140 @@ public class FinalProject {
         {
             System.out.println("Unable to connect to database");
         }
+    }
+    public void lampselect(String type){
+        String[][] lamp2d = new String[10][6];
+        try
+        {
+            Statement myStmt = dbconnect.createStatement();
+            results = myStmt.executeQuery("SELECT * FROM lamp WHERE Type ='"+type+"'");
+            int i=0;
+            while(results.next())
+            {
+                lamp2d[i][0] = results.getString("ID");
+                lamp2d[i][1] = results.getString("Type");
+                lamp2d[i][2] = results.getString("Base");
+                lamp2d[i][3] = String.valueOf(results.getInt("Price"));
+                lamp2d[i][4] = results.getString("ManuID");
+                i++;
+            }
+            for(int j=0;j<10;j++)
+            {
+                for(int k=0;k<6;k++)
+                {
+                    System.out.print(lamp2d[j][k]+" ");
+                }
+                System.out.println(" ");
+            }
+            myStmt.close();
         }
-    public static void main(String[] args)
+        catch (SQLException ex)
+        {
+            System.out.println("Unable to connect to database");
+        }
+    }
+    public void deskselect(String type){
+        String[][] desk2d = new String[10][5];
+        try
+        {
+            Statement myStmt = dbconnect.createStatement();
+            results = myStmt.executeQuery("SELECT * FROM desk WHERE Type ='"+type+"'");
+            int i=0;
+            while(results.next())
+            {
+                desk2d[i][0] = results.getString("ID");
+                desk2d[i][1] = results.getString("Type");
+                desk2d[i][2] = results.getString("Legs");
+                desk2d[i][2] = results.getString("Top");
+                desk2d[i][2] = results.getString("Drawer");
+                desk2d[i][3] = String.valueOf(results.getInt("Price"));
+                desk2d[i][4] = results.getString("ManuID");
+                i++;
+            }
+            for(int j=0;j<10;j++)
+            {
+                for(int k=0;k<4;k++)
+                {
+                    System.out.print(desk2d[j][k]+" ");
+                }
+                System.out.println(" ");
+            }
+            myStmt.close();
+        }
+        catch (SQLException ex)
+        {
+            System.out.println("Unable to connect to database");
+        }}
+    public void chairselect(String type){
+        String[][] chair2d = new String[10][7];
+        try
+        {
+            Statement myStmt = dbconnect.createStatement();
+            results = myStmt.executeQuery("SELECT * FROM chair WHERE Type = '"+type+"'");
+            int i=0;
+            while(results.next())
+            {
+                chair2d[i][0] = results.getString("ID");
+                chair2d[i][1] = results.getString("Type");
+                chair2d[i][2] = results.getString("Legs");
+                chair2d[i][3] = results.getString("Arms");
+                chair2d[i][4] = results.getString("Seat");
+                chair2d[i][4] = results.getString("Cushion");
+                chair2d[i][5] = String.valueOf(results.getInt("Price"));
+                chair2d[i][6] = results.getString("ManuID");
+                i++;
+            }
+            for(int j=0;j<10;j++)
+            {
+                for(int k=0;k<7;k++)
+                {
+                    System.out.print(chair2d[j][k]+" ");
+                }
+                System.out.println(" ");
+            }
+            myStmt.close();
+        }
+        catch (SQLException ex)
+        {
+            System.out.println("Unable to connect to database");
+        }
+    }
+    public void selectFurnitureType(String type, String tableName)
+    {
+        try
+        {
+            Statement myStmt = dbconnect.createStatement();
+            results = myStmt.executeQuery("SELECT COUNT(ID) FROM "+tableName+" WHERE Type='"+type+"'");
+        if(tableName.equals("chair"))
+        {
+            chairselect(type);
+        }
+        if(tableName.equals("desk"))
+        {
+            deskselect(type);
+        }
+        if(tableName.equals("filing"))
+        {
+            filingselect(type);
+        }
+        if(tableName.equals("lamp"))
+        {
+            lampselect(type);
+        }
+
+    } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+        public static void main(String[] args)
     {
         FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","NUMAN","TIGER");
         myJDBC.initializeConnection();
-        myJDBC.selectFurnitureType("Mesh","chair");
+        //myJDBC.selectFurnitureType("Mesh","chair");
         myJDBC.selectFurnitureType("Small","filing");
+        myJDBC.selectFurnitureType("Desk","lamp");
+        myJDBC.selectFurnitureType("Task","chair");
+        myJDBC.selectFurnitureType("Standing","desk");
         /*System.out.println(myJDBC.selecttable("chair"));
         System.out.println(myJDBC.selecttable("desk"));
         System.out.println(myJDBC.selecttable("filing"));
