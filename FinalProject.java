@@ -307,7 +307,7 @@ public class FinalProject {
         }
         return chair2d;
     }
-    public void selectFurnitureType(String type, String tableName)
+    public String[][] selectFurnitureType(String type, String tableName)
     {
         int count=0;
 
