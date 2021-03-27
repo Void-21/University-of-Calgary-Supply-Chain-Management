@@ -9,6 +9,9 @@ public class FinalProject {
     public final String PASSWORD; //store the user's account password
     private Connection dbconnect;
     private ResultSet results;
+    private String itemType; //Type of item user wishes to buy
+    private String itemTable; //contains the table of the item which the user wishes to buy
+    
     public FinalProject(String DBURL, String USERNAME, String PASSWORD) {
         this.DBURL = DBURL;
         this.USERNAME = USERNAME;
@@ -25,6 +28,23 @@ public class FinalProject {
     public String getPassword() {           //getter for password
         return PASSWORD;
     }
+    
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
+    }
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public String getItemTable() {
+        return itemTable;
+    }
+
+    public void setItemTable(String itemTable) {
+        this.itemTable = itemTable;
+    }
+    
     public void initializeConnection(){         //this creates a connection between the java files and the database
         try{
             dbconnect = DriverManager.getConnection(getDburl(),getUsername(),getPassword());
@@ -40,6 +60,66 @@ public class FinalProject {
             e.printStackTrace();
         }
     }
+    
+    public boolean checkValidItem(String itemName)
+    {
+        String table ;    // table name for that item in the database
+        String itemType; //type of the item
+
+        itemName = itemName.toLowerCase();
+
+        if(!itemName.equals("swing arm lamp"))
+        {
+            itemType = itemName.substring(0,itemName.indexOf(" "));
+            table = itemName.substring(itemName.indexOf(" ")+1);
+        }
+        else
+        {
+            itemType="swing arm";
+            table="lamp";
+        }
+
+        setItemTable(table);
+        setItemType(itemType);
+
+        int count=0;
+        try {
+            Statement myStmt = connection.createStatement();
+
+            results = myStmt.executeQuery("SELECT * FROM "+table+" WHERE type = '"+ itemType + "'");
+            while (results.next())
+            {
+                count++;
+            }
+            if(count>0)
+            {
+                return true;
+            }
+            return false;
+
+        }
+        catch (SQLException ex)
+        {
+            System.out.println("Item does not exists"); //remove later
+            return false;
+        }
+    }
+
+
+    public void userInput()
+    {
+        Scanner myScanner = new Scanner(System.in);
+        System.out.println("Enter the item you would like to purchase : ");
+        String item = myScanner.nextLine();
+        System.out.println("Enter the number of items to purchase : ");
+        String numItems = myScanner.nextLine();
+
+        System.out.println("Item : "+item);
+        System.out.println("Quantity : " + numItems);
+
+        System.out.println("Item exists? : "+checkValidItem(item));
+    }
+    
     public String selecttable(String tablename) {
         StringBuffer all = new StringBuffer();
         try {
