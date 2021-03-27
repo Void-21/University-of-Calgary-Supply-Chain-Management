@@ -85,7 +85,7 @@ public class FinalProject {
         return all.toString();
     }
     public void filingselect(String type, int count){
-        String[][] filing2d = new String[count][6];
+        String[][] filing2d = new String[count][7];
         try
         {
             Statement myStmt = dbconnect.createStatement();
@@ -94,16 +94,17 @@ public class FinalProject {
                 while(results.next())
                 {
                     filing2d[i][0] = results.getString("ID");
-                    filing2d[i][1] = results.getString("Rails");
-                    filing2d[i][2] = results.getString("Drawers");
-                    filing2d[i][3] = results.getString("Cabinet");
-                    filing2d[i][4] = String.valueOf(results.getInt("Price"));
-                    filing2d[i][5] = results.getString("ManuID");
+                    filing2d[i][1] = results.getString("Type");
+                    filing2d[i][2] = results.getString("Rails");
+                    filing2d[i][3] = results.getString("Drawers");
+                    filing2d[i][4] = results.getString("Cabinet");
+                    filing2d[i][5] = String.valueOf(results.getInt("Price"));
+                    filing2d[i][6] = results.getString("ManuID");
                     i=i+1;
                 }
             for(int j=0;j<count;j++)
             {
-                for(int k=0;k<6;k++)
+                for(int k=0;k<7;k++)
                 {
                     System.out.print(filing2d[j][k]+" ");
                 }
@@ -128,8 +129,9 @@ public class FinalProject {
                 lamp2d[i][0] = results.getString("ID");
                 lamp2d[i][1] = results.getString("Type");
                 lamp2d[i][2] = results.getString("Base");
-                lamp2d[i][3] = String.valueOf(results.getInt("Price"));
-                lamp2d[i][4] = results.getString("ManuID");
+                lamp2d[i][3] = results.getString("Bulb");
+                lamp2d[i][4] = String.valueOf(results.getInt("Price"));
+                lamp2d[i][5] = results.getString("ManuID");
                 i++;
             }
             for(int j=0;j<count;j++)
@@ -148,7 +150,7 @@ public class FinalProject {
         }
     }
     public void deskselect(String type, int count){
-        String[][] desk2d = new String[count][5];
+        String[][] desk2d = new String[count][7];
         try
         {
             Statement myStmt = dbconnect.createStatement();
@@ -159,15 +161,15 @@ public class FinalProject {
                 desk2d[i][0] = results.getString("ID");
                 desk2d[i][1] = results.getString("Type");
                 desk2d[i][2] = results.getString("Legs");
-                desk2d[i][2] = results.getString("Top");
-                desk2d[i][2] = results.getString("Drawer");
-                desk2d[i][3] = String.valueOf(results.getInt("Price"));
-                desk2d[i][4] = results.getString("ManuID");
+                desk2d[i][3] = results.getString("Top");
+                desk2d[i][4] = results.getString("Drawer");
+                desk2d[i][5] = String.valueOf(results.getInt("Price"));
+                desk2d[i][6] = results.getString("ManuID");
                 i++;
             }
             for(int j=0;j<count;j++)
             {
-                for(int k=0;k<4;k++)
+                for(int k=0;k<7;k++)
                 {
                     System.out.print(desk2d[j][k]+" ");
                 }
@@ -180,7 +182,7 @@ public class FinalProject {
             System.out.println("Unable to connect to database");
         }}
     public void chairselect(String type, int count){
-        String[][] chair2d = new String[count][7];
+        String[][] chair2d = new String[count][8];
         try
         {
             Statement myStmt = dbconnect.createStatement();
@@ -193,14 +195,14 @@ public class FinalProject {
                 chair2d[i][2] = results.getString("Legs");
                 chair2d[i][3] = results.getString("Arms");
                 chair2d[i][4] = results.getString("Seat");
-                chair2d[i][4] = results.getString("Cushion");
-                chair2d[i][5] = String.valueOf(results.getInt("Price"));
-                chair2d[i][6] = results.getString("ManuID");
+                chair2d[i][5] = results.getString("Cushion");
+                chair2d[i][6] = String.valueOf(results.getInt("Price"));
+                chair2d[i][7] = results.getString("ManuID");
                 i++;
             }
             for(int j=0;j<count;j++)
             {
-                for(int k=0;k<7;k++)
+                for(int k=0;k<8;k++)
                 {
                     System.out.print(chair2d[j][k]+" ");
                 }
@@ -225,7 +227,7 @@ public class FinalProject {
                 count++;
             }
             System.out.println(count);
-            if(tableName.equals("chair"))
+        if(tableName.equals("chair"))
         {
             chairselect(type,count);
         }
@@ -252,9 +254,9 @@ public class FinalProject {
         myJDBC.initializeConnection();
         //myJDBC.selectFurnitureType("Mesh","chair");
         myJDBC.selectFurnitureType("Small","filing");
-        myJDBC.selectFurnitureType("Desk","lamp");
+        myJDBC.selectFurnitureType("Adjustable","desk");
         myJDBC.selectFurnitureType("Mesh","chair");
-        myJDBC.selectFurnitureType("Standing","desk");
+        myJDBC.selectFurnitureType("Desk","lamp");
         /*System.out.println(myJDBC.selecttable("chair"));
         System.out.println(myJDBC.selecttable("desk"));
         System.out.println(myJDBC.selecttable("filing"));
