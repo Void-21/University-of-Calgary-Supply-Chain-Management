@@ -343,6 +343,49 @@ public class FinalProject {
 
         return null;
     }
+    public void writeManufacturers(String table) throws IOException
+    {
+        //import java.io to use this function
+        File outFile = new File("orderform.txt");
+        FileWriter myWriter = new FileWriter(outFile);
+
+        myWriter.write("Order cannot be fulfilled based on current inventory.\n\n");
+        myWriter.write("Suggested manufacturers are: " + getManufacturers(table));
+        myWriter.close();
+    }
+
+    private String getManufacturers(String table)
+    {
+        StringBuilder manufacturers = new StringBuilder();
+        Set<String> manu_ID = new HashSet<String>();
+        try
+        {
+            Statement myStmt = dbconnect.createStatement();
+            results = myStmt.executeQuery("SELECT * FROM " + table);
+
+            while( results.next() )
+            {
+                manu_ID.add( results.getString("ManuID") );
+            }
+
+            results = myStmt.executeQuery("SELECT * FROM manufacturer");
+            while( results.next() )
+            {
+                if(manu_ID.contains(results.getString("ManuID")))
+                {
+                    manufacturers.append( results.getString("Name") );
+                    manufacturers.append(", ");
+                }
+            }
+            myStmt.close();
+        }
+        catch (SQLException ex)
+        {
+            System.out.println("Unable to connect to database");
+        }
+
+        return manufacturers.toString();
+    }
     public static void main(String[] args)
     {
         FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","NUMAN","TIGER");
