@@ -62,7 +62,7 @@ public class FinalProject {
         }
     }
     
-    public boolean checkValidItem(String itemName)
+    public void checkValidItem(String itemName)
     {
         String table ;    // table name for that item in the database
         String itemType; //type of the item
