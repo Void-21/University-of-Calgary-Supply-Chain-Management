@@ -1,59 +1,62 @@
-package edu.ucalgary.ensf409;
-import java.sql.*;
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Scanner;
-import java.io.*;
-import java.util.*;
-
-public class FinalProject {
+public class FinalProject
+{
     public final String DBURL; //store the database url information
     public final String USERNAME; //store the user's account username
     public final String PASSWORD; //store the user's account password
-    private Connection dbconnect;
-    private ResultSet results;
+    private Connection dbconnect; //data member to establish connection with the database
+    private ResultSet results; // results conatins the results from MySQL query
     private String itemType; //Type of item user wishes to buy
     private String itemTable; //contains the table of the item which the user wishes to buy
-    private String numItems;
+    private String numItems; // contains the number of items enetered by the user
 
-    public FinalProject(String DBURL, String USERNAME, String PASSWORD) {
+    public FinalProject(String DBURL, String USERNAME, String PASSWORD)
+    {
+        /*Constructor to initialize the DBURL,USERNAME and PASSWORD which are the fields required to
+        establish connection with the DB*/
+
         this.DBURL = DBURL;
         this.USERNAME = USERNAME;
         this.PASSWORD = PASSWORD;
     }
-    public String getDburl() {              //getter for DBurl
+    public String getDburl()                // getter for DBURL
+    {
         return DBURL;
     }
 
-    public String getUsername() {           //getter for username
+    public String getUsername() {           // getter for username
         return USERNAME;
     }
 
-    public String getPassword() {           //getter for password
+    public String getPassword() {           // getter for password
         return PASSWORD;
     }
-    public String getNumItems()
+    public String getNumItems()             // getter for numItems
     {
         return this.numItems;
     }
 
-    public void setItemType(String itemType) {
+    public void setItemType(String itemType)  //Setter for itemType
+    {
         this.itemType = itemType;
     }
 
-    public String getItemType() {
+    public String getItemType()   // getter for getItemType
+    {
         return itemType;
     }
 
-    public String getItemTable() {
+    public String getItemTable()  // getter for itermTable
+    {
         return itemTable;
     }
 
-    public void setItemTable(String itemTable) {
+    public void setItemTable(String itemTable)  //setter for itemTable
+    {
         this.itemTable = itemTable;
     }
 
-    public void setNumItems(String numItems) {
+    public void setNumItems(String numItems)  //setter for numItems
+    {
         this.numItems = numItems;
     }
 
@@ -64,7 +67,10 @@ public class FinalProject {
             e.printStackTrace();
         }
     }
-    public void close() {
+    public void close()
+    {
+        /* This method closes the result and connection fields used to establish connection with the database*/
+
         try {
             results.close();
             dbconnect.close();
@@ -75,18 +81,24 @@ public class FinalProject {
 
     public void checkValidItem(String itemName)
     {
-        String table ;    // table name for that item in the database
-        String itemType; //type of the item
+        /*
+            This function checks the validity of the Item name entered by the user by comparing the item Type and Table
+            name with all the enteries in the MySQL database and see if a match exists
+         */
 
-        if(!itemName.contains(" "))
+        String table ;    // table name for that item in the database
+        String itemType; // type of the item
+
+        if(!itemName.contains(" "))  //if the item name does not contain a space Re-enter the string
         {
             userInput();
+            System.out.println();
             return;
         }
-        
+
         itemName = itemName.toLowerCase();
 
-        if(!itemName.equals("swing arm lamp"))
+        if(!itemName.equals("swing arm lamp"))  //Special case given for input with 3 words
         {
             itemType = itemName.substring(0,itemName.indexOf(" "));
             table = itemName.substring(itemName.indexOf(" ")+1);
@@ -132,6 +144,10 @@ public class FinalProject {
 
     public void userInput()
     {
+        /*
+        This method takes input from the user and calls checkValidItem to validate if the item exists in database
+         */
+        
         Scanner myScanner = new Scanner(System.in);
         System.out.println("Enter the item you would like to purchase : ");
         String item = myScanner.nextLine();
@@ -144,7 +160,10 @@ public class FinalProject {
         checkValidItem(item);
     }
 
-    public String selectTable(String tablename) {
+    public String selectTable(String tablename)
+    {
+        /* This a method which displays the current state of the inventory database in MySQL */
+        
         StringBuffer all = new StringBuffer();
         try {
             Statement myStmt = dbconnect.createStatement();
