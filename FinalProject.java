@@ -1,4 +1,3 @@
-
 package edu.ucalgary.ensf409;
 import java.sql.*;
 //import java.util.ArrayList;
@@ -52,6 +51,10 @@ public class FinalProject {
 
     public void setItemTable(String itemTable) {
         this.itemTable = itemTable;
+    }
+
+    public void setNumItems(String numItems) {
+        this.numItems = numItems;
     }
 
     public void initializeConnection(){         //this creates a connection between the java files and the database
@@ -629,7 +632,7 @@ public class FinalProject {
 
                 if(Integer.parseInt(getNumItems())>1)
                 {
-                    setNumItems(Character.toString(Integer.parseInt(getNumItems())-1));
+                    setNumItems(String.valueOf(Integer.parseInt(getNumItems())-1));
                     selectFurnitureType(getItemType(),getItemTable());
                 }
 
@@ -695,7 +698,7 @@ public class FinalProject {
 
         if(Integer.parseInt(getNumItems())>1)
         {
-            setNumItems(Character.toString(Integer.parseInt(getNumItems())-1));
+            setNumItems(String.valueOf(Integer.parseInt(getNumItems())-1));
             selectFurnitureType(getItemType(),getItemTable());
         }
 
@@ -722,7 +725,7 @@ public class FinalProject {
 
         myWriter.close();
     }
-public static void main(String[] args)
+    public static void main(String[] args)
     {
         FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","NUMAN","TIGER");
         myJDBC.initializeConnection();
@@ -740,4 +743,4 @@ public static void main(String[] args)
         System.out.println(myJDBC.selecttable("lamp"));
         System.out.println(myJDBC.selecttable("manufacturer"));*/
     }
-}    
+}
