@@ -1,8 +1,10 @@
 package edu.ucalgary.ensf409;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class FinalProject {
     public final String DBURL; //store the database url information
@@ -12,6 +14,7 @@ public class FinalProject {
     private ResultSet results;
     private String itemType; //Type of item user wishes to buy
     private String itemTable; //contains the table of the item which the user wishes to buy
+    private String numItems;
 
     public FinalProject(String DBURL, String USERNAME, String PASSWORD) {
         this.DBURL = DBURL;
@@ -28,6 +31,10 @@ public class FinalProject {
 
     public String getPassword() {           //getter for password
         return PASSWORD;
+    }
+    public String getNumItems()
+    {
+        return this.numItems;
     }
 
     public void setItemType(String itemType) {
@@ -119,7 +126,7 @@ public class FinalProject {
         System.out.println("Enter the item you would like to purchase : ");
         String item = myScanner.nextLine();
         System.out.println("Enter the number of items to purchase : ");
-        String numItems = myScanner.nextLine();
+        this.numItems = myScanner.nextLine();
 
         System.out.println("Item : "+item);
         System.out.println("Quantity : " + numItems);
@@ -497,15 +504,75 @@ public class FinalProject {
 
         return null;
     }
+    public void writeManufacturers(String table) throws IOException
+    {
+        //import java.io to use this function
+        File outFile = new File("orderform.txt");
+        FileWriter myWriter = new FileWriter(outFile);
+
+        myWriter.write("Order cannot be fulfilled based on current inventory.\n\n");
+        myWriter.write("Suggested manufacturers are: " + getManufacturers(table));
+        myWriter.close();
+    }
+    //method called in writeManufacturers
+    private String getManufacturers(String table)
+    {
+        StringBuilder manufacturers = new StringBuilder();
+        Set<String> manu_ID = new HashSet<String>();
+        try
+        {
+            Statement myStmt = dbconnect.createStatement();
+            results = myStmt.executeQuery("SELECT * FROM " + table);
+
+            while( results.next() )
+            {
+                manu_ID.add( results.getString("ManuID") );
+            }
+
+            results = myStmt.executeQuery("SELECT * FROM manufacturer");
+            while( results.next() )
+            {
+                if(manu_ID.contains(results.getString("ManuID")))
+                {
+                    manufacturers.append( results.getString("Name") );
+                    manufacturers.append(", ");
+                }
+            }
+            myStmt.close();
+        }
+        catch (SQLException ex)
+        {
+            System.out.println("Unable to connect to database");
+        }
+
+        return manufacturers.toString();
+    }
+
+    public void deleteFromTable(String table, String objectID)
+    {
+        try
+        {
+            Statement myStmt = dbconnect.createStatement();
+            results = myStmt.executeQuery("DELETE FROM " + table + " WHERE ID='" + objectID + "'");
+            
+            myStmt.close();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args)
     {
-        FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","NUMAN","TIGER");
+        FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","root","cRipt4518^*");
         myJDBC.initializeConnection();
         //myJDBC.selectFurnitureType("Mesh","chair")
 
         myJDBC.userInput();
 
         myJDBC.selectFurnitureType(myJDBC.getItemType(),myJDBC.getItemTable());
+        //myJDBC.writeManufacturers("lamp");
+        myJDBC.close();
 
         /*System.out.println(myJDBC.selecttable("chair"));
         System.out.println(myJDBC.selecttable("desk"));
