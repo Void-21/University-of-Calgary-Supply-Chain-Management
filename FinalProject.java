@@ -173,6 +173,8 @@ public class FinalProject {
     }
     public String[][] filingSelect(String type, int count){
         String[][] filing2d = new String[count][7];
+        String[][] filing = new String[count][4];
+        int c =count;
         try
         {
             Statement myStmt = dbconnect.createStatement();
@@ -183,9 +185,13 @@ public class FinalProject {
                 filing2d[i][0] = results.getString("ID");
                 filing2d[i][1] = results.getString("Type");
                 filing2d[i][2] = results.getString("Rails");
+                filing[i][0] = results.getString("Rails");
                 filing2d[i][3] = results.getString("Drawers");
+                filing[i][1] = results.getString("Drawers");
                 filing2d[i][4] = results.getString("Cabinet");
+                filing[i][2] = results.getString("Cabinet");
                 filing2d[i][5] = String.valueOf(results.getInt("Price"));
+                filing[i][3] = String.valueOf(results.getInt("Price"));
                 filing2d[i][6] = results.getString("ManuID");
                 i=i+1;
             }
@@ -197,6 +203,7 @@ public class FinalProject {
                 }
                 System.out.println(" ");
             }*/
+            checkFiling(filing,c);
             myStmt.close();
         }
         catch (SQLException ex)
@@ -205,8 +212,41 @@ public class FinalProject {
         }
         return filing2d;
     }
+    public String[][] checkFiling(String[][] filing, int count)
+    {   
+        int c1=0,c2=0,c3=0;
+        boolean check = false;
+        for(int i=0;i<count;i++)
+        {
+            if(filing[i][0].equals("Y"))
+            {
+                c1++;
+            }
+            if(filing[i][1].equals("Y"))
+            {
+                c2++;
+            }
+            if(filing[i][2].equals("Y"))
+            {
+                c3++;
+            }
+        }
+        if((c1>0)&&(c2>0)&&(c3>0))
+        {
+            check = true;
+            System.out.println(check);
+            return filing;
+        }
+        else
+        {
+            System.out.println(check);
+            return null;
+        }
+    }
     public String[][] lampSelect(String type, int count){
         String[][] lamp2d = new String[count][6];
+        String[][] lamp = new String[count][3];
+        int c =count;
         try
         {
             Statement myStmt = dbconnect.createStatement();
@@ -217,8 +257,11 @@ public class FinalProject {
                 lamp2d[i][0] = results.getString("ID");
                 lamp2d[i][1] = results.getString("Type");
                 lamp2d[i][2] = results.getString("Base");
+                lamp[i][0] = results.getString("Base");
                 lamp2d[i][3] = results.getString("Bulb");
+                lamp[i][1] = results.getString("Base");
                 lamp2d[i][4] = String.valueOf(results.getInt("Price"));
+                lamp[i][2] = String.valueOf(results.getInt("Price"));
                 lamp2d[i][5] = results.getString("ManuID");
                 i++;
             }
@@ -230,6 +273,7 @@ public class FinalProject {
                 }
                 System.out.println(" ");
             }*/
+            checkLamp(lamp,c);
             myStmt.close();
         }
         catch (SQLException ex)
@@ -238,8 +282,36 @@ public class FinalProject {
         }
         return lamp2d;
     }
+    public String[][] checkLamp(String[][] lamp, int count)
+    {   int c1=0,c2=0;
+        boolean check = false;
+        for(int i=0;i<count;i++)
+        {
+            if(lamp[i][0].equals("Y"))
+            {
+                c1++;
+            }
+            if(lamp[i][1].equals("Y"))
+            {
+                c2++;
+            }
+        }
+        if((c1>0)&&(c2>0))
+        {
+            check = true;
+            System.out.println(check);
+            return lamp;
+        }
+        else
+        {
+            System.out.println(check);
+            return null;
+        }
+    }
     public String[][] deskSelect(String type, int count){
         String[][] desk2d = new String[count][7];
+        String[][] desk = new String[count][4];
+        int c =count;
         try
         {
             Statement myStmt = dbconnect.createStatement();
@@ -250,9 +322,13 @@ public class FinalProject {
                 desk2d[i][0] = results.getString("ID");
                 desk2d[i][1] = results.getString("Type");
                 desk2d[i][2] = results.getString("Legs");
+                desk[i][0] = results.getString("Legs");
                 desk2d[i][3] = results.getString("Top");
+                desk[i][1] = results.getString("Top");
                 desk2d[i][4] = results.getString("Drawer");
+                desk[i][2] = results.getString("Drawer");
                 desk2d[i][5] = String.valueOf(results.getInt("Price"));
+                desk[i][3] = String.valueOf(results.getInt("Price"));
                 desk2d[i][6] = results.getString("ManuID");
                 i++;
             }
@@ -264,16 +340,49 @@ public class FinalProject {
                 }
                 System.out.println(" ");
             }*/
+            checkDesk(desk,c);
             myStmt.close();
         }
         catch (SQLException ex)
         {
             System.out.println("Unable to connect to database");
         }
-    return desk2d;
+        return desk2d;
+    }
+    public String[][] checkDesk(String[][] desk, int count)
+    {   int c1=0,c2=0,c3=0;
+        boolean check = false;
+        for(int i=0;i<count;i++)
+        {
+            if(desk[i][0].equals("Y"))
+            {
+                c1++;
+            }
+            if(desk[i][1].equals("Y"))
+            {
+                c2++;
+            }
+            if(desk[i][2].equals("Y"))
+            {
+                c3++;
+            }
+        }
+        if((c1>0)&&(c2>0)&&(c3>0))
+        {
+            check = true;
+            System.out.println(check);
+            return desk;
+        }
+        else
+        {
+            System.out.println(check);
+            return null;
+        }
     }
     public String[][] chairSelect(String type, int count){
         String[][] chair2d = new String[count][8];
+        String[][] chair = new String[count][5];
+        int c =count;
         try
         {
             Statement myStmt = dbconnect.createStatement();
@@ -284,28 +393,69 @@ public class FinalProject {
                 chair2d[i][0] = results.getString("ID");
                 chair2d[i][1] = results.getString("Type");
                 chair2d[i][2] = results.getString("Legs");
+                chair[i][0] = results.getString("Legs");
                 chair2d[i][3] = results.getString("Arms");
+                chair[i][1] = results.getString("Arms");
                 chair2d[i][4] = results.getString("Seat");
+                chair[i][2] = results.getString("Seat");
                 chair2d[i][5] = results.getString("Cushion");
+                chair[i][3] = results.getString("Cushion");
                 chair2d[i][6] = String.valueOf(results.getInt("Price"));
+                chair[i][4] = String.valueOf(results.getInt("Price"));
                 chair2d[i][7] = results.getString("ManuID");
                 i++;
             }
-            /*for(int j=0;j<count;j++)
+            /*int z=0;
+            for(int j=0;j<count;j++)
             {
-                for(int k=0;k<8;k++)
+                for(int k=2;k<7;k++)
                 {
-                    System.out.print(chair2d[j][k]+" ");
+                    chair[j][z++]=chair2d[j][k];
                 }
                 System.out.println(" ");
             }*/
             myStmt.close();
+            checkChair(chair,c);
         }
         catch (SQLException ex)
         {
             System.out.println("Unable to connect to database");
         }
         return chair2d;
+    }
+    public String[][] checkChair(String[][] chair, int count)
+    {   int c1=0,c2=0,c3=0,c4=0;
+        boolean check = false;
+        for(int i=0;i<count;i++)
+        {
+            if(chair[i][0].equals("Y"))
+            {
+                c1++;
+            }
+            if(chair[i][1].equals("Y"))
+            {
+                c2++;
+            }
+            if(chair[i][2].equals("Y"))
+            {
+                c3++;
+            }
+            if(chair[i][3].equals("Y"))
+            {
+                c4++;
+            }
+        }
+        if((c1>0)&&(c2>0)&&(c3>0)&&(c4>0))
+        {
+            check = true;
+            System.out.println(check);
+            return chair;
+        }
+        else
+        {
+            System.out.println(check);
+            return null;
+        }
     }
     public String[][] selectFurnitureType(String type, String tableName)
     {
@@ -318,7 +468,7 @@ public class FinalProject {
             results = myStmt.executeQuery("SELECT * FROM "+tableName+" WHERE Type='"+type+"'");
             while (results.next()){
                 count++;
-            }          
+            }
             if(tableName.equals("chair"))
             {
                 return chairSelect(type,count);
@@ -343,49 +493,6 @@ public class FinalProject {
 
         return null;
     }
-    public void writeManufacturers(String table) throws IOException
-    {
-        //import java.io to use this function
-        File outFile = new File("orderform.txt");
-        FileWriter myWriter = new FileWriter(outFile);
-
-        myWriter.write("Order cannot be fulfilled based on current inventory.\n\n");
-        myWriter.write("Suggested manufacturers are: " + getManufacturers(table));
-        myWriter.close();
-    }
-
-    private String getManufacturers(String table)
-    {
-        StringBuilder manufacturers = new StringBuilder();
-        Set<String> manu_ID = new HashSet<String>();
-        try
-        {
-            Statement myStmt = dbconnect.createStatement();
-            results = myStmt.executeQuery("SELECT * FROM " + table);
-
-            while( results.next() )
-            {
-                manu_ID.add( results.getString("ManuID") );
-            }
-
-            results = myStmt.executeQuery("SELECT * FROM manufacturer");
-            while( results.next() )
-            {
-                if(manu_ID.contains(results.getString("ManuID")))
-                {
-                    manufacturers.append( results.getString("Name") );
-                    manufacturers.append(", ");
-                }
-            }
-            myStmt.close();
-        }
-        catch (SQLException ex)
-        {
-            System.out.println("Unable to connect to database");
-        }
-
-        return manufacturers.toString();
-    }
     public static void main(String[] args)
     {
         FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","NUMAN","TIGER");
@@ -396,16 +503,6 @@ public class FinalProject {
 
         myJDBC.selectFurnitureType(myJDBC.getItemType(),myJDBC.getItemTable());
 
-        System.out.println();
-        for(int i =0;i<result.length;i++)
-        {
-            for(int j=0;j<result[i].length;j++)
-            {
-                System.out.print(result[i][j]+" ");
-            }
-            System.out.println();
-        }
-        
         /*System.out.println(myJDBC.selecttable("chair"));
         System.out.println(myJDBC.selecttable("desk"));
         System.out.println(myJDBC.selecttable("filing"));
