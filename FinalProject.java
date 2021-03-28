@@ -599,6 +599,27 @@ public class FinalProject
 
     public int calculateLowestPrice(String[][] tableData)
     {
+        
+         /*
+        
+        This method calculates the lowest int price for the passed tableData and returns a string value of it by
+        following this approach:
+
+        * Step 1 : Start by considering the object with the most number of reusable parts (indicated by "Y").
+        * Step 2 : Calculate all the possible cost options for this object and append the cheapest option to collectionOfLowestItem ArrayList
+        * Step 3 : Using ArrayLists idTracker and trackIndexPrices to contain the ids of all the cheapest options considered in each iteration
+                   for the objects with this specific number of "Y" (reusable parts)
+        * Step 4 : repeat Step 1,2 and 3 to determine the lowest possible options for the objects containing the second most
+                    ,third most,4th most and so on... reusable parts
+        * Step 5 : Extract the smallest element in the collectionOfLowestItem ArrayList which will be the Lowest
+                    possible price
+        * Step 6 : Extract the corresponding ids for the lowest prices from idTracker ArrayList and delete these records
+                    from the database 
+        * Step 7 : Finally if the numOfItems requested by user is >1 call setfurniture again to repeat all the steps for 
+                    the next Item as long as numOfItems<=1
+                     
+        */
+        
         String id=new String();
         ArrayList<String> idTracker = new ArrayList<>();
         int count = 0; //counting the number of Y's
