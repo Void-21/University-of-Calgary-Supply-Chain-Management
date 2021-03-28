@@ -564,7 +564,7 @@ public class FinalProject {
     }
     public static void main(String[] args)
     {
-        FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","root","cRipt4518^*");
+        FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","root","pass");
         myJDBC.initializeConnection();
         //myJDBC.selectFurnitureType("Mesh","chair")
 
