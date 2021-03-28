@@ -8,6 +8,7 @@
  * @since 1.0
  */
 
+
 package edu.ucalgary.ensf409;
 import java.sql.*;
 //import java.util.ArrayList;
@@ -16,7 +17,10 @@ import java.sql.*;
 import java.io.*;
 import java.util.*;
 
-/**
+public class FinalProject
+{
+
+    /**
      * This Class utilizes the data from inventory.sql database and calculates the lowest possible price for the users input item
      * It contains the following functions :
      * 1. FinalProject(String,String,String) : Constructor
@@ -50,8 +54,6 @@ import java.util.*;
      * 29. writeOrderForm(ArrayList<Integer>) : Writes the formatted output in the texfile
      */
 
-public class FinalProject
-{
     public final String DBURL; //store the database url information
     public final String USERNAME; //store the user's account username
     public final String PASSWORD; //store the user's account password
@@ -60,9 +62,15 @@ public class FinalProject
     private String itemType; //Type of item user wishes to buy
     private String itemTable; //contains the table of the item which the user wishes to buy
     private String numItems; // contains the number of items enetered by the user
+    private String faculty;  // contains the faculty name for user input
+    private String phoneNumber; // contains the phone number for user input
 
-    public FinalProject(String DBURL, String USERNAME, String PASSWORD)
-    {
+    private int counter=0;
+    File outFile = new File("orderform.txt");
+    FileWriter myWriter = new FileWriter(outFile);
+    public String str ="";
+
+    public FinalProject(String DBURL, String USERNAME, String PASSWORD) throws IOException {
         /*Constructor to initialize the DBURL,USERNAME and PASSWORD which are the fields required to
         establish connection with the DB*/
 
@@ -119,14 +127,16 @@ public class FinalProject
             e.printStackTrace();
         }
     }
-    public void close()
+    public void closes()
     {
         /* This method closes the result and connection fields used to establish connection with the database*/
 
         try {
+            myWriter.close();
             results.close();
             dbconnect.close();
-        } catch (SQLException e) {
+
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -179,6 +189,8 @@ public class FinalProject
                 //return true;
             }
 
+            System.out.println("Item does not exist in database please re-enter item :");
+
             userInput();
             //return false;
 
@@ -199,23 +211,27 @@ public class FinalProject
         /*
         This method takes input from the user and calls checkValidItem to validate if the item exists in database
          */
-        
+
         Scanner myScanner = new Scanner(System.in);
+        System.out.println();
         System.out.println("Enter the item you would like to purchase : ");
         String item = myScanner.nextLine();
         System.out.println("Enter the number of items to purchase : ");
         this.numItems = myScanner.nextLine();
 
-        System.out.println("Item : "+item);
-        System.out.println("Quantity : " + numItems);
 
         checkValidItem(item);
+
+        System.out.println("Enter your faculty :  ");
+        this.faculty = myScanner.nextLine();
+        System.out.println("Enter your phone number : ");
+        this.phoneNumber = myScanner.nextLine();
     }
 
     public String selectTable(String tablename)
     {
         /* This a method which displays the current state of the inventory database in MySQL */
-        
+
         StringBuffer all = new StringBuffer();
         try {
             Statement myStmt = dbconnect.createStatement();
@@ -295,14 +311,18 @@ public class FinalProject
             checkFiling(filing,c);
             myStmt.close();
         }
-        catch (SQLException ex)
+        catch (SQLException e)
         {
             System.out.println("Unable to connect to database");
         }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            System.out.println("file error");
+        }
         return filing2d;
     }
-    public String[][] checkFiling(String[][] filing, int count)
-    {
+    public String[][] checkFiling(String[][] filing, int count) throws IOException {
         int c1=0,c2=0,c3=0;
         boolean check = false;
         for(int i=0;i<count;i++)
@@ -330,6 +350,10 @@ public class FinalProject
         else
         {
             System.out.println(check);
+            str += "ORDER SUMMARY:\n"+"The Item: " + getItemType() +" "+ getItemTable() +"\nNumber of Items Requested: "+getNumItems()+"\n\nUnfortunately this item cannot be constructed with the available materials.\n" +"Please contact one of the manufacturers mentioned below for more information.\n\n";
+            str+=getManufacturers(getItemTable());
+            str+="\n\nSorry for the inconvenience.";
+            writeOrderForm(str,check);
             return null;
         }
     }
@@ -367,14 +391,14 @@ public class FinalProject
             checkLamp(lamp,c);
             myStmt.close();
         }
-        catch (SQLException ex)
+        catch (SQLException | IOException ex)
         {
+            ex.printStackTrace();
             System.out.println("Unable to connect to database");
         }
         return lamp2d;
     }
-    public String[][] checkLamp(String[][] lamp, int count)
-    {   int c1=0,c2=0;
+    public String[][] checkLamp(String[][] lamp, int count) throws IOException {   int c1=0,c2=0;
         boolean check = false;
         for(int i=0;i<count;i++)
         {
@@ -397,6 +421,10 @@ public class FinalProject
         else
         {
             System.out.println(check);
+            String str = "ORDER SUMMARY:\n"+"The Item: " + getItemType() +" "+ getItemTable() +"\nNumber of Items Requested: "+getNumItems()+"\n\nUnfortunately this item cannot be constructed with the available materials.\n" +"Please contact one of the manufacturers mentioned below for more information.\n\n";
+            str+=getManufacturers(getItemTable());
+            str+="\n\nSorry for the inconvenience.";
+            writeOrderForm(str,check);
             return null;
         }
     }
@@ -436,14 +464,13 @@ public class FinalProject
             checkDesk(desk,c);
             myStmt.close();
         }
-        catch (SQLException ex)
+        catch (SQLException | IOException ex)
         {
             System.out.println("Unable to connect to database");
         }
         return desk2d;
     }
-    public String[][] checkDesk(String[][] desk, int count)
-    {   int c1=0,c2=0,c3=0;
+    public String[][] checkDesk(String[][] desk, int count) throws IOException {   int c1=0,c2=0,c3=0;
         boolean check = false;
         for(int i=0;i<count;i++)
         {
@@ -470,6 +497,10 @@ public class FinalProject
         else
         {
             System.out.println(check);
+            String str = "ORDER SUMMARY:\n"+"The Item: " + getItemType() +" "+ getItemTable() +"\nNumber of Items Requested: "+getNumItems()+"\n\nUnfortunately this item cannot be constructed with the available materials.\n" +"Please contact one of the manufacturers mentioned below for more information.\n\n";
+            str+=getManufacturers(getItemTable());
+            str+="\n\nSorry for the inconvenience.";
+            writeOrderForm(str,check);
             return null;
         }
     }
@@ -512,14 +543,13 @@ public class FinalProject
             myStmt.close();
             checkChair(chair,c);
         }
-        catch (SQLException ex)
+        catch (SQLException | IOException ex)
         {
             System.out.println("Unable to connect to database");
         }
         return chair2d;
     }
-    public String[][] checkChair(String[][] chair, int count)
-    {   int c1=0,c2=0,c3=0,c4=0;
+    public String[][] checkChair(String[][] chair, int count) throws IOException {   int c1=0,c2=0,c3=0,c4=0;
         boolean check = false;
         for(int i=0;i<count;i++)
         {
@@ -550,6 +580,10 @@ public class FinalProject
         else
         {
             System.out.println(check);
+            String str = "ORDER SUMMARY:\n"+"The Item: " + getItemType() +" "+ getItemTable() +"\nNumber of Items Requested: "+getNumItems()+"\n\nUnfortunately this item cannot be constructed with the available materials.\n" +"Please contact one of the manufacturers mentioned below for more information.\n\n";
+            str+=getManufacturers(getItemTable());
+            str+="\n\nSorry for the inconvenience.";
+            writeOrderForm(str,check);
             return null;
         }
     }
@@ -649,14 +683,12 @@ public class FinalProject
         }
     }
 
-    public int calculateLowestPrice(String[][] tableData)
-    {
-        
+    public int calculateLowestPrice(String[][] tableData) throws IOException {
+
          /*
-        
+
         This method calculates the lowest int price for the passed tableData and returns a string value of it by
         following this approach:
-
         * Step 1 : Start by considering the object with the most number of reusable parts (indicated by "Y").
         * Step 2 : Calculate all the possible cost options for this object and append the cheapest option to collectionOfLowestItem ArrayList
         * Step 3 : Using ArrayLists idTracker and trackIndexPrices to contain the ids of all the cheapest options considered in each iteration
@@ -666,12 +698,12 @@ public class FinalProject
         * Step 5 : Extract the smallest element in the collectionOfLowestItem ArrayList which will be the Lowest
                     possible price
         * Step 6 : Extract the corresponding ids for the lowest prices from idTracker ArrayList and delete these records
-                    from the database 
-        * Step 7 : Finally if the numOfItems requested by user is >1 call setfurniture again to repeat all the steps for 
+                    from the database
+        * Step 7 : Finally if the numOfItems requested by user is >1 call setfurniture again to repeat all the steps for
                     the next Item as long as numOfItems<=1
-                     
+
         */
-        
+
         String id=new String();
         ArrayList<String> idTracker = new ArrayList<>();
         int count = 0; //counting the number of Y's
@@ -763,10 +795,6 @@ public class FinalProject
 
             idTracker.add(trackIndexPrices.get(prices.indexOf(lowestPriceY))+" "+rowsWithHighestNumY.get(k)); // keeps track of all indexes considered
 
-            System.out.println(idTracker);
-
-            System.out.println("lowest price of that col  " + lowestPriceY);
-
 
             lowestPriceY+=Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);  //will add the price of row with most Y with the remaining rows cheapest Y
             collectionOfLowestPrices.add(lowestPriceY);  //contains lowest price of each highest Y row
@@ -783,62 +811,40 @@ public class FinalProject
         }
 
         String tempId = idTracker.get(collectionOfLowestPrices.indexOf(actualLowest));
-        System.out.println(tempId);
+
         String idRow1=tableData[Integer.parseInt(tempId.substring(0,tempId.indexOf(" ")))][tableData[0].length-1];
         String idRow2=tableData[Integer.parseInt(tempId.substring(tempId.indexOf(" ")+1))][tableData[0].length-1];
-        System.out.println("id1 : "+idRow1);
-        System.out.println("id2 : "+idRow2);
+
         deleteFromTable(getItemTable(),idRow1); //delete the specified row
         deleteFromTable(getItemTable(),idRow2); //delete the specified row
 
-        System.out.println("Lowest:"+actualLowest);
 
+        counter++;
+        str +="\nthe lowest cost of constructing "+counter+" item: "+actualLowest +".\n";
+        //writeOrderForm(str,true);
 
         if(Integer.parseInt(getNumItems())>1)
         {
             setNumItems(String.valueOf(Integer.parseInt(getNumItems())-1));
             selectFurnitureType(getItemType(),getItemTable());
         }
-
+        writeOrderForm(str,true);
         //deleteFromTable(getItemTable(),id);
         return actualLowest; //instead of return pass the value
     }
 
-    public void writeOrderForm(String orderedItems) throws IOException
+
+
+    public void writeOrderForm(String order,boolean checker) throws IOException
     {
-        File outFile = new File("orderform.txt");
-        FileWriter myWriter = new FileWriter(outFile);
 
-        myWriter.write("Furniture Order Form\n\n");
+        myWriter.write("ORDER SUMMARY:\n");
+        int val = Integer.parseInt(getNumItems())+1;
+        myWriter.write("The Item: " + getItemType() + " " + getItemTable() + "\nNumber of Items Requested: " + val + "\n");
 
-        myWriter.write("Faculty Name: ");
-        myWriter.write("\nContact: ");
-        myWriter.write("\nDate: ");
+        myWriter.write(order);
+        myWriter.write("\n");
 
-        myWriter.write("\nOriginal Request: " + itemType + " " + itemTable + ", " + numItems);
-        myWriter.write("\n\nItems Ordered\n");
-        //write to file the IDs of items ordered
-        myWriter.write(orderedItems);
-        myWriter.write("\n\nTotal Price: " + "price");
-
-        myWriter.close();
+        myWriter.write(order);
+        myWriter.write("\n");
     }
-    public static void main(String[] args)
-    {
-        FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","NUMAN","TIGER");
-        myJDBC.initializeConnection();
-        //myJDBC.selectFurnitureType("Mesh","chair")
-
-        myJDBC.userInput();
-
-        myJDBC.selectFurnitureType(myJDBC.getItemType(),myJDBC.getItemTable());
-        //myJDBC.writeManufacturers("lamp");
-        myJDBC.close();
-
-        /*System.out.println(myJDBC.selecttable("chair"));
-        System.out.println(myJDBC.selecttable("desk"));
-        System.out.println(myJDBC.selecttable("filing"));
-        System.out.println(myJDBC.selecttable("lamp"));
-        System.out.println(myJDBC.selecttable("manufacturer"));*/
-    }
-}
