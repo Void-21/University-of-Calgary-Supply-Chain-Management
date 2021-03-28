@@ -286,6 +286,7 @@ public class FinalProject
         }
         return all.toString();
     }
+ // filingSelect function selects the required data from the whole pool of the sql
     public String[][] filingSelect(String type, int count){
         String[][] filing2d = new String[count][7];
         String[][] filing = new String[count][5];
