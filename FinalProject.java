@@ -78,6 +78,12 @@ public class FinalProject {
         String table ;    // table name for that item in the database
         String itemType; //type of the item
 
+        if(!itemName.contains(" "))
+        {
+            userInput();
+            return;
+        }
+        
         itemName = itemName.toLowerCase();
 
         if(!itemName.equals("swing arm lamp"))
