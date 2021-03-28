@@ -82,7 +82,7 @@ public class FinalProjectTest
         // testArray[2][4] = "Y";
         // testArray[2][5] = "200";
         // testArray[2][6] = "002";
-        testArray = arrayFromFile("filing",5,7);
+        testArray = arrayFromFile("filing.txt",5,7);
         Boolean flag = false;
 
         String [][] fromFunc = testobj.filingSelect("Medium", 5);
@@ -102,7 +102,7 @@ public class FinalProjectTest
         {
             for( int j=0 ; j < col ; j++)
             {
-                if( arr1[i][j].equals(arr2[i][j]))
+                if( arr1[i][j].equals(arr2[i][j]) )
                 {
                     flag = true;
                 }
@@ -110,19 +110,20 @@ public class FinalProjectTest
                 {
                     return false;
                 }
-
             }
         }
         return flag;
     }
-
+    // Reads a 2D array 
     public String [][] arrayFromFile(String filename, int rows, int columns) throws FileNotFoundException
     {
-        Scanner sc = new Scanner(new BufferedReader(new FileReader( "C:\\Users\\hp\\IdeaProjects\\Ensf 409\\src\\edu\\ucalgary\\ensf409\\input.txt")));
+        Scanner sc = new Scanner(new BufferedReader(new FileReader( filename)));
         // int rows = 5;
         // int columns = 7;
         String [][] myArray = new String[rows][columns];
+
         while(sc.hasNextLine()) {
+
             for (int i=0; i<myArray.length; i++) {
                 String[] line = sc.nextLine().trim().split(",");
                 for (int j=0; j<line.length; j++) {
@@ -176,8 +177,11 @@ public class FinalProjectTest
     @Test
     public void testGetManufacturers(){
         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
+        String sb = "Office Furnishings, Furniture Goods, Fine Office Supplies, ";
 
+        assertTrue("Unable to get list of Manufacturers.", testobj.getManufacturers("lamp").equals(sb));
     }
+
     @Test
     public void testDeleteFromTable(){
         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
@@ -186,11 +190,13 @@ public class FinalProjectTest
     @Test
     public void testCalculateLowestPrice(){
         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
-
+        testobj.setItemType("mesh chair");
+        testobj.setNumItems("1");
+        int price = 50;
+        assertTrue("Unable to calculate the lowest cost", testobj.calculateLowestPrice().equals(price));
     }
     @Test
     public void testWriteOrderForm(){
         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
     }
-
 }
