@@ -38,59 +38,59 @@ public class FinalProjectTest
         testobj.initializeConnection();
         //test if this works
     }
-    @Test
-    public void testFilingSelect() throws FileNotFoundException {
-        FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
-        String [][] testArray = new String [5][7];
+//     @Test
+//     public void testFilingSelect() throws FileNotFoundException {
+//         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
+//         String [][] testArray = new String [5][7];
 
-        // testArray[0][0] = "F002";
-        // testArray[0][1] = "Medium";
-        // testArray[0][2] = "N";
-        // testArray[0][3] = "N";
-        // testArray[0][4] = "Y";
-        // testArray[0][5] = "100";
-        // testArray[0][6] = "004";
+//         // testArray[0][0] = "F002";
+//         // testArray[0][1] = "Medium";
+//         // testArray[0][2] = "N";
+//         // testArray[0][3] = "N";
+//         // testArray[0][4] = "Y";
+//         // testArray[0][5] = "100";
+//         // testArray[0][6] = "004";
 
-        // testArray[1][0] = "F007";
-        // testArray[1][1] = "Medium";
-        // testArray[1][2] = "N";
-        // testArray[1][3] = "Y";
-        // testArray[1][4] = "Y";
-        // testArray[1][5] = "150";
-        // testArray[1][6] = "002";
+//         // testArray[1][0] = "F007";
+//         // testArray[1][1] = "Medium";
+//         // testArray[1][2] = "N";
+//         // testArray[1][3] = "Y";
+//         // testArray[1][4] = "Y";
+//         // testArray[1][5] = "150";
+//         // testArray[1][6] = "002";
 
-        // testArray[2][0] = "F008";
-        // testArray[2][1] = "Medium";
-        // testArray[2][2] = "Y";
-        // testArray[2][3] = "N";
-        // testArray[2][4] = "N";
-        // testArray[2][5] = "50";
-        // testArray[2][6] = "005";
+//         // testArray[2][0] = "F008";
+//         // testArray[2][1] = "Medium";
+//         // testArray[2][2] = "Y";
+//         // testArray[2][3] = "N";
+//         // testArray[2][4] = "N";
+//         // testArray[2][5] = "50";
+//         // testArray[2][6] = "005";
 
-        // testArray[3][0] = "F009";
-        // testArray[3][1] = "Medium";
-        // testArray[3][2] = "Y";
-        // testArray[3][3] = "Y";
-        // testArray[3][4] = "N";
-        // testArray[3][5] = "150";
-        // testArray[3][6] = "004";
+//         // testArray[3][0] = "F009";
+//         // testArray[3][1] = "Medium";
+//         // testArray[3][2] = "Y";
+//         // testArray[3][3] = "Y";
+//         // testArray[3][4] = "N";
+//         // testArray[3][5] = "150";
+//         // testArray[3][6] = "004";
 
-        // testArray[2][0] = "F014";
-        // testArray[2][1] = "Medium";
-        // testArray[2][2] = "Y";
-        // testArray[2][3] = "Y";
-        // testArray[2][4] = "Y";
-        // testArray[2][5] = "200";
-        // testArray[2][6] = "002";
-        testArray = arrayFromFile("filing.txt",5,7);
-        Boolean flag = false;
+//         // testArray[2][0] = "F014";
+//         // testArray[2][1] = "Medium";
+//         // testArray[2][2] = "Y";
+//         // testArray[2][3] = "Y";
+//         // testArray[2][4] = "Y";
+//         // testArray[2][5] = "200";
+//         // testArray[2][6] = "002";
+//         testArray = arrayFromFile("filing.txt",5,7);
+//         Boolean flag = false;
 
-        String [][] fromFunc = testobj.filingSelect("Medium", 5);
-        if (! checkIfSame(fromFunc, testArray))
-        {
-            System.out.println("Output from filingSelect is wrong!");
-        }
-    }
+//         String [][] fromFunc = testobj.filingSelect("Medium", 5);
+//         if (! checkIfSame(fromFunc, testArray))
+//         {
+//             System.out.println("Output from filingSelect is wrong!");
+//         }
+//     }
 
     public boolean checkIfSame(String [][] arr1, String [][] arr2)
     {
@@ -174,27 +174,27 @@ public class FinalProjectTest
         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
 
     }
-    @Test
-    public void testGetManufacturers(){
-        FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
-        String sb = "Office Furnishings, Furniture Goods, Fine Office Supplies, ";
+//     @Test
+//     public void testGetManufacturers(){
+//         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
+//         String sb = "Office Furnishings, Furniture Goods, Fine Office Supplies, ";
 
-        assertTrue("Unable to get list of Manufacturers.", testobj.getManufacturers("lamp").equals(sb));
-    }
+//         assertTrue("Unable to get list of Manufacturers.", testobj.getManufacturers("lamp").equals(sb));
+//     }
 
     @Test
     public void testDeleteFromTable(){
         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
 
     }
-    @Test
-    public void testCalculateLowestPrice(){
-        FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
-        testobj.setItemType("mesh chair");
-        testobj.setNumItems("1");
-        int price = 50;
-        assertTrue("Unable to calculate the lowest cost", testobj.calculateLowestPrice().equals(price));
-    }
+//     @Test
+//     public void testCalculateLowestPrice(){
+//         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
+//         testobj.setItemType("mesh chair");
+//         testobj.setNumItems("1");
+//         int price = 50;
+//         assertTrue("Unable to calculate the lowest cost", testobj.calculateLowestPrice().equals(price));
+//     }
     @Test
     public void testWriteOrderForm(){
         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
