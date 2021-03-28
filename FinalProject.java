@@ -1,3 +1,55 @@
+
+ /**
+ * @author Zeeshan Chougle <a href="mailto:zeeshan.chougle@ucalgary.ca">Zeeshan.chougle@ucalgary.ca</a>
+  * @author Mohamed Numan <a hreaf="mailto:mohamed.numan@ucalgary.ca">mailto:mohamed.numan@ucalgary.ca</a>
+  * @author Mahtab Khan <a hreaf="mailto:mohammadmahtab.khan@ucalgary.ca">mailto:mohammadmahtab.khan@ucalgary.ca</a>
+  *@author Muhammed Umar <a hreaf="mailto:umarbaloch84@gmail.com">mailto:mailto:umarbaloch84@gmail.com</a>
+ * @version 2.5
+ * @since 1.0
+ */
+
+package edu.ucalgary.ensf409;
+import java.sql.*;
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.Scanner;
+import java.io.*;
+import java.util.*;
+
+/**
+     * This Class utilizes the data from inventory.sql database and calculates the lowest possible price for the users input item
+     * It contains the following functions :
+     * 1. FinalProject(String,String,String) : Constructor
+     * 2. String getDburl() : getter
+     * 3. String getUsername() : getter
+     * 4. String getPassword() : getter
+     * 5. String getNumItems() : getter
+     * 6. String setItemType() : setter
+     * 7. String getItemType() : getter
+     * 8. String getItemTable() : getter
+     * 9. setItemTable(String) : setter
+     * 10. setNumItems(String) : setter
+     * 11. initializeConnection() : establishes connection with database
+     * 12. closes() : closes connection with database
+     * 13. userInput() : Takes input from User.
+     * 14. checkValidItem(String) :  checks if the input provided by user exsists in database
+     * 15. selectTable(String) : Displays the current state of the passsed table
+     * 16. String[][] filingSelect(String, int) :
+     * 17. String[][] checkFiling(String[][] filing, int :
+     * 18. String[][] lampSelect(String,int) :
+     * 19. String[][] checklamp(String[][],int) :
+     * 20. String[][] deskSelect(string,int) :
+     * 21. String[][] checkDisk(String[][],int) :
+     * 22. String[][] chairSelect(String[][],int):
+     * 23. String[][] checkchair(String[][],int) :
+     * 24. String[][] selectFurnitureType(String type, String tableName) :
+     * 25. writeManufacturers(String table) : writes the manufacturer's detail in the output file
+     * 26. String getManufacturers(String) : returns manufacturers details
+     * 27. deleteFromTable(String, String) : Deletes the passed row in the MySQL table
+     * 28. int calculateLowestPrice(String[][]) : calculates the lowest possible price for the passed table
+     * 29. writeOrderForm(ArrayList<Integer>) : Writes the formatted output in the texfile
+     */
+
 public class FinalProject
 {
     public final String DBURL; //store the database url information
