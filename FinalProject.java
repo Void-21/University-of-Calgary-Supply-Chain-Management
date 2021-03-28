@@ -78,6 +78,15 @@ public class FinalProject
         this.USERNAME = USERNAME;
         this.PASSWORD = PASSWORD;
     }
+ 
+    public String getFaculty() {
+        return faculty;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }  
+ 
     public String getDburl()                // getter for DBURL
     {
         return DBURL;
