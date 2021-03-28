@@ -190,16 +190,16 @@ public class FinalProject {
             while(results.next())
             {
                 filing2d[i][0] = results.getString("ID");
-                filing[i][0] = results.getString("ID");
+                filing[i][4] = results.getString("ID");
                 filing2d[i][1] = results.getString("Type");
                 filing2d[i][2] = results.getString("Rails");
-                filing[i][1] = results.getString("Rails");
+                filing[i][0] = results.getString("Rails");
                 filing2d[i][3] = results.getString("Drawers");
-                filing[i][2] = results.getString("Drawers");
+                filing[i][1] = results.getString("Drawers");
                 filing2d[i][4] = results.getString("Cabinet");
-                filing[i][3] = results.getString("Cabinet");
+                filing[i][2] = results.getString("Cabinet");
                 filing2d[i][5] = String.valueOf(results.getInt("Price"));
-                filing[i][4] = String.valueOf(results.getInt("Price"));
+                filing[i][3] = String.valueOf(results.getInt("Price"));
                 filing2d[i][6] = results.getString("ManuID");
                 i=i+1;
             }
@@ -226,15 +226,15 @@ public class FinalProject {
         boolean check = false;
         for(int i=0;i<count;i++)
         {
-            if(filing[i][1].equals("Y"))
+            if(filing[i][0].equals("Y"))
             {
                 c1++;
             }
-            if(filing[i][2].equals("Y"))
+            if(filing[i][1].equals("Y"))
             {
                 c2++;
             }
-            if(filing[i][3].equals("Y"))
+            if(filing[i][2].equals("Y"))
             {
                 c3++;
             }
@@ -243,6 +243,7 @@ public class FinalProject {
         {
             check = true;
             System.out.println(check);
+            calculateLowestPrice(filing);
             return filing;
         }
         else
@@ -263,14 +264,14 @@ public class FinalProject {
             while(results.next())
             {
                 lamp2d[i][0] = results.getString("ID");
-                lamp[i][1] = results.getString("ID");
+                lamp[i][3] = results.getString("ID");
                 lamp2d[i][1] = results.getString("Type");
                 lamp2d[i][2] = results.getString("Base");
-                lamp[i][1] = results.getString("Base");
+                lamp[i][0] = results.getString("Base");
                 lamp2d[i][3] = results.getString("Bulb");
-                lamp[i][2] = results.getString("Base");
+                lamp[i][1] = results.getString("Base");
                 lamp2d[i][4] = String.valueOf(results.getInt("Price"));
-                lamp[i][3] = String.valueOf(results.getInt("Price"));
+                lamp[i][2] = String.valueOf(results.getInt("Price"));
                 lamp2d[i][5] = results.getString("ManuID");
                 i++;
             }
@@ -296,11 +297,11 @@ public class FinalProject {
         boolean check = false;
         for(int i=0;i<count;i++)
         {
-            if(lamp[i][1].equals("Y"))
+            if(lamp[i][0].equals("Y"))
             {
                 c1++;
             }
-            if(lamp[i][2].equals("Y"))
+            if(lamp[i][1].equals("Y"))
             {
                 c2++;
             }
@@ -309,6 +310,7 @@ public class FinalProject {
         {
             check = true;
             System.out.println(check);
+            calculateLowestPrice(lamp);
             return lamp;
         }
         else
@@ -329,16 +331,16 @@ public class FinalProject {
             while(results.next())
             {
                 desk2d[i][0] = results.getString("ID");
-                desk[i][0] = results.getString("ID");
+                desk[i][4] = results.getString("ID");
                 desk2d[i][1] = results.getString("Type");
                 desk2d[i][2] = results.getString("Legs");
-                desk[i][1] = results.getString("Legs");
+                desk[i][0] = results.getString("Legs");
                 desk2d[i][3] = results.getString("Top");
-                desk[i][2] = results.getString("Top");
+                desk[i][1] = results.getString("Top");
                 desk2d[i][4] = results.getString("Drawer");
-                desk[i][3] = results.getString("Drawer");
+                desk[i][2] = results.getString("Drawer");
                 desk2d[i][5] = String.valueOf(results.getInt("Price"));
-                desk[i][4] = String.valueOf(results.getInt("Price"));
+                desk[i][3] = String.valueOf(results.getInt("Price"));
                 desk2d[i][6] = results.getString("ManuID");
                 i++;
             }
@@ -364,15 +366,15 @@ public class FinalProject {
         boolean check = false;
         for(int i=0;i<count;i++)
         {
-            if(desk[i][1].equals("Y"))
+            if(desk[i][0].equals("Y"))
             {
                 c1++;
             }
-            if(desk[i][2].equals("Y"))
+            if(desk[i][1].equals("Y"))
             {
                 c2++;
             }
-            if(desk[i][3].equals("Y"))
+            if(desk[i][2].equals("Y"))
             {
                 c3++;
             }
@@ -381,6 +383,7 @@ public class FinalProject {
         {
             check = true;
             System.out.println(check);
+            calculateLowestPrice(desk);
             return desk;
         }
         else
@@ -401,18 +404,18 @@ public class FinalProject {
             while(results.next())
             {
                 chair2d[i][0] = results.getString("ID");
-                chair[i][0] = results.getString("ID");
+                chair[i][5] = results.getString("ID");
                 chair2d[i][1] = results.getString("Type");
                 chair2d[i][2] = results.getString("Legs");
-                chair[i][1] = results.getString("Legs");
+                chair[i][0] = results.getString("Legs");
                 chair2d[i][3] = results.getString("Arms");
-                chair[i][2] = results.getString("Arms");
+                chair[i][1] = results.getString("Arms");
                 chair2d[i][4] = results.getString("Seat");
-                chair[i][3] = results.getString("Seat");
+                chair[i][2] = results.getString("Seat");
                 chair2d[i][5] = results.getString("Cushion");
-                chair[i][4] = results.getString("Cushion");
+                chair[i][3] = results.getString("Cushion");
                 chair2d[i][6] = String.valueOf(results.getInt("Price"));
-                chair[i][5] = String.valueOf(results.getInt("Price"));
+                chair[i][4] = String.valueOf(results.getInt("Price"));
                 chair2d[i][7] = results.getString("ManuID");
                 i++;
             }
@@ -439,19 +442,19 @@ public class FinalProject {
         boolean check = false;
         for(int i=0;i<count;i++)
         {
-            if(chair[i][1].equals("Y"))
+            if(chair[i][0].equals("Y"))
             {
                 c1++;
             }
-            if(chair[i][2].equals("Y"))
+            if(chair[i][1].equals("Y"))
             {
                 c2++;
             }
-            if(chair[i][3].equals("Y"))
+            if(chair[i][2].equals("Y"))
             {
                 c3++;
             }
-            if(chair[i][4].equals("Y"))
+            if(chair[i][3].equals("Y"))
             {
                 c4++;
             }
@@ -460,6 +463,7 @@ public class FinalProject {
         {
             check = true;
             System.out.println(check);
+            calculateLowestPrice(chair);
             return chair;
         }
         else
@@ -554,7 +558,7 @@ public class FinalProject {
         {
             Statement myStmt = dbconnect.createStatement();
             results = myStmt.executeQuery("DELETE FROM " + table + " WHERE ID='" + objectID + "'");
-            
+
             myStmt.close();
         }
         catch (SQLException e)
@@ -562,11 +566,11 @@ public class FinalProject {
             e.printStackTrace();
         }
     }
-    
+
     public int calculateLowestPrice(String[][] tableData)
     {
 
-         int count = 0; //counting the number of Y's
+        int count = 0; //counting the number of Y's
         ArrayList<Integer> rowCount = new ArrayList<>(); //count of Y in each row
 
         for(int i=0;i<tableData.length;i++)
@@ -653,7 +657,7 @@ public class FinalProject {
 
         return actualLowest;
 
-        
+
 
     }
     public void writeOrderForm(String orderedItems) throws IOException
@@ -675,11 +679,11 @@ public class FinalProject {
 
         myWriter.close();
     }
-    
-    
+
+
     public static void main(String[] args)
     {
-        FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","root","pass");
+        FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","NUMAN","TIGER");
         myJDBC.initializeConnection();
         //myJDBC.selectFurnitureType("Mesh","chair")
 
