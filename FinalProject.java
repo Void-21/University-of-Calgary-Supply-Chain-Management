@@ -626,6 +626,13 @@ public class FinalProject {
                 deleteFromTable(getItemTable(),id);  //delete the specified row
                 System.out.println("id : "+id);
                 System.out.println("Lowest : "+tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);
+
+                if(Integer.parseInt(getNumItems())>1)
+                {
+                    setNumItems(Character.toString(Integer.parseInt(getNumItems())-1));
+                    selectFurnitureType(getItemType(),getItemTable());
+                }
+
                 return Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);
             }
 
@@ -684,6 +691,13 @@ public class FinalProject {
         deleteFromTable(getItemTable(),idRow2); //delete the specified row
 
         System.out.println("Lowest:"+actualLowest);
+
+
+        if(Integer.parseInt(getNumItems())>1)
+        {
+            setNumItems(Character.toString(Integer.parseInt(getNumItems())-1));
+            selectFurnitureType(getItemType(),getItemTable());
+        }
 
         //deleteFromTable(getItemTable(),id);
         return actualLowest; //instead of return pass the value
