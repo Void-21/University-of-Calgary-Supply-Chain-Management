@@ -15,7 +15,7 @@ This is an application to calculate the cheapest combination of available invent
 
 (4) The project includes a Test File which validates the functionality of each method in the FinalProject.java file.
 
-##Java imports used 
+## Java imports used 
 
 (1) import java.sql.*
 
