@@ -566,7 +566,7 @@ public class FinalProject {
     public int calculateLowestPrice(String[][] tableData)
     {
 
-        int count = 0; //counting the number of Y's
+         int count = 0; //counting the number of Y's
         ArrayList<Integer> rowCount = new ArrayList<>(); //count of Y in each row
 
         for(int i=0;i<tableData.length;i++)
@@ -582,98 +582,78 @@ public class FinalProject {
             count=0;
         }
 
-        int rowWithHighestNumY= rowCount.indexOf(Collections.max(rowCount));  // row with greatest number of Y's
-        System.out.println("Row with highest num Y "+rowWithHighestNumY);
+        int highestNumY = Collections.max(rowCount);    //maximum number of Y's
+        ArrayList<Integer> rowsWithHighestNumY = new ArrayList<>();
+        ArrayList<Integer> prices = new ArrayList<>();
+        ArrayList<Integer> collectionOfLowestPrices = new ArrayList<>(); // contains lowest price of each greatest Y
+
+        for(int i=0;i<tableData.length;i++)
+        {
+            if(rowCount.get(i)==highestNumY)
+            {
+                rowsWithHighestNumY.add(i);  // contains all rows with highest number of Y
+            }
+        }
+
+        //int rowWithHighestNumY= rowCount.indexOf(Collections.max(rowCount));  // row with greatest number of Y's
+        //System.out.println("Row with highest num Y "+rowWithHighestNumY);
+
         int columnWithValN=20; //contains the column in row with high value of Y which has N, if it remains 20 after loop we already solved
 
-        for(int i=0;i<tableData[0].length;i++)
-        {
-            if(tableData[rowWithHighestNumY][i]=="N")
-            {
-                columnWithValN=i;
-                break;
-            }
-        }
+        for(int k=0;k<rowsWithHighestNumY.size();k++) {
 
-        if(columnWithValN==20)  //if it remain 0 problem was already solved
-        {
-            return Integer.parseInt(tableData[rowWithHighestNumY][tableData[0].length-1]);
-        }
-
-        System.out.println("Column containing the N for the highest row "+columnWithValN);
-
-        ArrayList<Integer> prices = new ArrayList<>();
-        for(int i=0; i < tableData.length;i++)
-        {
-            if(tableData[i][columnWithValN]=="Y")
-            {
-                prices.add(Integer.parseInt(tableData[i][tableData[0].length-1]));  //adds price of that column
-            }
-        }
-
-        // if (prices.size()==0) not possible to calculate
-
-        System.out.println(prices);
-
-        int lowestPriceY = prices.get(0);
-
-        for(int i=0;i<prices.size();i++)
-        {
-            if(lowestPriceY>prices.get(i))
-            {
-                lowestPriceY=prices.get(i);
-            }
-        }
-
-        System.out.println("lowest price of that col  "+lowestPriceY);
-
-        lowestPriceY+=Integer.parseInt(tableData[rowWithHighestNumY][tableData[0].length-1]);  //will add the price of row with most Y with the remaining rows cheapest Y
-
-        return lowestPriceY;
-
-
-
-
-        /*int[] arrayPrice = new int[tableData.length];  //contains prices
-
-        for(int i=0;i< tableData.length;i++)
-        {
-            arrayPrice[i]=Integer.parseInt(tableData[i][tableData[0].length-1]);
-        }
-
-        System.out.println(arrayPrice[0]+" "+arrayPrice[2]+" "+arrayPrice[3]);
-
-        ArrayList<Integer> arrayVal = new ArrayList<>(tableData.length); //Contains the Y or N values
-        int sum = 0;    //lowest price
-
-
-        for(int i=0;i<tableData[0].length;i++)
-        {
-            for(int j=0;j< tableData.length;j++)
-            {
-                if(tableData[j][i].equals("Y"))
-                {
-                    arrayVal.add(arrayPrice[i]);    //gets all prices for Y
+            for (int i = 0; i < tableData[0].length; i++) {
+                if (tableData[rowsWithHighestNumY.get(k)][i] == "N") {
+                    columnWithValN = i;
+                    break;
                 }
             }
 
-            if(arrayVal.size()!=0)
+            if (columnWithValN == 20)  //if it remain 0 problem was already solved
             {
-                int min = arrayVal.get(0);
-                for(int k=0;k<arrayVal.size();k++)
-                {
-                    if(min>arrayVal.get(k))
-                    {
-                        min=arrayVal.get(k);                          //gets lowest price
-                    }
-                }
-                sum+=min;
+                return Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 1]);
             }
 
-            arrayVal = new ArrayList<>(tableData.length);
+            System.out.println("Column containing the N for the highest row " + columnWithValN);
+
+
+            for (int i = 0; i < tableData.length; i++) {
+                if (tableData[i][columnWithValN] == "Y") {
+                    prices.add(Integer.parseInt(tableData[i][tableData[0].length - 1]));  //adds price of that column
+                }
+            }
+
+            // if (prices.size()==0) not possible to calculate
+
+            System.out.println(prices);
+
+            int lowestPriceY = prices.get(0);
+
+            for (int i = 0; i < prices.size(); i++) {
+                if (lowestPriceY > prices.get(i)) {
+                    lowestPriceY = prices.get(i);
+                }
+            }
+
+            System.out.println("lowest price of that col  " + lowestPriceY);
+
+            lowestPriceY+=Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length-1]);  //will add the price of row with most Y with the remaining rows cheapest Y
+            collectionOfLowestPrices.add(lowestPriceY);  //contains lowest price of each highest Y row
+            prices = new ArrayList<>(); //set prices to default
         }
 
-        return sum; */
+        int actualLowest = collectionOfLowestPrices.get(0);
+
+        for (int i = 0; i < collectionOfLowestPrices.size(); i++) {
+            if (actualLowest > collectionOfLowestPrices.get(i)) {
+                actualLowest = collectionOfLowestPrices.get(i);
+            }
+        }
+
+
+        return actualLowest;
+
+        
 
     }
     
