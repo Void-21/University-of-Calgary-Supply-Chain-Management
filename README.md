@@ -17,19 +17,19 @@ This is an application to calculate the cheapest combination of available invent
 
 ##Java imports used 
 
-(1)import java.sql.*
+(1) import java.sql.*
 
-(2)import java.io.*
+(2) import java.io.*
 
-(3)import java.util.*
+(3) import java.util.*
 
-(4)import org.junit.*
+(4) import org.junit.*
 
-(5)import static org.junit.Assert.*
+(5) import static org.junit.Assert.*
 
 ## Done by : 
 
 1. Zeeshan Chougle - 30094417
 2. Muhammed Umar - 30062451
-3. Mohammed Numan - 
+3. Mohammed Numan - 30086940
 4. Mahtab - 3010408
