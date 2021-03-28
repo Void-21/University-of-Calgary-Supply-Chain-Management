@@ -1,3 +1,4 @@
+
 package edu.ucalgary.ensf409;
 import java.sql.*;
 //import java.util.ArrayList;
@@ -269,7 +270,7 @@ public class FinalProject {
                 lamp2d[i][2] = results.getString("Base");
                 lamp[i][0] = results.getString("Base");
                 lamp2d[i][3] = results.getString("Bulb");
-                lamp[i][1] = results.getString("Base");
+                lamp[i][1] = results.getString("Bulb");
                 lamp2d[i][4] = String.valueOf(results.getInt("Price"));
                 lamp[i][2] = String.valueOf(results.getInt("Price"));
                 lamp2d[i][5] = results.getString("ManuID");
@@ -556,9 +557,10 @@ public class FinalProject {
     {
         try
         {
-            Statement myStmt = dbconnect.createStatement();
-            results = myStmt.executeQuery("DELETE FROM " + table + " WHERE ID='" + objectID + "'");
-
+            String query = "DELETE FROM "+ table +" WHERE ID = ?";
+            PreparedStatement myStmt = dbconnect.prepareStatement(query);
+            myStmt.setString(1,objectID);
+            myStmt.executeUpdate();
             myStmt.close();
         }
         catch (SQLException e)
@@ -678,15 +680,15 @@ public class FinalProject {
         String idRow2=tableData[Integer.parseInt(tempId.substring(tempId.indexOf(" ")+1))][tableData[0].length-1];
         System.out.println("id1 : "+idRow1);
         System.out.println("id2 : "+idRow2);
-       // deleteFromTable(getItemTable(),idRow1); //delete the specified row
-       // deleteFromTable(getItemTable(),idRow2); //delete the specified row
+        deleteFromTable(getItemTable(),idRow1); //delete the specified row
+        deleteFromTable(getItemTable(),idRow2); //delete the specified row
 
         System.out.println("Lowest:"+actualLowest);
 
         //deleteFromTable(getItemTable(),id);
         return actualLowest; //instead of return pass the value
-
     }
+
     public void writeOrderForm(String orderedItems) throws IOException
     {
         File outFile = new File("orderform.txt");
@@ -706,24 +708,3 @@ public class FinalProject {
 
         myWriter.close();
     }
-
-
-    public static void main(String[] args)
-    {
-        FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","NUMAN","TIGER");
-        myJDBC.initializeConnection();
-        //myJDBC.selectFurnitureType("Mesh","chair")
-
-        myJDBC.userInput();
-
-        myJDBC.selectFurnitureType(myJDBC.getItemType(),myJDBC.getItemTable());
-        //myJDBC.writeManufacturers("lamp");
-        myJDBC.close();
-
-        /*System.out.println(myJDBC.selecttable("chair"));
-        System.out.println(myJDBC.selecttable("desk"));
-        System.out.println(myJDBC.selecttable("filing"));
-        System.out.println(myJDBC.selecttable("lamp"));
-        System.out.println(myJDBC.selecttable("manufacturer"));*/
-    }
-}
