@@ -9,6 +9,8 @@ This is an application to calculate the cheapest combination of available invent
 
 (1) Accepts Input from the User through a user friendly GUI. The code enables the user to return the item name in case the item name doees not exist in the database.
 
+![image](https://user-images.githubusercontent.com/59512700/112756840-2306f880-8fa4-11eb-89e7-351cc493d909.png)
+
 (2) Calculates all the possible combinations for choosing the lowest possible price option for manufacturing the requested object.
 
 (3) Regardless of wether the object requested by the user can be created or not an output text file is created which display the status of the request.
