@@ -607,7 +607,6 @@ public class FinalProject {
         //System.out.println("Row with highest num Y "+rowWithHighestNumY);
 
         int columnWithValN=20; //contains the column in row with high value of Y which has N, if it remains 20 after loop we already solved
-        int allY=0;
 
         for(int k=0;k<rowsWithHighestNumY.size();k++) {
 
@@ -679,12 +678,10 @@ public class FinalProject {
         String idRow2=tableData[Integer.parseInt(tempId.substring(tempId.indexOf(" ")+1))][tableData[0].length-1];
         System.out.println("id1 : "+idRow1);
         System.out.println("id2 : "+idRow2);
-        deleteFromTable(getItemTable(),idRow1); //delete the specified row
-        deleteFromTable(getItemTable(),idRow2); //delete the specified row
+       // deleteFromTable(getItemTable(),idRow1); //delete the specified row
+       // deleteFromTable(getItemTable(),idRow2); //delete the specified row
 
         System.out.println("Lowest:"+actualLowest);
-
-        
 
         //deleteFromTable(getItemTable(),id);
         return actualLowest; //instead of return pass the value
