@@ -69,7 +69,8 @@ public class FinalProject
     File outFile = new File("orderform.txt");
     FileWriter myWriter = new FileWriter(outFile);
     public String str ="";
-
+    int reqvalue=0;
+    ArrayList<String> output = new ArrayList<String>();
     public FinalProject(String DBURL, String USERNAME, String PASSWORD) throws IOException {
         /*Constructor to initialize the DBURL,USERNAME and PASSWORD which are the fields required to
         establish connection with the DB*/
@@ -227,6 +228,7 @@ public class FinalProject
         String item = myScanner.nextLine();
         System.out.println("Enter the number of items to purchase : ");
         this.numItems = myScanner.nextLine();
+     reqvalue = Integer.parseInt(numItems);
 
 
         checkValidItem(item);
@@ -358,11 +360,11 @@ public class FinalProject
         }
         else
         {
-            System.out.println(check);
-            str += "ORDER SUMMARY:\n"+"The Item: " + getItemType() +" "+ getItemTable() +"\nNumber of Items Requested: "+getNumItems()+"\n\nUnfortunately this item cannot be constructed with the available materials.\n" +"Please contact one of the manufacturers mentioned below for more information.\n\n";
-            str+=getManufacturers(getItemTable());
-            str+="\n\nSorry for the inconvenience.";
-            writeOrderForm(str,check);
+           System.out.println(check);
+            output.add("\nUnfortunately 1 or more of this item cannot be constructed due to insufficient materials\n");
+            output.add("Please contact one of the manufacturers mentioned below for more information.\n");
+            output.add(getManufacturers(getItemTable()));
+            output.add("\nSorry for the inconvenience.");
             return null;
         }
     }
@@ -389,14 +391,7 @@ public class FinalProject
                 lamp2d[i][5] = results.getString("ManuID");
                 i++;
             }
-            /*for(int j=0;j<count;j++)
-            {
-                for(int k=0;k<6;k++)
-                {
-                    System.out.print(lamp2d[j][k]+" ");
-                }
-                System.out.println(" ");
-            }*/
+          
             checkLamp(lamp,c);
             myStmt.close();
         }
@@ -429,11 +424,11 @@ public class FinalProject
         }
         else
         {
-            System.out.println(check);
-            String str = "ORDER SUMMARY:\n"+"The Item: " + getItemType() +" "+ getItemTable() +"\nNumber of Items Requested: "+getNumItems()+"\n\nUnfortunately this item cannot be constructed with the available materials.\n" +"Please contact one of the manufacturers mentioned below for more information.\n\n";
-            str+=getManufacturers(getItemTable());
-            str+="\n\nSorry for the inconvenience.";
-            writeOrderForm(str,check);
+           System.out.println(check);
+            output.add("\nUnfortunately 1 or more of this item cannot be constructed due to insufficient materials\n");
+            output.add("Please contact one of the manufacturers mentioned below for more information.\n");
+            output.add(getManufacturers(getItemTable()));
+            output.add("\nSorry for the inconvenience.");
             return null;
         }
     }
@@ -506,10 +501,10 @@ public class FinalProject
         else
         {
             System.out.println(check);
-            String str = "ORDER SUMMARY:\n"+"The Item: " + getItemType() +" "+ getItemTable() +"\nNumber of Items Requested: "+getNumItems()+"\n\nUnfortunately this item cannot be constructed with the available materials.\n" +"Please contact one of the manufacturers mentioned below for more information.\n\n";
-            str+=getManufacturers(getItemTable());
-            str+="\n\nSorry for the inconvenience.";
-            writeOrderForm(str,check);
+            output.add("\nUnfortunately 1 or more of this item cannot be constructed due to insufficient materials\n");
+            output.add("Please contact one of the manufacturers mentioned below for more information.\n");
+            output.add(getManufacturers(getItemTable()));
+            output.add("\nSorry for the inconvenience.");
             return null;
         }
     }
@@ -540,15 +535,7 @@ public class FinalProject
                 chair2d[i][7] = results.getString("ManuID");
                 i++;
             }
-            /*int z=0;
-            for(int j=0;j<count;j++)
-            {
-                for(int k=2;k<7;k++)
-                {
-                    chair[j][z++]=chair2d[j][k];
-                }
-                System.out.println(" ");
-            }*/
+           
             myStmt.close();
             checkChair(chair,c);
         }
@@ -589,10 +576,10 @@ public class FinalProject
         else
         {
             System.out.println(check);
-            String str = "ORDER SUMMARY:\n"+"The Item: " + getItemType() +" "+ getItemTable() +"\nNumber of Items Requested: "+getNumItems()+"\n\nUnfortunately this item cannot be constructed with the available materials.\n" +"Please contact one of the manufacturers mentioned below for more information.\n\n";
-            str+=getManufacturers(getItemTable());
-            str+="\n\nSorry for the inconvenience.";
-            writeOrderForm(str,check);
+            output.add("\nUnfortunately 1 or more of this item cannot be constructed due to insufficient materials\n");
+            output.add("Please contact one of the manufacturers mentioned below for more information.\n");
+            output.add(getManufacturers(getItemTable()));
+            output.add("\nSorry for the inconvenience.");
             return null;
         }
     }
@@ -831,7 +818,7 @@ public class FinalProject
         counter++;
         str +="\nthe lowest cost of constructing "+counter+" item: "+actualLowest +".\n";
         //writeOrderForm(str,true);
-
+     output.add("The lowest cost to manufacture "+counter+" item of "+getItemType()+" "+getItemTable()+" is - "+actualLowest+"\n");
         if(Integer.parseInt(getNumItems())>1)
         {
             setNumItems(String.valueOf(Integer.parseInt(getNumItems())-1));
@@ -846,14 +833,11 @@ public class FinalProject
 
     public void writeOrderForm(String order,boolean checker) throws IOException
     {
-
-        myWriter.write("ORDER SUMMARY:\n");
-        int val = Integer.parseInt(getNumItems())+1;
-        myWriter.write("The Item: " + getItemType() + " " + getItemTable() + "\nNumber of Items Requested: " + val + "\n");
-
-        myWriter.write(order);
-        myWriter.write("\n");
-
-        myWriter.write(order);
-        myWriter.write("\n");
+           output.add(0,"ORDER SUMMARY:\n");
+           output.add(1,"The Item: " + getItemType() +" "+ getItemTable() +"\nNumber of Items Requested: "+reqvalue+"\n");
+            for(int i=0;i<output.size();i++)
+           {
+               myWriter.write(output.get(i));
+           }
+       
     }
