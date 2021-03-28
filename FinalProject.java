@@ -569,7 +569,8 @@ public class FinalProject {
 
     public int calculateLowestPrice(String[][] tableData)
     {
-
+        String id=new String();
+        ArrayList<String> idTracker = new ArrayList<>();
         int count = 0; //counting the number of Y's
         ArrayList<Integer> rowCount = new ArrayList<>(); //count of Y in each row
 
@@ -606,6 +607,7 @@ public class FinalProject {
         //System.out.println("Row with highest num Y "+rowWithHighestNumY);
 
         int columnWithValN=20; //contains the column in row with high value of Y which has N, if it remains 20 after loop we already solved
+        int allY=0;
 
         for(int k=0;k<rowsWithHighestNumY.size();k++) {
 
@@ -619,22 +621,28 @@ public class FinalProject {
 
             if (columnWithValN == 20)  //if it remain 20 problem was already solved
             {
+                id = tableData[rowsWithHighestNumY.get(k)][tableData[0].length-1];  //id of the record to delete
+                deleteFromTable(getItemTable(),id);  //delete the specified row
+                System.out.println("id : "+id);
+                System.out.println("Lowest : "+tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);
                 return Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);
             }
 
-
             System.out.println("Column containing the N for the highest row " + columnWithValN);
 
+            ArrayList<Integer> trackIndexPrices = new ArrayList<>();  //tracks which rows from 2d array are selected prices
 
             for (int i = 0; i < tableData.length; i++) {
                 if (tableData[i][columnWithValN].contains("Y")) {
                     prices.add(Integer.parseInt(tableData[i][tableData[0].length - 2]));  //adds price of that column
+                    trackIndexPrices.add(i);
                 }
             }
 
             // if (prices.size()==0) not possible to calculate
 
             System.out.println(prices);
+
 
             int lowestPriceY = prices.get(0);
 
@@ -644,7 +652,12 @@ public class FinalProject {
                 }
             }
 
+            idTracker.add(trackIndexPrices.get(prices.indexOf(lowestPriceY))+" "+rowsWithHighestNumY.get(k)); // keeps track of all indexes considered
+
+            System.out.println(idTracker);
+
             System.out.println("lowest price of that col  " + lowestPriceY);
+
 
             lowestPriceY+=Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);  //will add the price of row with most Y with the remaining rows cheapest Y
             collectionOfLowestPrices.add(lowestPriceY);  //contains lowest price of each highest Y row
@@ -654,17 +667,27 @@ public class FinalProject {
         int actualLowest = collectionOfLowestPrices.get(0);
 
         for (int i = 0; i < collectionOfLowestPrices.size(); i++) {
-            if (actualLowest > collectionOfLowestPrices.get(i)) {
+            if (actualLowest > collectionOfLowestPrices.get(i))
+            {
                 actualLowest = collectionOfLowestPrices.get(i);
             }
         }
 
+        String tempId = idTracker.get(collectionOfLowestPrices.indexOf(actualLowest));
+        System.out.println(tempId);
+        String idRow1=tableData[Integer.parseInt(tempId.substring(0,tempId.indexOf(" ")))][tableData[0].length-1];
+        String idRow2=tableData[Integer.parseInt(tempId.substring(tempId.indexOf(" ")+1))][tableData[0].length-1];
+        System.out.println("id1 : "+idRow1);
+        System.out.println("id2 : "+idRow2);
+        deleteFromTable(getItemTable(),idRow1); //delete the specified row
+        deleteFromTable(getItemTable(),idRow2); //delete the specified row
 
         System.out.println("Lowest:"+actualLowest);
-        return actualLowest;
 
+        
 
-
+        //deleteFromTable(getItemTable(),id);
+        return actualLowest; //instead of return pass the value
 
     }
     public void writeOrderForm(String orderedItems) throws IOException
