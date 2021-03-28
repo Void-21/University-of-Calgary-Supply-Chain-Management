@@ -708,3 +708,22 @@ public class FinalProject {
 
         myWriter.close();
     }
+public static void main(String[] args)
+    {
+        FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","NUMAN","TIGER");
+        myJDBC.initializeConnection();
+        //myJDBC.selectFurnitureType("Mesh","chair")
+
+        myJDBC.userInput();
+
+        myJDBC.selectFurnitureType(myJDBC.getItemType(),myJDBC.getItemTable());
+        //myJDBC.writeManufacturers("lamp");
+        myJDBC.close();
+
+        /*System.out.println(myJDBC.selecttable("chair"));
+        System.out.println(myJDBC.selecttable("desk"));
+        System.out.println(myJDBC.selecttable("filing"));
+        System.out.println(myJDBC.selecttable("lamp"));
+        System.out.println(myJDBC.selecttable("manufacturer"));*/
+    }
+}    
