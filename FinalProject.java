@@ -656,6 +656,25 @@ public class FinalProject {
         
 
     }
+    public void writeOrderForm(String orderedItems) throws IOException
+    {
+        File outFile = new File("orderform.txt");
+        FileWriter myWriter = new FileWriter(outFile);
+
+        myWriter.write("Furniture Order Form\n\n");
+
+        myWriter.write("Faculty Name: ");
+        myWriter.write("\nContact: ");
+        myWriter.write("\nDate: ");
+
+        myWriter.write("\nOriginal Request: " + itemType + " " + itemTable + ", " + numItems);
+        myWriter.write("\n\nItems Ordered\n");
+        //write to file the IDs of items ordered
+        myWriter.write(orderedItems);
+        myWriter.write("\n\nTotal Price: " + "price");
+
+        myWriter.close();
+    }
     
     
     public static void main(String[] args)
