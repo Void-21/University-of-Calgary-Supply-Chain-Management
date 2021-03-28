@@ -32,7 +32,9 @@ This is an application to calculate the cheapest combination of available invent
 ## How to run
 
 (1) Clone the repository
+
 (2) Run the FinalProject.java file through command line or IDE of your choice.
+
 (3) Run the FinalProjectTest.java for Unit Testing purposes.
 
 ## Done by : 
