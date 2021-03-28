@@ -1,12 +1,16 @@
-//package edu.ucalgary.ensf409;
+package edu.ucalgary.ensf409;
 import static org.junit.Assert.*;
 import org.junit.*;
 import java.io.*;
 import java.util.*;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
-public class FinalProjectTest {
-    public final static String USERNAME = "NUMAN";
-    public final static String PASSWORD = "TIGER";
+
+
+public class FinalProjectTest
+{
+
+    public final static String USERNAME = "zee";
+    public final static String PASSWORD = "Zeemaan1234@";
     public final static String DBURL = "jdbc:mysql://localhost/inventory";
 
     @Test
@@ -31,11 +35,11 @@ public class FinalProjectTest {
     @Test
     public void testinitializeConnection() {
         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
-        testobj.initialiazeConnection();
+        testobj.initializeConnection();
         //test if this works
     }
     @Test
-    public void testFilingSelect() {
+    public void testFilingSelect() throws FileNotFoundException {
         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
         String [][] testArray = new String [5][7];
 
@@ -78,7 +82,7 @@ public class FinalProjectTest {
         // testArray[2][4] = "Y";
         // testArray[2][5] = "200";
         // testArray[2][6] = "002";
-        testArray = arrayFromFile(filing,5,7);
+        testArray = arrayFromFile("filing",5,7);
         Boolean flag = false;
 
         String [][] fromFunc = testobj.filingSelect("Medium", 5);
@@ -112,21 +116,21 @@ public class FinalProjectTest {
         return flag;
     }
 
-    public String [][] arrayFromFile(String filename, int rows, int columns)
+    public String [][] arrayFromFile(String filename, int rows, int columns) throws FileNotFoundException
     {
-       Scanner sc = new Scanner(new BufferedReader(new FileReader( filename + ".txt")));
-      // int rows = 5;
-      // int columns = 7;
-      String [][] myArray = new String[rows][columns];
-      while(sc.hasNextLine()) {
-         for (int i=0; i<myArray.length; i++) {
-            String[] line = sc.nextLine().trim().split(",");
-            for (int j=0; j<line.length; j++) {
-               myArray[i][j] = (line[j]);
+        Scanner sc = new Scanner(new BufferedReader(new FileReader( "C:\\Users\\hp\\IdeaProjects\\Ensf 409\\src\\edu\\ucalgary\\ensf409\\input.txt")));
+        // int rows = 5;
+        // int columns = 7;
+        String [][] myArray = new String[rows][columns];
+        while(sc.hasNextLine()) {
+            for (int i=0; i<myArray.length; i++) {
+                String[] line = sc.nextLine().trim().split(",");
+                for (int j=0; j<line.length; j++) {
+                    myArray[i][j] = (line[j]);
+                }
             }
-         }
-      }
-      return myArray;
+        }
+        return myArray;
     }
 
     @Test
