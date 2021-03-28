@@ -7,7 +7,7 @@ This is an application to calculate the cheapest combination of available invent
 
 ## Current features
 
-(1) Accepts Input from the User through a user friendly GUI. The code enables the user to return the item name in case the item name doees not exist in the database.
+(1) Accepts Input from the User through a user friendly GUI. The code enables the user to return the item name in case the item name does not exist in the database.
 
 ![image](https://user-images.githubusercontent.com/59512700/112756840-2306f880-8fa4-11eb-89e7-351cc493d909.png)
 
