@@ -575,9 +575,9 @@ public class FinalProject {
 
         for(int i=0;i<tableData.length;i++)
         {
-            for(int j=0;j<tableData[0].length;j++)
+            for(int j=0;j<tableData[0].length-2;j++)
             {
-                if(tableData[i][j]=="Y")
+                if(tableData[i][j].contains("Y"))
                 {
                     count++;    //Count Y in that row i
                 }
@@ -586,10 +586,13 @@ public class FinalProject {
             count=0;
         }
 
+
         int highestNumY = Collections.max(rowCount);    //maximum number of Y's
         ArrayList<Integer> rowsWithHighestNumY = new ArrayList<>();
         ArrayList<Integer> prices = new ArrayList<>();
         ArrayList<Integer> collectionOfLowestPrices = new ArrayList<>(); // contains lowest price of each greatest Y
+
+        System.out.println(highestNumY);
 
         for(int i=0;i<tableData.length;i++)
         {
@@ -606,24 +609,26 @@ public class FinalProject {
 
         for(int k=0;k<rowsWithHighestNumY.size();k++) {
 
-            for (int i = 0; i < tableData[0].length; i++) {
-                if (tableData[rowsWithHighestNumY.get(k)][i] == "N") {
+            for (int i = 0; i < tableData[0].length-2; i++) {
+                if (tableData[rowsWithHighestNumY.get(k)][i].contains("N")) {
                     columnWithValN = i;
                     break;
                 }
             }
 
-            if (columnWithValN == 20)  //if it remain 0 problem was already solved
+
+            if (columnWithValN == 20)  //if it remain 20 problem was already solved
             {
-                return Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 1]);
+                return Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);
             }
+
 
             System.out.println("Column containing the N for the highest row " + columnWithValN);
 
 
             for (int i = 0; i < tableData.length; i++) {
-                if (tableData[i][columnWithValN] == "Y") {
-                    prices.add(Integer.parseInt(tableData[i][tableData[0].length - 1]));  //adds price of that column
+                if (tableData[i][columnWithValN].contains("Y")) {
+                    prices.add(Integer.parseInt(tableData[i][tableData[0].length - 2]));  //adds price of that column
                 }
             }
 
@@ -641,7 +646,7 @@ public class FinalProject {
 
             System.out.println("lowest price of that col  " + lowestPriceY);
 
-            lowestPriceY+=Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length-1]);  //will add the price of row with most Y with the remaining rows cheapest Y
+            lowestPriceY+=Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);  //will add the price of row with most Y with the remaining rows cheapest Y
             collectionOfLowestPrices.add(lowestPriceY);  //contains lowest price of each highest Y row
             prices = new ArrayList<>(); //set prices to default
         }
@@ -655,7 +660,9 @@ public class FinalProject {
         }
 
 
+        System.out.println("Lowest:"+actualLowest);
         return actualLowest;
+
 
 
 
