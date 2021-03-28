@@ -29,9 +29,15 @@ This is an application to calculate the cheapest combination of available invent
 
 (5) import static org.junit.Assert.*
 
+## How to run
+
+(1) Clone the repository
+(2) Run the FinalProject.java file through command line or IDE of your choice.
+(3) Run the FinalProjectTest.java for Unit Testing purposes.
+
 ## Done by : 
 
 1. Zeeshan Chougle - 30094417
 2. Muhammed Umar - 30062451
 3. Mohammed Numan - 30086940
-4. Mahtab - 3010408
+4. Mohammad Mahtab Khan - 3010408
