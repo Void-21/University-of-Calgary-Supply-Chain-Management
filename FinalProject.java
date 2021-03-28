@@ -562,6 +562,122 @@ public class FinalProject {
             e.printStackTrace();
         }
     }
+    
+    public int calculateLowestPrice(String[][] tableData)
+    {
+
+        int count = 0; //counting the number of Y's
+        ArrayList<Integer> rowCount = new ArrayList<>(); //count of Y in each row
+
+        for(int i=0;i<tableData.length;i++)
+        {
+            for(int j=0;j<tableData[0].length;j++)
+            {
+                if(tableData[i][j]=="Y")
+                {
+                    count++;    //Count Y in that row i
+                }
+            }
+            rowCount.add(count);  // add the count of each row as an element
+            count=0;
+        }
+
+        int rowWithHighestNumY= rowCount.indexOf(Collections.max(rowCount));  // row with greatest number of Y's
+        System.out.println("Row with highest num Y "+rowWithHighestNumY);
+        int columnWithValN=20; //contains the column in row with high value of Y which has N, if it remains 20 after loop we already solved
+
+        for(int i=0;i<tableData[0].length;i++)
+        {
+            if(tableData[rowWithHighestNumY][i]=="N")
+            {
+                columnWithValN=i;
+                break;
+            }
+        }
+
+        if(columnWithValN==20)  //if it remain 0 problem was already solved
+        {
+            return Integer.parseInt(tableData[rowWithHighestNumY][tableData[0].length-1]);
+        }
+
+        System.out.println("Column containing the N for the highest row "+columnWithValN);
+
+        ArrayList<Integer> prices = new ArrayList<>();
+        for(int i=0; i < tableData.length;i++)
+        {
+            if(tableData[i][columnWithValN]=="Y")
+            {
+                prices.add(Integer.parseInt(tableData[i][tableData[0].length-1]));  //adds price of that column
+            }
+        }
+
+        // if (prices.size()==0) not possible to calculate
+
+        System.out.println(prices);
+
+        int lowestPriceY = prices.get(0);
+
+        for(int i=0;i<prices.size();i++)
+        {
+            if(lowestPriceY>prices.get(i))
+            {
+                lowestPriceY=prices.get(i);
+            }
+        }
+
+        System.out.println("lowest price of that col  "+lowestPriceY);
+
+        lowestPriceY+=Integer.parseInt(tableData[rowWithHighestNumY][tableData[0].length-1]);  //will add the price of row with most Y with the remaining rows cheapest Y
+
+        return lowestPriceY;
+
+
+
+
+        /*int[] arrayPrice = new int[tableData.length];  //contains prices
+
+        for(int i=0;i< tableData.length;i++)
+        {
+            arrayPrice[i]=Integer.parseInt(tableData[i][tableData[0].length-1]);
+        }
+
+        System.out.println(arrayPrice[0]+" "+arrayPrice[2]+" "+arrayPrice[3]);
+
+        ArrayList<Integer> arrayVal = new ArrayList<>(tableData.length); //Contains the Y or N values
+        int sum = 0;    //lowest price
+
+
+        for(int i=0;i<tableData[0].length;i++)
+        {
+            for(int j=0;j< tableData.length;j++)
+            {
+                if(tableData[j][i].equals("Y"))
+                {
+                    arrayVal.add(arrayPrice[i]);    //gets all prices for Y
+                }
+            }
+
+            if(arrayVal.size()!=0)
+            {
+                int min = arrayVal.get(0);
+                for(int k=0;k<arrayVal.size();k++)
+                {
+                    if(min>arrayVal.get(k))
+                    {
+                        min=arrayVal.get(k);                          //gets lowest price
+                    }
+                }
+                sum+=min;
+            }
+
+            arrayVal = new ArrayList<>(tableData.length);
+        }
+
+        return sum; */
+
+    }
+    
+    
     public static void main(String[] args)
     {
         FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","root","pass");
