@@ -1,4 +1,4 @@
-//package edu.ucalgary.ensf409;
+package edu.ucalgary.ensf409;
 import static org.junit.Assert.*;
 import org.junit.*;
 import java.io.*;
@@ -25,16 +25,39 @@ public class FinalProjectTest {
     @Test
     public void testSetItemTable() {
         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
-
+        //testobj.setItemTable("lamp");
+        //assertTrue("Setter for Item table is wrong",testobj..equals(DBURL));
     }
     @Test
     public void testinitializeConnection() {
         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
-
+        testobj.initialiazeConnection();
+        //test if this works
     }
     @Test
     public void testFilingSelect() {
         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
+        String [][] testArray = new String [5][7];
+
+        testArray[0][0] = 'F002';
+        testArray[0][1] = 'F007';
+        testArray[0][2] = 'F008';
+        testArray[0][3] = 'F009';
+        testArray[0][4] = 'F014';
+
+        testArray[1][0] = 'Medium';
+        testArray[1][1] = 'Medium';
+        testArray[1][2] = 'Medium';
+        testArray[1][3] = 'Medium';
+        testArray[1][4] = 'Medium';
+
+        testArray[1][0] = '';
+        testArray[1][1] = '';
+        testArray[1][2] = 'Medium';
+        testArray[1][3] = 'Medium';
+        testArray[1][4] = 'Medium';
+
+
 
     }
     @Test
@@ -80,14 +103,17 @@ public class FinalProjectTest {
     @Test
     public void testGetManufacturers(){
         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
+
     }
     @Test
     public void testDeleteFromTable(){
         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
+
     }
     @Test
     public void testCalculateLowestPrice(){
         FinalProject testobj = new FinalProject(DBURL,USERNAME,PASSWORD);
+
     }
     @Test
     public void testWriteOrderForm(){
