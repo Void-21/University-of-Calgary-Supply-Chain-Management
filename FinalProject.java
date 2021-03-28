@@ -12,6 +12,7 @@ public class FinalProject {
     private ResultSet results;
     private String itemType; //Type of item user wishes to buy
     private String itemTable; //contains the table of the item which the user wishes to buy
+    private String numItem; //number of items
 
     public FinalProject(String DBURL, String USERNAME, String PASSWORD) {
         this.DBURL = DBURL;
@@ -42,6 +43,14 @@ public class FinalProject {
         return itemTable;
     }
 
+    public String getNumItem() {
+        return numItem;
+    }
+
+    public void setNumItem(String numItem) {
+        this.numItem = numItem;
+    }
+    
     public void setItemTable(String itemTable) {
         this.itemTable = itemTable;
     }
@@ -125,6 +134,7 @@ public class FinalProject {
         System.out.println("Quantity : " + numItems);
 
         checkValidItem(item);
+        setNumItem(numItems);
     }
 
     public String selectTable(String tablename) {
