@@ -12,7 +12,6 @@ public class FinalProject {
     private ResultSet results;
     private String itemType; //Type of item user wishes to buy
     private String itemTable; //contains the table of the item which the user wishes to buy
-    private String numItem; //number of items
 
     public FinalProject(String DBURL, String USERNAME, String PASSWORD) {
         this.DBURL = DBURL;
@@ -43,14 +42,6 @@ public class FinalProject {
         return itemTable;
     }
 
-    public String getNumItem() {
-        return numItem;
-    }
-
-    public void setNumItem(String numItem) {
-        this.numItem = numItem;
-    }
-    
     public void setItemTable(String itemTable) {
         this.itemTable = itemTable;
     }
@@ -134,7 +125,6 @@ public class FinalProject {
         System.out.println("Quantity : " + numItems);
 
         checkValidItem(item);
-        setNumItem(numItems);
     }
 
     public String selectTable(String tablename) {
@@ -183,7 +173,7 @@ public class FinalProject {
     }
     public String[][] filingSelect(String type, int count){
         String[][] filing2d = new String[count][7];
-        String[][] filing = new String[count][4];
+        String[][] filing = new String[count][5];
         int c =count;
         try
         {
@@ -193,15 +183,16 @@ public class FinalProject {
             while(results.next())
             {
                 filing2d[i][0] = results.getString("ID");
+                filing[i][0] = results.getString("ID");
                 filing2d[i][1] = results.getString("Type");
                 filing2d[i][2] = results.getString("Rails");
-                filing[i][0] = results.getString("Rails");
+                filing[i][1] = results.getString("Rails");
                 filing2d[i][3] = results.getString("Drawers");
-                filing[i][1] = results.getString("Drawers");
+                filing[i][2] = results.getString("Drawers");
                 filing2d[i][4] = results.getString("Cabinet");
-                filing[i][2] = results.getString("Cabinet");
+                filing[i][3] = results.getString("Cabinet");
                 filing2d[i][5] = String.valueOf(results.getInt("Price"));
-                filing[i][3] = String.valueOf(results.getInt("Price"));
+                filing[i][4] = String.valueOf(results.getInt("Price"));
                 filing2d[i][6] = results.getString("ManuID");
                 i=i+1;
             }
@@ -223,20 +214,20 @@ public class FinalProject {
         return filing2d;
     }
     public String[][] checkFiling(String[][] filing, int count)
-    {   
+    {
         int c1=0,c2=0,c3=0;
         boolean check = false;
         for(int i=0;i<count;i++)
         {
-            if(filing[i][0].equals("Y"))
+            if(filing[i][1].equals("Y"))
             {
                 c1++;
             }
-            if(filing[i][1].equals("Y"))
+            if(filing[i][2].equals("Y"))
             {
                 c2++;
             }
-            if(filing[i][2].equals("Y"))
+            if(filing[i][3].equals("Y"))
             {
                 c3++;
             }
@@ -255,7 +246,7 @@ public class FinalProject {
     }
     public String[][] lampSelect(String type, int count){
         String[][] lamp2d = new String[count][6];
-        String[][] lamp = new String[count][3];
+        String[][] lamp = new String[count][4];
         int c =count;
         try
         {
@@ -265,13 +256,14 @@ public class FinalProject {
             while(results.next())
             {
                 lamp2d[i][0] = results.getString("ID");
+                lamp[i][1] = results.getString("ID");
                 lamp2d[i][1] = results.getString("Type");
                 lamp2d[i][2] = results.getString("Base");
-                lamp[i][0] = results.getString("Base");
-                lamp2d[i][3] = results.getString("Bulb");
                 lamp[i][1] = results.getString("Base");
+                lamp2d[i][3] = results.getString("Bulb");
+                lamp[i][2] = results.getString("Base");
                 lamp2d[i][4] = String.valueOf(results.getInt("Price"));
-                lamp[i][2] = String.valueOf(results.getInt("Price"));
+                lamp[i][3] = String.valueOf(results.getInt("Price"));
                 lamp2d[i][5] = results.getString("ManuID");
                 i++;
             }
@@ -297,11 +289,11 @@ public class FinalProject {
         boolean check = false;
         for(int i=0;i<count;i++)
         {
-            if(lamp[i][0].equals("Y"))
+            if(lamp[i][1].equals("Y"))
             {
                 c1++;
             }
-            if(lamp[i][1].equals("Y"))
+            if(lamp[i][2].equals("Y"))
             {
                 c2++;
             }
@@ -320,7 +312,7 @@ public class FinalProject {
     }
     public String[][] deskSelect(String type, int count){
         String[][] desk2d = new String[count][7];
-        String[][] desk = new String[count][4];
+        String[][] desk = new String[count][5];
         int c =count;
         try
         {
@@ -330,15 +322,16 @@ public class FinalProject {
             while(results.next())
             {
                 desk2d[i][0] = results.getString("ID");
+                desk[i][0] = results.getString("ID");
                 desk2d[i][1] = results.getString("Type");
                 desk2d[i][2] = results.getString("Legs");
-                desk[i][0] = results.getString("Legs");
+                desk[i][1] = results.getString("Legs");
                 desk2d[i][3] = results.getString("Top");
-                desk[i][1] = results.getString("Top");
+                desk[i][2] = results.getString("Top");
                 desk2d[i][4] = results.getString("Drawer");
-                desk[i][2] = results.getString("Drawer");
+                desk[i][3] = results.getString("Drawer");
                 desk2d[i][5] = String.valueOf(results.getInt("Price"));
-                desk[i][3] = String.valueOf(results.getInt("Price"));
+                desk[i][4] = String.valueOf(results.getInt("Price"));
                 desk2d[i][6] = results.getString("ManuID");
                 i++;
             }
@@ -364,15 +357,15 @@ public class FinalProject {
         boolean check = false;
         for(int i=0;i<count;i++)
         {
-            if(desk[i][0].equals("Y"))
+            if(desk[i][1].equals("Y"))
             {
                 c1++;
             }
-            if(desk[i][1].equals("Y"))
+            if(desk[i][2].equals("Y"))
             {
                 c2++;
             }
-            if(desk[i][2].equals("Y"))
+            if(desk[i][3].equals("Y"))
             {
                 c3++;
             }
@@ -391,7 +384,7 @@ public class FinalProject {
     }
     public String[][] chairSelect(String type, int count){
         String[][] chair2d = new String[count][8];
-        String[][] chair = new String[count][5];
+        String[][] chair = new String[count][6];
         int c =count;
         try
         {
@@ -401,17 +394,18 @@ public class FinalProject {
             while(results.next())
             {
                 chair2d[i][0] = results.getString("ID");
+                chair[i][0] = results.getString("ID");
                 chair2d[i][1] = results.getString("Type");
                 chair2d[i][2] = results.getString("Legs");
-                chair[i][0] = results.getString("Legs");
+                chair[i][1] = results.getString("Legs");
                 chair2d[i][3] = results.getString("Arms");
-                chair[i][1] = results.getString("Arms");
+                chair[i][2] = results.getString("Arms");
                 chair2d[i][4] = results.getString("Seat");
-                chair[i][2] = results.getString("Seat");
+                chair[i][3] = results.getString("Seat");
                 chair2d[i][5] = results.getString("Cushion");
-                chair[i][3] = results.getString("Cushion");
+                chair[i][4] = results.getString("Cushion");
                 chair2d[i][6] = String.valueOf(results.getInt("Price"));
-                chair[i][4] = String.valueOf(results.getInt("Price"));
+                chair[i][5] = String.valueOf(results.getInt("Price"));
                 chair2d[i][7] = results.getString("ManuID");
                 i++;
             }
@@ -438,19 +432,19 @@ public class FinalProject {
         boolean check = false;
         for(int i=0;i<count;i++)
         {
-            if(chair[i][0].equals("Y"))
+            if(chair[i][1].equals("Y"))
             {
                 c1++;
             }
-            if(chair[i][1].equals("Y"))
+            if(chair[i][2].equals("Y"))
             {
                 c2++;
             }
-            if(chair[i][2].equals("Y"))
+            if(chair[i][3].equals("Y"))
             {
                 c3++;
             }
-            if(chair[i][3].equals("Y"))
+            if(chair[i][4].equals("Y"))
             {
                 c4++;
             }
