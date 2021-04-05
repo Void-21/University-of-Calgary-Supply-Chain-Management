@@ -214,17 +214,16 @@ class ProgramInput extends ConnectDatabase
     }
 }
 
-
-public class FinalProject extends ProgramInput
+class DatabaseCalculation extends ProgramInput
 {
-
     private int counter=0;
     File outFile = new File("orderform.txt");
     FileWriter myWriter = new FileWriter(outFile);
     public String str ="";
     int totalPrice=0;
     ArrayList<String> output = new ArrayList<String>();
-    public FinalProject(String DBURL, String USERNAME, String PASSWORD) throws IOException
+
+    public DatabaseCalculation(String DBURL, String USERNAME, String PASSWORD) throws IOException
     {
 
         /*Constructor to initialize the DBURL,USERNAME and PASSWORD which are the fields required to
@@ -875,6 +874,8 @@ public class FinalProject extends ProgramInput
         }
         return actualLowest; //instead of return pass the value
     }
+    
+    
     public static String ordinal(int i) {
         String[] suffixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
         switch (i % 100) {
@@ -903,10 +904,16 @@ public class FinalProject extends ProgramInput
             }
         }
     }
+}
+
+
+public class FinalProject
+{
+
     public static void main(String[] args) throws IOException
     {
 
-        FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","zee","Zeemaan1234@");
+        DatabaseCalculation myJDBC = new DatabaseCalculation("jdbc:mysql://localhost/inventory","zee","Zeemaan1234@");
         myJDBC.initializeConnection();
         myJDBC.userInput();
 
