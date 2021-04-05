@@ -297,6 +297,12 @@ class DatabaseCalculation extends ProgramInput
         return all.toString();
     }
     public String[][] filingSelect(String type, int count){
+        /*
+            this method selects all the tuples/rows that match the type of filing required by the user
+            from the data base using 'type' as a key.
+            the method also creates a 2d array of type string that selects all the columns that have values of the form
+            (Y/N), this new 2d array is passed to the method checkFiling. 
+        */
         String[][] filing2d = new String[count][7];
         String[][] filing = new String[count][5];
         int c =count;
@@ -337,6 +343,17 @@ class DatabaseCalculation extends ProgramInput
         return filing2d;
     }
     public String[][] checkFiling(String[][] filing, int count) throws IOException {
+        /*
+            this method receives a 2d array from selectFiling method and uses it to check if the Filing can be constructed
+            if it can be constructed it passes the 2d array further to the method calculateLowestPrice
+            if it cannot be constructed the else block of the code is executed. 
+            
+            the way the method checks if the filing can be constructed is as follows, 
+            there are three counter variables set to zero in the beginning. 
+            whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
+            
+            only if all the counters are greater than zero the required furniture can be constructed.
+         */
         int c1=0,c2=0,c3=0;
         boolean check = false;
         for(int i=0;i<count;i++)
@@ -384,6 +401,12 @@ class DatabaseCalculation extends ProgramInput
         }
     }
     public String[][] lampSelect(String type, int count){
+        /*
+            this method selects all the tuples/rows that match the type of lamp required by the user
+            from the data base using 'type' as a key.
+            the method also creates a 2d array of type string that selects all the columns that have values of the form
+            (Y/N), this new 2d array is passed to the method checkLamp. 
+        */
         String[][] lamp2d = new String[count][6];
         String[][] lamp = new String[count][4];
         int c =count;
@@ -418,6 +441,17 @@ class DatabaseCalculation extends ProgramInput
         return lamp2d;
     }
     public String[][] checkLamp(String[][] lamp, int count) throws IOException {   int c1=0,c2=0;
+        /*
+            this method receives a 2d array from selectLamp method and uses it to check if the Lamp can be constructed
+            if it can be constructed it passes the 2d array further to the method calculateLowestPrice
+            if it cannot be constructed the else block of the code is executed. 
+            
+            the way the method checks if the lamp can be constructed is as follows, 
+            there are two counter variables set to zero in the beginning. 
+            whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
+            
+            only if all the counters are greater than zero the required furniture can be constructed.
+         */ 
         boolean check = false;
         for(int i=0;i<count;i++)
         {
@@ -460,6 +494,12 @@ class DatabaseCalculation extends ProgramInput
         }
     }
     public String[][] deskSelect(String type, int count){
+        /*
+            this method selects all the tuples/rows that match the type of desk required by the user
+            from the data base using 'type' as a key.
+            the method also creates a 2d array of type string that selects all the columns that have values of the form
+            (Y/N), this new 2d array is passed to the method checkDesk. 
+        */
         String[][] desk2d = new String[count][7];
         String[][] desk = new String[count][5];
         int c =count;
@@ -495,6 +535,17 @@ class DatabaseCalculation extends ProgramInput
         return desk2d;
     }
     public String[][] checkDesk(String[][] desk, int count) throws IOException {   int c1=0,c2=0,c3=0;
+        /*
+            this method receives a 2d array from selectDesk method and uses it to check if the Desk can be constructed
+            if it can be constructed it passes the 2d array further to the method calculateLowestPrice
+            if it cannot be constructed the else block of the code is executed. 
+            
+            the way the method checks if the Desk can be constructed is as follows, 
+            there are three counter variables set to zero in the beginning. 
+            whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
+            
+            only if all the counters are greater than zero the required furniture can be constructed.
+         */
         boolean check = false;
         for(int i=0;i<count;i++)
         {
@@ -541,6 +592,13 @@ class DatabaseCalculation extends ProgramInput
         }
     }
     public String[][] chairSelect(String type, int count){
+        /*
+            this method selects all the tuples/rows that match the type of chair required by the user
+            from the data base using 'type' as a key.
+            the method also creates a 2d array of type string that selects all the columns that have values of the form
+            (Y/N), this new 2d array is passed to the method checkChair. 
+
+        */
         String[][] chair2d = new String[count][8];
         String[][] chair = new String[count][6];
         int c =count;
@@ -578,6 +636,17 @@ class DatabaseCalculation extends ProgramInput
         return chair2d;
     }
     public String[][] checkChair(String[][] chair, int count) throws IOException {   int c1=0,c2=0,c3=0,c4=0;
+        /*
+            this method receives a 2d array from selectChair method and uses it to check if the Chair can be constructed
+            if it can be constructed it passes the 2d array further to the method calculateLowestPrice
+            if it cannot be constructed the else block of the code is executed. 
+            
+            the way the method checks if the Chair can be constructed is as follows, 
+            there are four counter variables set to zero in the beginning. 
+            whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
+            
+            only if all the counters are greater than zero the required furniture can be constructed.
+         */
         boolean check = false;
         for(int i=0;i<count;i++)
         {
@@ -629,6 +698,12 @@ class DatabaseCalculation extends ProgramInput
     }
     public String[][] selectFurnitureType(String type, String tableName)
     {
+        /*
+                this method calls the respective select functions based on the table name and the type provided by the 
+                user. the 'type' is used as the key to proceed with the function.
+                the local variable count is incremented every time the required furniture type in the table is encountered 
+                'count' represents the total number of elements that are present in the sql database of the required type
+        */
         int count=0;
 
         try
@@ -676,6 +751,15 @@ class DatabaseCalculation extends ProgramInput
     //method called in writeManufacturers
     private String getManufacturers(String table)
     {
+        /*
+            this method accesses the sql database and returns all the manufacturers of a certain furniture 
+            the list of manufacturers are written to the file in the final invoice of the transaction.
+          
+            the steps to receive the required rows are as follows
+            1. select all the ManuID's from the specified table.
+            2. select all the manufacturers from the manufacturers table using the ManuID
+            3. select all the Names of the manufacturers using the key 'Name'
+        */
         int i=0;
         StringBuilder manufacturers = new StringBuilder();
         Set<String> manu_ID = new HashSet<String>();
@@ -712,6 +796,11 @@ class DatabaseCalculation extends ProgramInput
 
     public void deleteFromTable(String table, String objectID)
     {
+        /*
+            this method deletes a specified row using the ID of the specified table.
+            the deletion only takes place once the element has been used to construct the required furniture and therefore
+            is not available for further use anymore.        
+        */
         try
         {
             String query = "DELETE FROM "+ table +" WHERE ID = ?";
@@ -864,7 +953,7 @@ class DatabaseCalculation extends ProgramInput
 
         //System.out.println("Lowest:"+actualLowest);
         counter++;
-        String value = ordinal(counter);
+        String value = numFormat(counter);
         totalPrice+=actualLowest;
         output.add("• The lowest cost to manufacture "+value+" item of "+getItemType()+" "+getItemTable()+" is - "+actualLowest+".00 $ \n");
         if(Integer.parseInt(getNumItems())>1)
@@ -876,21 +965,29 @@ class DatabaseCalculation extends ProgramInput
     }
     
     
-    public static String ordinal(int i) {
-        String[] suffixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
+    public static String numFormat(int i) {
+        /*
+            this is a helper function used to properly format the output file , for example it changes the '1' to '1st' 
+            '11' to '11th' and onwards.
+        */
+        String[] str = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
         switch (i % 100) {
             case 11:
             case 12:
             case 13:
                 return i + "th";
             default:
-                return i + suffixes[i % 10];
+                return i + str[i % 10];
 
         }
     }
 
     public void writeOrderForm() throws IOException
     {
+       /*
+            this method is used to write to the output file.
+            main formatting of the output file takes place in this function.
+        */
         output.add(0,"--------------------------------------------------------------------------------------------------------------------\n");
         output.add(1,"                                              \t          SALES INVOICE                             \n");
         output.add(2,"--------------------------------------------------------------------------------------------------------------------\n");
