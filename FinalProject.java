@@ -147,8 +147,17 @@ class ProgramInput extends ConnectDatabase
         String table ;    // table name for that item in the database
         String itemType; // type of the item
         itemName=itemName.trim();
+        int countSpace=0;
 
-        if(!itemName.contains(" "))  //if the item name does not contain a space Re-enter the string
+        for(int i=0;i<itemName.length();i++)
+        {
+            if(itemName.charAt(i)==' ')
+            {
+                countSpace++;
+            }
+        }
+
+        if(!itemName.contains(" ")||countSpace>1)  //if the item name does not contain a space Re-enter the string
         {
             System.out.println();
             System.out.println("Item does not exists please enter a valid item"); //remove later
@@ -894,8 +903,10 @@ public class FinalProject extends ProgramInput
             }
         }
     }
-    public static void main(String[] args) throws IOException {
-        FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","NUMAN","TIGER");
+    public static void main(String[] args) throws IOException
+    {
+
+        FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","zee","Zeemaan1234@");
         myJDBC.initializeConnection();
         myJDBC.userInput();
 
