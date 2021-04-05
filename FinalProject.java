@@ -1,153 +1,139 @@
-
- /**
- * @author Zeeshan Chougle <a href="mailto:zeeshan.chougle@ucalgary.ca">Zeeshan.chougle@ucalgary.ca</a>
-  * @author Mohamed Numan <a hreaf="mailto:mohamed.numan@ucalgary.ca">mailto:mohamed.numan@ucalgary.ca</a>
-  * @author Mahtab Khan <a hreaf="mailto:mohammadmahtab.khan@ucalgary.ca">mailto:mohammadmahtab.khan@ucalgary.ca</a>
-  *@author Muhammed Umar <a hreaf="mailto:umarbaloch84@gmail.com">mailto:mailto:umarbaloch84@gmail.com</a>
- * @version 2.5
- * @since 1.0
- */
-
-
 package edu.ucalgary.ensf409;
 import java.sql.*;
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Scanner;
 import java.io.*;
 import java.util.*;
 
-public class FinalProject
+class ConnectDatabase
 {
+    public final String DBURL;      //store the database url information
+    public final String USERNAME;   //store the user's account username
+    public final String PASSWORD;   //store the user's account password
+    private Connection dbconnect;   //data member to establish connection with the database
+    private ResultSet results;      // results contains the results from MySQL query
 
-    /**
-     * This Class utilizes the data from inventory.sql database and calculates the lowest possible price for the users input item
-     * It contains the following functions :
-     * 1. FinalProject(String,String,String) : Constructor
-     * 2. String getDburl() : getter
-     * 3. String getUsername() : getter
-     * 4. String getPassword() : getter
-     * 5. String getNumItems() : getter
-     * 6. String setItemType() : setter
-     * 7. String getItemType() : getter
-     * 8. String getItemTable() : getter
-     * 9. setItemTable(String) : setter
-     * 10. setNumItems(String) : setter
-     * 11. initializeConnection() : establishes connection with database
-     * 12. closes() : closes connection with database
-     * 13. userInput() : Takes input from User.
-     * 14. checkValidItem(String) :  checks if the input provided by user exsists in database
-     * 15. selectTable(String) : Displays the current state of the passsed table
-     * 16. String[][] filingSelect(String, int) :
-     * 17. String[][] checkFiling(String[][] filing, int :
-     * 18. String[][] lampSelect(String,int) :
-     * 19. String[][] checklamp(String[][],int) :
-     * 20. String[][] deskSelect(string,int) :
-     * 21. String[][] checkDisk(String[][],int) :
-     * 22. String[][] chairSelect(String[][],int):
-     * 23. String[][] checkchair(String[][],int) :
-     * 24. String[][] selectFurnitureType(String type, String tableName) :
-     * 25. writeManufacturers(String table) : writes the manufacturer's detail in the output file
-     * 26. String getManufacturers(String) : returns manufacturers details
-     * 27. deleteFromTable(String, String) : Deletes the passed row in the MySQL table
-     * 28. int calculateLowestPrice(String[][]) : calculates the lowest possible price for the passed table
-     * 29. writeOrderForm(ArrayList<Integer>) : Writes the formatted output in the texfile
-     */
+    public ConnectDatabase(String DBURL, String USERNAME, String PASSWORD) throws IOException
+    {
 
-    public final String DBURL; //store the database url information
-    public final String USERNAME; //store the user's account username
-    public final String PASSWORD; //store the user's account password
-    private Connection dbconnect; //data member to establish connection with the database
-    private ResultSet results; // results conatins the results from MySQL query
-    private String itemType; //Type of item user wishes to buy
-    private String itemTable; //contains the table of the item which the user wishes to buy
-    private String numItems; // contains the number of items enetered by the user
-    private String faculty;  // contains the faculty name for user input
-    private String phoneNumber; // contains the phone number for user input
-
-    private int counter=0;
-    File outFile = new File("orderform.txt");
-    FileWriter myWriter = new FileWriter(outFile);
-    public String str ="";
-    int reqvalue=0;
-    ArrayList<String> output = new ArrayList<String>();
-    public FinalProject(String DBURL, String USERNAME, String PASSWORD) throws IOException {
         /*Constructor to initialize the DBURL,USERNAME and PASSWORD which are the fields required to
         establish connection with the DB*/
 
         this.DBURL = DBURL;
         this.USERNAME = USERNAME;
         this.PASSWORD = PASSWORD;
-    }
- 
-    public String getFaculty() {
-        return faculty;
+
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }  
- 
-    public String getDburl()                // getter for DBURL
-    {
-        return DBURL;
-    }
 
-    public String getUsername() {           // getter for username
-        return USERNAME;
-    }
-
-    public String getPassword() {           // getter for password
-        return PASSWORD;
-    }
-    public String getNumItems()             // getter for numItems
-    {
-        return this.numItems;
-    }
-
-    public void setItemType(String itemType)  //Setter for itemType
-    {
-        this.itemType = itemType;
-    }
-
-    public String getItemType()   // getter for getItemType
-    {
-        return itemType;
-    }
-
-    public String getItemTable()  // getter for itermTable
-    {
-        return itemTable;
-    }
-
-    public void setItemTable(String itemTable)  //setter for itemTable
-    {
-        this.itemTable = itemTable;
-    }
-
-    public void setNumItems(String numItems)  //setter for numItems
-    {
-        this.numItems = numItems;
-    }
-
-    public void initializeConnection(){         //this creates a connection between the java files and the database
-        try{
-            dbconnect = DriverManager.getConnection(getDburl(),getUsername(),getPassword());
+    public void initializeConnection()
+    {         //this creates a connection between the java files and the database
+        try
+        {
+            dbconnect = DriverManager.getConnection(getDBURL(),getUSERNAME(),getPASSWORD());
         } catch (SQLException e){
             e.printStackTrace();
         }
     }
-    public void closes()
+
+
+
+    public void setDbconnect(Connection dbconnect)
     {
-        /* This method closes the result and connection fields used to establish connection with the database*/
+        this.dbconnect = dbconnect;
+    }
 
-        try {
-            myWriter.close();
-            results.close();
-            dbconnect.close();
+    public void setResults(ResultSet results)
+    {
+        this.results = results;
+    }
 
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
+    public String getUSERNAME()
+    {
+        return USERNAME;
+    }
+
+    public String getDBURL()
+    {
+        return DBURL;
+    }
+
+    public String getPASSWORD()
+    {
+        return PASSWORD;
+    }
+
+    public Connection getDbconnect()
+    {
+        return dbconnect;
+    }
+
+    public ResultSet getResults()
+    {
+        return results;
+    }
+}
+
+class ProgramInput extends ConnectDatabase
+{
+    private String itemType;            //Type of item user wishes to buy
+    private String itemTable;           //contains the table of the item which the user wishes to buy
+    private String numItems;            // contains the number of items entered by the user
+    private int flagInput=0;
+    private int reqValue=0;
+
+    public ProgramInput(String DBURL, String USERNAME, String PASSWORD) throws IOException
+    {
+        super(DBURL,USERNAME,PASSWORD);
+    }
+
+
+    public void setNumItems(String numItems) {
+        this.numItems = numItems;
+    }
+
+    public void setItemTable(String itemTable) {
+        this.itemTable = itemTable;
+    }
+
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
+    }
+
+    public String getItemTable() {
+        return itemTable;
+    }
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public String getNumItems() {
+        return numItems;
+    }
+    public int getReqValue(){
+        return reqValue;
+    }
+
+    public void userInput()
+    {
+        /*
+        This method takes input from the user and calls checkValidItem to validate if the item exists in database
+         */
+
+        Scanner myScanner = new Scanner(System.in);
+        System.out.println("Enter the item you would like to purchase : ");
+        String item = myScanner.nextLine();
+        System.out.println("Enter the number of items to purchase : ");
+        this.numItems = myScanner.nextLine();
+        reqValue = Integer.parseInt(numItems);
+        //System.out.println("Item : "+item);
+        //System.out.println("Quantity : " + numItems);
+        checkValidItem(item);
+
+        if(flagInput==0)
+        {
+            flagInput=1;
+            System.out.println();
+            System.out.println("Please check the orderform.txt file to see your order status");
         }
     }
 
@@ -160,11 +146,14 @@ public class FinalProject
 
         String table ;    // table name for that item in the database
         String itemType; // type of the item
+        itemName=itemName.trim();
 
         if(!itemName.contains(" "))  //if the item name does not contain a space Re-enter the string
         {
-            userInput();
             System.out.println();
+            System.out.println("Item does not exists please enter a valid item"); //remove later
+            System.out.println();
+            userInput();
             return;
         }
 
@@ -184,10 +173,10 @@ public class FinalProject
 
         int count=0;
         try {
-            Statement myStmt = dbconnect.createStatement();
+            Statement myStmt = getDbconnect().createStatement();
 
-            results = myStmt.executeQuery("SELECT * FROM "+table+" WHERE type = '"+ itemType + "'");
-            while (results.next())
+            setResults(myStmt.executeQuery("SELECT * FROM "+table+" WHERE type = '"+ itemType + "'"));
+            while (getResults().next())
             {
                 count++;
             }
@@ -196,13 +185,13 @@ public class FinalProject
                 setItemTable(table);
                 setItemType(itemType);
                 return;
-                //return true;
+
             }
-
-            System.out.println("Item does not exist in database please re-enter item :");
-
+            System.out.println();
+            System.out.println("Item does not exists please enter a valid item"); //remove later
+            System.out.println();
             userInput();
-            //return false;
+
 
         }
         catch (SQLException ex)
@@ -211,33 +200,46 @@ public class FinalProject
             System.out.println("Item does not exists please enter a valid item"); //remove later
             System.out.println();
             userInput();
-            //return false;
+
+        }
+    }
+}
+
+
+public class FinalProject extends ProgramInput
+{
+
+    private int counter=0;
+    File outFile = new File("orderform.txt");
+    FileWriter myWriter = new FileWriter(outFile);
+    public String str ="";
+    int totalPrice=0;
+    ArrayList<String> output = new ArrayList<String>();
+    public FinalProject(String DBURL, String USERNAME, String PASSWORD) throws IOException
+    {
+
+        /*Constructor to initialize the DBURL,USERNAME and PASSWORD which are the fields required to
+        establish connection with the DB*/
+
+        super(DBURL,USERNAME,PASSWORD);
+
+    }
+
+
+    public void closes()
+    {
+        /* This method closes the result and connection fields used to establish connection with the database*/
+
+        try {
+            myWriter.close();
+            getResults().close();
+            getDbconnect().close();
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
         }
     }
 
-
-    public void userInput()
-    {
-        /*
-        This method takes input from the user and calls checkValidItem to validate if the item exists in database
-         */
-
-        Scanner myScanner = new Scanner(System.in);
-        System.out.println();
-        System.out.println("Enter the item you would like to purchase : ");
-        String item = myScanner.nextLine();
-        System.out.println("Enter the number of items to purchase : ");
-        this.numItems = myScanner.nextLine();
-     reqvalue = Integer.parseInt(numItems);
-
-
-        checkValidItem(item);
-
-        System.out.println("Enter your faculty :  ");
-        this.faculty = myScanner.nextLine();
-        System.out.println("Enter your phone number : ");
-        this.phoneNumber = myScanner.nextLine();
-    }
 
     public String selectTable(String tablename)
     {
@@ -245,37 +247,37 @@ public class FinalProject
 
         StringBuffer all = new StringBuffer();
         try {
-            Statement myStmt = dbconnect.createStatement();
-            results = myStmt.executeQuery("SELECT * FROM " + tablename);
+            Statement myStmt = getDbconnect().createStatement();
+            setResults(myStmt.executeQuery("SELECT * FROM " + tablename));
             all.append(tablename);
             all.append("\n");
             if (tablename.equals("lamp")) {
-                while (results.next()) {
-                    all.append("(" + results.getString("ID") + " // " + results.getString("TYPE") + " // " + results.getString("Base") + " // " + results.getString("Bulb") + " // " + results.getString("Price") + " // " + results.getString("ManuID") + ")");
+                while (getResults().next()) {
+                    all.append("(" + getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " + getResults().getString("Base") + " // " +getResults().getString("Bulb") + " // " +getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
                     all.append("\n");
                 }
             }
             if (tablename.equals("manufacturer")) {
-                while (results.next()) {
-                    all.append("(" + results.getString("ManuID") + " // " + results.getString("Name") + " // " + results.getString("Phone") + " // " + results.getString("Province") + ")");
+                while (getResults().next()) {
+                    all.append("(" +getResults().getString("ManuID") + " // " + getResults().getString("Name") + " // " + getResults().getString("Phone") + " // " + getResults().getString("Province") + ")");
                     all.append("\n");
                 }
             }
             if (tablename.equals("filing")) {
-                while (results.next()) {
-                    all.append("(" + results.getString("ID") + " // " + results.getString("TYPE") + " // " + results.getString("Rails") + " // " + results.getString("Drawers") + " // " + results.getString("Cabinet") + " // " + results.getString("Price") + " // " + results.getString("ManuID") + ")");
+                while (getResults().next()) {
+                    all.append("(" + getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " +getResults().getString("Rails") + " // " + getResults().getString("Drawers") + " // " + getResults().getString("Cabinet") + " // " + getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
                     all.append("\n");
                 }
             }
             if (tablename.equals("desk")) {
-                while (results.next()) {
-                    all.append("(" + results.getString("ID") + " // " + results.getString("TYPE") + " // " + results.getString("Legs") + " // " + results.getString("Top") + " // " + results.getString("Drawer") + " // " + results.getString("Price") + " // " + results.getString("ManuID") + ")");
+                while (getResults().next()) {
+                    all.append("(" + getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " + getResults().getString("Legs") + " // " + getResults().getString("Top") + " // " + getResults().getString("Drawer") + " // " + getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
                     all.append("\n");
                 }
             }
             if (tablename.equals("chair")) {
-                while (results.next()) {
-                    all.append("(" + results.getString("ID") + " // " + results.getString("TYPE") + " // " + results.getString("Legs") + " // " + results.getString("Arms") + " // " + results.getString("Seat") + " // " + results.getString("Cushion") + " // " + results.getString("Price") + " // " + results.getString("ManuID") + ")");
+                while (getResults().next()) {
+                    all.append("(" +getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " + getResults().getString("Legs") + " // " + getResults().getString("Arms") + " // " + getResults().getString("Seat") + " // " + getResults().getString("Cushion") + " // " + getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
                     all.append("\n");
                 }
             }
@@ -286,40 +288,32 @@ public class FinalProject
         }
         return all.toString();
     }
- // filingSelect function selects the required data from the whole pool of the sql
     public String[][] filingSelect(String type, int count){
         String[][] filing2d = new String[count][7];
         String[][] filing = new String[count][5];
         int c =count;
         try
         {
-            Statement myStmt = dbconnect.createStatement();
-            results = myStmt.executeQuery("SELECT * FROM filing WHERE Type ='"+type+"'");
+            Statement myStmt = getDbconnect().createStatement();
+            setResults(myStmt.executeQuery("SELECT * FROM filing WHERE Type ='"+type+"'"));
             int i=0;
-            while(results.next())
+            while(getResults().next())
             {
-                filing2d[i][0] = results.getString("ID");
-                filing[i][4] = results.getString("ID");
-                filing2d[i][1] = results.getString("Type");
-                filing2d[i][2] = results.getString("Rails");
-                filing[i][0] = results.getString("Rails");
-                filing2d[i][3] = results.getString("Drawers");
-                filing[i][1] = results.getString("Drawers");
-                filing2d[i][4] = results.getString("Cabinet");
-                filing[i][2] = results.getString("Cabinet");
-                filing2d[i][5] = String.valueOf(results.getInt("Price"));
-                filing[i][3] = String.valueOf(results.getInt("Price"));
-                filing2d[i][6] = results.getString("ManuID");
+                filing2d[i][0] = getResults().getString("ID");
+                filing[i][4] = getResults().getString("ID");
+                filing2d[i][1] =getResults().getString("Type");
+                filing2d[i][2] = getResults().getString("Rails");
+                filing[i][0] =getResults().getString("Rails");
+                filing2d[i][3] = getResults().getString("Drawers");
+                filing[i][1] =getResults().getString("Drawers");
+                filing2d[i][4] =getResults().getString("Cabinet");
+                filing[i][2] =getResults().getString("Cabinet");
+                filing2d[i][5] = String.valueOf(getResults().getInt("Price"));
+                filing[i][3] = String.valueOf(getResults().getInt("Price"));
+                filing2d[i][6] = getResults().getString("ManuID");
                 i=i+1;
             }
-            /*for(int j=0;j<count;j++)
-            {
-                for(int k=0;k<7;k++)
-                {
-                    System.out.print(filing2d[j][k]+" ");
-                }
-                System.out.println(" ");
-            }*/
+
             checkFiling(filing,c);
             myStmt.close();
         }
@@ -355,17 +349,29 @@ public class FinalProject
         if((c1>0)&&(c2>0)&&(c3>0))
         {
             check = true;
-            System.out.println(check);
             calculateLowestPrice(filing);
             return filing;
         }
         else
         {
-           System.out.println(check);
-            output.add("\nUnfortunately 1 or more of this item cannot be constructed due to insufficient materials\n");
-            output.add("Please contact one of the manufacturers mentioned below for more information.\n");
+            //output.add("    -Total Price: "+totalPrice+".00 $");
+            //System.out.println(check);
+            output.add("\nUnfortunately ");
+            output.add(getReqValue()-counter+" ");
+            output.add(getItemType() +" "+ getItemTable());
+            if(getReqValue()-counter==1)
+            {
+                output.add(" cannot be constructed due to insufficient materials\n");
+            }
+            else
+            {
+                output.add("'s cannot be constructed due to insufficient materials\n");
+            }
+            output.add("\nPlease contact one of the manufacturers mentioned below for more information.\n");
+            output.add("--------------------------------------------------------------------------------------------------------------------\n");
             output.add(getManufacturers(getItemTable()));
-            output.add("\nSorry for the inconvenience.");
+            output.add("--------------------------------------------------------------------------------------------------------------------\n");
+            output.add("Sorry for the inconvenience.\n");
             return null;
         }
     }
@@ -375,24 +381,24 @@ public class FinalProject
         int c =count;
         try
         {
-            Statement myStmt = dbconnect.createStatement();
-            results = myStmt.executeQuery("SELECT * FROM lamp WHERE Type ='"+type+"'");
+            Statement myStmt = getDbconnect().createStatement();
+            setResults(myStmt.executeQuery("SELECT * FROM lamp WHERE Type ='"+type+"'"));
             int i=0;
-            while(results.next())
+            while(getResults().next())
             {
-                lamp2d[i][0] = results.getString("ID");
-                lamp[i][3] = results.getString("ID");
-                lamp2d[i][1] = results.getString("Type");
-                lamp2d[i][2] = results.getString("Base");
-                lamp[i][0] = results.getString("Base");
-                lamp2d[i][3] = results.getString("Bulb");
-                lamp[i][1] = results.getString("Bulb");
-                lamp2d[i][4] = String.valueOf(results.getInt("Price"));
-                lamp[i][2] = String.valueOf(results.getInt("Price"));
-                lamp2d[i][5] = results.getString("ManuID");
+                lamp2d[i][0] = getResults().getString("ID");
+                lamp[i][3] = getResults().getString("ID");
+                lamp2d[i][1] = getResults().getString("Type");
+                lamp2d[i][2] =getResults().getString("Base");
+                lamp[i][0] =getResults().getString("Base");
+                lamp2d[i][3] = getResults().getString("Bulb");
+                lamp[i][1] =getResults().getString("Bulb");
+                lamp2d[i][4] = String.valueOf(getResults().getInt("Price"));
+                lamp[i][2] = String.valueOf(getResults().getInt("Price"));
+                lamp2d[i][5] = getResults().getString("ManuID");
                 i++;
             }
-          
+
             checkLamp(lamp,c);
             myStmt.close();
         }
@@ -419,17 +425,29 @@ public class FinalProject
         if((c1>0)&&(c2>0))
         {
             check = true;
-            System.out.println(check);
             calculateLowestPrice(lamp);
             return lamp;
         }
         else
         {
-           System.out.println(check);
-            output.add("\nUnfortunately 1 or more of this item cannot be constructed due to insufficient materials\n");
-            output.add("Please contact one of the manufacturers mentioned below for more information.\n");
+            //output.add("    -Total Price: "+totalPrice+".00 $");
+            //System.out.println(check);
+            output.add("\nUnfortunately ");
+            output.add(getReqValue()-counter+" ");
+            output.add(getItemType() +" "+ getItemTable());
+            if(getReqValue()-counter==1)
+            {
+                output.add(" cannot be constructed due to insufficient materials\n");
+            }
+            else
+            {
+                output.add("'s cannot be constructed due to insufficient materials\n");
+            }
+            output.add("\nPlease contact one of the manufacturers mentioned below for more information.\n");
+            output.add("--------------------------------------------------------------------------------------------------------------------\n");
             output.add(getManufacturers(getItemTable()));
-            output.add("\nSorry for the inconvenience.");
+            output.add("--------------------------------------------------------------------------------------------------------------------\n");
+            output.add("Sorry for the inconvenience.\n");
             return null;
         }
     }
@@ -439,33 +457,26 @@ public class FinalProject
         int c =count;
         try
         {
-            Statement myStmt = dbconnect.createStatement();
-            results = myStmt.executeQuery("SELECT * FROM desk WHERE Type ='"+type+"'");
+            Statement myStmt = getDbconnect().createStatement();
+            setResults( myStmt.executeQuery("SELECT * FROM desk WHERE Type ='"+type+"'"));
             int i=0;
-            while(results.next())
+            while(getResults().next())
             {
-                desk2d[i][0] = results.getString("ID");
-                desk[i][4] = results.getString("ID");
-                desk2d[i][1] = results.getString("Type");
-                desk2d[i][2] = results.getString("Legs");
-                desk[i][0] = results.getString("Legs");
-                desk2d[i][3] = results.getString("Top");
-                desk[i][1] = results.getString("Top");
-                desk2d[i][4] = results.getString("Drawer");
-                desk[i][2] = results.getString("Drawer");
-                desk2d[i][5] = String.valueOf(results.getInt("Price"));
-                desk[i][3] = String.valueOf(results.getInt("Price"));
-                desk2d[i][6] = results.getString("ManuID");
+                desk2d[i][0] = getResults().getString("ID");
+                desk[i][4] =getResults().getString("ID");
+                desk2d[i][1] = getResults().getString("Type");
+                desk2d[i][2] = getResults().getString("Legs");
+                desk[i][0] = getResults().getString("Legs");
+                desk2d[i][3] = getResults().getString("Top");
+                desk[i][1] = getResults().getString("Top");
+                desk2d[i][4] = getResults().getString("Drawer");
+                desk[i][2] = getResults().getString("Drawer");
+                desk2d[i][5] = String.valueOf(getResults().getInt("Price"));
+                desk[i][3] = String.valueOf(getResults().getInt("Price"));
+                desk2d[i][6] = getResults().getString("ManuID");
                 i++;
             }
-            /*for(int j=0;j<count;j++)
-            {
-                for(int k=0;k<7;k++)
-                {
-                    System.out.print(desk2d[j][k]+" ");
-                }
-                System.out.println(" ");
-            }*/
+
             checkDesk(desk,c);
             myStmt.close();
         }
@@ -495,17 +506,29 @@ public class FinalProject
         if((c1>0)&&(c2>0)&&(c3>0))
         {
             check = true;
-            System.out.println(check);
             calculateLowestPrice(desk);
             return desk;
         }
         else
         {
-            System.out.println(check);
-            output.add("\nUnfortunately 1 or more of this item cannot be constructed due to insufficient materials\n");
-            output.add("Please contact one of the manufacturers mentioned below for more information.\n");
+            //output.add("    -Total Price: "+totalPrice+".00 $");
+            //System.out.println(check);
+            output.add("\nUnfortunately ");
+            output.add(getReqValue()-counter+" ");
+            output.add(getItemType() +" "+ getItemTable());
+            if(getReqValue()-counter==1)
+            {
+                output.add(" cannot be constructed due to insufficient materials\n");
+            }
+            else
+            {
+                output.add("'s cannot be constructed due to insufficient materials\n");
+            }
+            output.add("\nPlease contact one of the manufacturers mentioned below for more information.\n");
+            output.add("--------------------------------------------------------------------------------------------------------------------\n");
             output.add(getManufacturers(getItemTable()));
-            output.add("\nSorry for the inconvenience.");
+            output.add("--------------------------------------------------------------------------------------------------------------------\n");
+            output.add("Sorry for the inconvenience.\n");
             return null;
         }
     }
@@ -515,28 +538,28 @@ public class FinalProject
         int c =count;
         try
         {
-            Statement myStmt = dbconnect.createStatement();
-            results = myStmt.executeQuery("SELECT * FROM chair WHERE Type = '"+type+"'");
+            Statement myStmt = getDbconnect().createStatement();
+            setResults(myStmt.executeQuery("SELECT * FROM chair WHERE Type = '"+type+"'"));
             int i=0;
-            while(results.next())
+            while(getResults().next())
             {
-                chair2d[i][0] = results.getString("ID");
-                chair[i][5] = results.getString("ID");
-                chair2d[i][1] = results.getString("Type");
-                chair2d[i][2] = results.getString("Legs");
-                chair[i][0] = results.getString("Legs");
-                chair2d[i][3] = results.getString("Arms");
-                chair[i][1] = results.getString("Arms");
-                chair2d[i][4] = results.getString("Seat");
-                chair[i][2] = results.getString("Seat");
-                chair2d[i][5] = results.getString("Cushion");
-                chair[i][3] = results.getString("Cushion");
-                chair2d[i][6] = String.valueOf(results.getInt("Price"));
-                chair[i][4] = String.valueOf(results.getInt("Price"));
-                chair2d[i][7] = results.getString("ManuID");
+                chair2d[i][0] = getResults().getString("ID");
+                chair[i][5] = getResults().getString("ID");
+                chair2d[i][1] = getResults().getString("Type");
+                chair2d[i][2] = getResults().getString("Legs");
+                chair[i][0] = getResults().getString("Legs");
+                chair2d[i][3] = getResults().getString("Arms");
+                chair[i][1] = getResults().getString("Arms");
+                chair2d[i][4] = getResults().getString("Seat");
+                chair[i][2] = getResults().getString("Seat");
+                chair2d[i][5] =getResults().getString("Cushion");
+                chair[i][3] = getResults().getString("Cushion");
+                chair2d[i][6] = String.valueOf(getResults().getInt("Price"));
+                chair[i][4] = String.valueOf(getResults().getInt("Price"));
+                chair2d[i][7] =getResults().getString("ManuID");
                 i++;
             }
-           
+
             myStmt.close();
             checkChair(chair,c);
         }
@@ -570,17 +593,29 @@ public class FinalProject
         if((c1>0)&&(c2>0)&&(c3>0)&&(c4>0))
         {
             check = true;
-            System.out.println(check);
             calculateLowestPrice(chair);
             return chair;
         }
         else
         {
-            System.out.println(check);
-            output.add("\nUnfortunately 1 or more of this item cannot be constructed due to insufficient materials\n");
-            output.add("Please contact one of the manufacturers mentioned below for more information.\n");
+            //output.add("    ~Total Price: "+totalPrice+".00 $");
+            //System.out.println(check);
+            output.add("\nUnfortunately ");
+            output.add(getReqValue()-counter+" ");
+            output.add(getItemType() +" "+ getItemTable());
+            if(getReqValue()-counter==1)
+            {
+                output.add(" cannot be constructed due to insufficient materials\n");
+            }
+            else
+            {
+                output.add("'s cannot be constructed due to insufficient materials\n");
+            }
+            output.add("\nPlease contact one of the manufacturers mentioned below for more information.\n");
+            output.add("--------------------------------------------------------------------------------------------------------------------\n");
             output.add(getManufacturers(getItemTable()));
-            output.add("\nSorry for the inconvenience.");
+            output.add("--------------------------------------------------------------------------------------------------------------------\n");
+            output.add("Sorry for the inconvenience.\n");
             return null;
         }
     }
@@ -590,10 +625,10 @@ public class FinalProject
 
         try
         {
-            Statement myStmt = dbconnect.createStatement();
+            Statement myStmt =getDbconnect().createStatement();
             //results = myStmt.executeQuery("SELECT COUNT(ID) FROM "+tableName+" WHERE Type='"+type+"'");
-            results = myStmt.executeQuery("SELECT * FROM "+tableName+" WHERE Type='"+type+"'");
-            while (results.next()){
+            setResults(myStmt.executeQuery("SELECT * FROM "+tableName+" WHERE Type='"+type+"'"));
+            while (getResults().next()){
                 count++;
             }
             if(tableName.equals("chair"))
@@ -633,25 +668,28 @@ public class FinalProject
     //method called in writeManufacturers
     private String getManufacturers(String table)
     {
+        int i=0;
         StringBuilder manufacturers = new StringBuilder();
         Set<String> manu_ID = new HashSet<String>();
         try
         {
-            Statement myStmt = dbconnect.createStatement();
-            results = myStmt.executeQuery("SELECT * FROM " + table);
+            Statement myStmt = getDbconnect().createStatement();
+            setResults( myStmt.executeQuery("SELECT * FROM " + table));
 
-            while( results.next() )
+            while( getResults().next() )
             {
-                manu_ID.add( results.getString("ManuID") );
+                manu_ID.add( getResults().getString("ManuID") );
             }
 
-            results = myStmt.executeQuery("SELECT * FROM manufacturer");
-            while( results.next() )
+            setResults(myStmt.executeQuery("SELECT * FROM manufacturer"));
+            while( getResults().next() )
             {
-                if(manu_ID.contains(results.getString("ManuID")))
+                if(manu_ID.contains(getResults().getString("ManuID")))
                 {
-                    manufacturers.append( results.getString("Name") );
-                    manufacturers.append(", ");
+                    i++;
+                    manufacturers.append(i +". ");
+                    manufacturers.append( getResults().getString("Name") );
+                    manufacturers.append("\n");
                 }
             }
             myStmt.close();
@@ -669,7 +707,7 @@ public class FinalProject
         try
         {
             String query = "DELETE FROM "+ table +" WHERE ID = ?";
-            PreparedStatement myStmt = dbconnect.prepareStatement(query);
+            PreparedStatement myStmt = getDbconnect().prepareStatement(query);
             myStmt.setString(1,objectID);
             myStmt.executeUpdate();
             myStmt.close();
@@ -683,7 +721,6 @@ public class FinalProject
     public int calculateLowestPrice(String[][] tableData) throws IOException {
 
          /*
-
         This method calculates the lowest int price for the passed tableData and returns a string value of it by
         following this approach:
         * Step 1 : Start by considering the object with the most number of reusable parts (indicated by "Y").
@@ -698,7 +735,6 @@ public class FinalProject
                     from the database
         * Step 7 : Finally if the numOfItems requested by user is >1 call setfurniture again to repeat all the steps for
                     the next Item as long as numOfItems<=1
-
         */
 
         String id=new String();
@@ -725,7 +761,7 @@ public class FinalProject
         ArrayList<Integer> prices = new ArrayList<>();
         ArrayList<Integer> collectionOfLowestPrices = new ArrayList<>(); // contains lowest price of each greatest Y
 
-        System.out.println(highestNumY);
+        //System.out.println(highestNumY);
 
         for(int i=0;i<tableData.length;i++)
         {
@@ -754,8 +790,8 @@ public class FinalProject
             {
                 id = tableData[rowsWithHighestNumY.get(k)][tableData[0].length-1];  //id of the record to delete
                 deleteFromTable(getItemTable(),id);  //delete the specified row
-                System.out.println("id : "+id);
-                System.out.println("Lowest : "+tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);
+                //System.out.println("id : "+id);
+                //System.out.println("Lowest : "+tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);
 
                 if(Integer.parseInt(getNumItems())>1)
                 {
@@ -765,8 +801,6 @@ public class FinalProject
 
                 return Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);
             }
-
-            System.out.println("Column containing the N for the highest row " + columnWithValN);
 
             ArrayList<Integer> trackIndexPrices = new ArrayList<>();  //tracks which rows from 2d array are selected prices
 
@@ -779,7 +813,7 @@ public class FinalProject
 
             // if (prices.size()==0) not possible to calculate
 
-            System.out.println(prices);
+            //System.out.println(prices);
 
 
             int lowestPriceY = prices.get(0);
@@ -791,6 +825,10 @@ public class FinalProject
             }
 
             idTracker.add(trackIndexPrices.get(prices.indexOf(lowestPriceY))+" "+rowsWithHighestNumY.get(k)); // keeps track of all indexes considered
+
+            //System.out.println(idTracker);
+
+            //System.out.println("lowest price of that col  " + lowestPriceY);
 
 
             lowestPriceY+=Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);  //will add the price of row with most Y with the remaining rows cheapest Y
@@ -808,37 +846,62 @@ public class FinalProject
         }
 
         String tempId = idTracker.get(collectionOfLowestPrices.indexOf(actualLowest));
-
+        //System.out.println(tempId);
         String idRow1=tableData[Integer.parseInt(tempId.substring(0,tempId.indexOf(" ")))][tableData[0].length-1];
         String idRow2=tableData[Integer.parseInt(tempId.substring(tempId.indexOf(" ")+1))][tableData[0].length-1];
-
+        //System.out.println("id1 : "+idRow1);
+        //System.out.println("id2 : "+idRow2);
         deleteFromTable(getItemTable(),idRow1); //delete the specified row
         deleteFromTable(getItemTable(),idRow2); //delete the specified row
 
-
+        //System.out.println("Lowest:"+actualLowest);
         counter++;
-        str +="\nthe lowest cost of constructing "+counter+" item: "+actualLowest +".\n";
-        //writeOrderForm(str,true);
-     output.add("The lowest cost to manufacture "+counter+" item of "+getItemType()+" "+getItemTable()+" is - "+actualLowest+"\n");
+        String value = ordinal(counter);
+        totalPrice+=actualLowest;
+        output.add("• The lowest cost to manufacture "+value+" item of "+getItemType()+" "+getItemTable()+" is - "+actualLowest+".00 $ \n");
         if(Integer.parseInt(getNumItems())>1)
         {
             setNumItems(String.valueOf(Integer.parseInt(getNumItems())-1));
             selectFurnitureType(getItemType(),getItemTable());
         }
-        writeOrderForm(str,true);
-        //deleteFromTable(getItemTable(),id);
         return actualLowest; //instead of return pass the value
     }
+    public static String ordinal(int i) {
+        String[] suffixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
+        switch (i % 100) {
+            case 11:
+            case 12:
+            case 13:
+                return i + "th";
+            default:
+                return i + suffixes[i % 10];
 
-
-
-    public void writeOrderForm(String order,boolean checker) throws IOException
-    {
-           output.add(0,"ORDER SUMMARY:\n");
-           output.add(1,"The Item: " + getItemType() +" "+ getItemTable() +"\nNumber of Items Requested: "+reqvalue+"\n");
-            for(int i=0;i<output.size();i++)
-           {
-               myWriter.write(output.get(i));
-           }
-       
+        }
     }
+
+    public void writeOrderForm() throws IOException
+    {
+        output.add(0,"--------------------------------------------------------------------------------------------------------------------\n");
+        output.add(1,"                                              \t          SALES INVOICE                             \n");
+        output.add(2,"--------------------------------------------------------------------------------------------------------------------\n");
+        output.add(3,"• The Item: " + getItemType() +" "+ getItemTable() +"\n• Number of Items Requested: "+getReqValue()+"\n");
+        for(int i=0;i<output.size();i++)
+        {
+            myWriter.write(output.get(i));
+            if(i==output.size()-1)
+            {
+                myWriter.write("\n    ~Total Price: "+totalPrice+".00 $");
+            }
+        }
+    }
+    public static void main(String[] args) throws IOException {
+        FinalProject myJDBC = new FinalProject("jdbc:mysql://localhost/inventory","NUMAN","TIGER");
+        myJDBC.initializeConnection();
+        myJDBC.userInput();
+
+        myJDBC.selectFurnitureType(myJDBC.getItemType(),myJDBC.getItemTable());
+        myJDBC.writeOrderForm();
+        myJDBC.closes();
+
+    }
+}
