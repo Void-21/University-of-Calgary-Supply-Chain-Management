@@ -25,10 +25,11 @@ class ConnectDatabase
 
 
     public void initializeConnection()
-    {         //this creates a connection between the java files and the database
+    {
+        //this establishes a connection between the java files and the database
         try
         {
-            dbconnect = DriverManager.getConnection(getDBURL(),getUSERNAME(),getPASSWORD());
+            dbconnect = DriverManager.getConnection(getDburl(),getUsername(),getPassword());
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -38,36 +39,50 @@ class ConnectDatabase
 
     public void setDbconnect(Connection dbconnect)
     {
+        //setter to set dbconnect
+
         this.dbconnect = dbconnect;
     }
 
     public void setResults(ResultSet results)
     {
+        //setter to set results
+
         this.results = results;
     }
 
-    public String getUSERNAME()
+    public String getUsername()
     {
+        //getter to get USERNAME
+
         return USERNAME;
     }
 
-    public String getDBURL()
+    public String getDburl()
     {
+        //getter to get DBURL
+
         return DBURL;
     }
 
-    public String getPASSWORD()
+    public String getPassword()
     {
+        //getter to get PASSWORD
+        
         return PASSWORD;
     }
 
     public Connection getDbconnect()
     {
+        //getter to get dbconnect
+        
         return dbconnect;
     }
 
     public ResultSet getResults()
     {
+        //getter to get results
+        
         return results;
     }
 }
@@ -76,40 +91,63 @@ class ProgramInput extends ConnectDatabase
 {
     private String itemType;            //Type of item user wishes to buy
     private String itemTable;           //contains the table of the item which the user wishes to buy
-    private String numItems;            // contains the number of items entered by the user
-    private int flagInput=0;
-    private int reqValue=0;
+    private String numItems;            //contains the number of items entered by the user
+    private int flagInput=0;            //flag to keep track of whether input operation has already been performed
+    private int reqValue=0;             //Stores integer value of numItems 
 
     public ProgramInput(String DBURL, String USERNAME, String PASSWORD) throws IOException
     {
+        // Constructor which calls the super constructor of parent class
+        
         super(DBURL,USERNAME,PASSWORD);
     }
 
 
-    public void setNumItems(String numItems) {
+    public void setNumItems(String numItems) 
+    {
+        //Setter to set the numItems
+        
         this.numItems = numItems;
     }
 
-    public void setItemTable(String itemTable) {
+    public void setItemTable(String itemTable) 
+    {
+        //Setter to set itemTable
+        
         this.itemTable = itemTable;
     }
 
-    public void setItemType(String itemType) {
+    public void setItemType(String itemType) 
+    {
+        //Setter to set itemType
+        
         this.itemType = itemType;
     }
 
-    public String getItemTable() {
+    public String getItemTable() 
+    {
+        //Getter to get itemTable
+        
         return itemTable;
     }
 
-    public String getItemType() {
+    public String getItemType() 
+    {
+        //Getter to get itemType
+        
         return itemType;
     }
 
-    public String getNumItems() {
+    public String getNumItems() 
+    {
+        //Getter to get numItems
+        
         return numItems;
     }
-    public int getReqValue(){
+    public int getReqValue()
+    {
+        //Getter to get reqValue
+        
         return reqValue;
     }
 
@@ -197,7 +235,7 @@ class ProgramInput extends ConnectDatabase
 
             }
             System.out.println();
-            System.out.println("Item does not exists please enter a valid item"); //remove later
+            System.out.println("Item does not exists please enter a valid item");
             System.out.println();
             userInput();
 
@@ -206,7 +244,7 @@ class ProgramInput extends ConnectDatabase
         catch (SQLException ex)
         {
             System.out.println();
-            System.out.println("Item does not exists please enter a valid item"); //remove later
+            System.out.println("Item does not exists please enter a valid item");
             System.out.println();
             userInput();
 
@@ -217,11 +255,11 @@ class ProgramInput extends ConnectDatabase
 class DatabaseCalculation extends ProgramInput
 {
     private int counter=0;
-    File outFile = new File("orderform.txt");
-    FileWriter myWriter = new FileWriter(outFile);
     public String str ="";
     int totalPrice=0;
     ArrayList<String> output = new ArrayList<String>();
+    File outFile = new File("orderform.txt");
+    FileWriter myWriter = new FileWriter(outFile);
 
     public DatabaseCalculation(String DBURL, String USERNAME, String PASSWORD) throws IOException
     {
@@ -301,7 +339,7 @@ class DatabaseCalculation extends ProgramInput
             this method selects all the tuples/rows that match the type of filing required by the user
             from the data base using 'type' as a key.
             the method also creates a 2d array of type string that selects all the columns that have values of the form
-            (Y/N), this new 2d array is passed to the method checkFiling. 
+            (Y/N), this new 2d array is passed to the method checkFiling.
         */
         String[][] filing2d = new String[count][7];
         String[][] filing = new String[count][5];
@@ -346,12 +384,12 @@ class DatabaseCalculation extends ProgramInput
         /*
             this method receives a 2d array from selectFiling method and uses it to check if the Filing can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
-            if it cannot be constructed the else block of the code is executed. 
-            
-            the way the method checks if the filing can be constructed is as follows, 
-            there are three counter variables set to zero in the beginning. 
+            if it cannot be constructed the else block of the code is executed.
+
+            the way the method checks if the filing can be constructed is as follows,
+            there are three counter variables set to zero in the beginning.
             whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
-            
+
             only if all the counters are greater than zero the required furniture can be constructed.
          */
         int c1=0,c2=0,c3=0;
@@ -405,7 +443,7 @@ class DatabaseCalculation extends ProgramInput
             this method selects all the tuples/rows that match the type of lamp required by the user
             from the data base using 'type' as a key.
             the method also creates a 2d array of type string that selects all the columns that have values of the form
-            (Y/N), this new 2d array is passed to the method checkLamp. 
+            (Y/N), this new 2d array is passed to the method checkLamp.
         */
         String[][] lamp2d = new String[count][6];
         String[][] lamp = new String[count][4];
@@ -444,14 +482,14 @@ class DatabaseCalculation extends ProgramInput
         /*
             this method receives a 2d array from selectLamp method and uses it to check if the Lamp can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
-            if it cannot be constructed the else block of the code is executed. 
-            
-            the way the method checks if the lamp can be constructed is as follows, 
-            there are two counter variables set to zero in the beginning. 
+            if it cannot be constructed the else block of the code is executed.
+
+            the way the method checks if the lamp can be constructed is as follows,
+            there are two counter variables set to zero in the beginning.
             whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
-            
+
             only if all the counters are greater than zero the required furniture can be constructed.
-         */ 
+         */
         boolean check = false;
         for(int i=0;i<count;i++)
         {
@@ -498,7 +536,7 @@ class DatabaseCalculation extends ProgramInput
             this method selects all the tuples/rows that match the type of desk required by the user
             from the data base using 'type' as a key.
             the method also creates a 2d array of type string that selects all the columns that have values of the form
-            (Y/N), this new 2d array is passed to the method checkDesk. 
+            (Y/N), this new 2d array is passed to the method checkDesk.
         */
         String[][] desk2d = new String[count][7];
         String[][] desk = new String[count][5];
@@ -538,12 +576,12 @@ class DatabaseCalculation extends ProgramInput
         /*
             this method receives a 2d array from selectDesk method and uses it to check if the Desk can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
-            if it cannot be constructed the else block of the code is executed. 
-            
-            the way the method checks if the Desk can be constructed is as follows, 
-            there are three counter variables set to zero in the beginning. 
+            if it cannot be constructed the else block of the code is executed.
+
+            the way the method checks if the Desk can be constructed is as follows,
+            there are three counter variables set to zero in the beginning.
             whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
-            
+
             only if all the counters are greater than zero the required furniture can be constructed.
          */
         boolean check = false;
@@ -596,7 +634,7 @@ class DatabaseCalculation extends ProgramInput
             this method selects all the tuples/rows that match the type of chair required by the user
             from the data base using 'type' as a key.
             the method also creates a 2d array of type string that selects all the columns that have values of the form
-            (Y/N), this new 2d array is passed to the method checkChair. 
+            (Y/N), this new 2d array is passed to the method checkChair.
 
         */
         String[][] chair2d = new String[count][8];
@@ -639,12 +677,12 @@ class DatabaseCalculation extends ProgramInput
         /*
             this method receives a 2d array from selectChair method and uses it to check if the Chair can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
-            if it cannot be constructed the else block of the code is executed. 
-            
-            the way the method checks if the Chair can be constructed is as follows, 
-            there are four counter variables set to zero in the beginning. 
+            if it cannot be constructed the else block of the code is executed.
+
+            the way the method checks if the Chair can be constructed is as follows,
+            there are four counter variables set to zero in the beginning.
             whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
-            
+
             only if all the counters are greater than zero the required furniture can be constructed.
          */
         boolean check = false;
@@ -699,9 +737,9 @@ class DatabaseCalculation extends ProgramInput
     public String[][] selectFurnitureType(String type, String tableName)
     {
         /*
-                this method calls the respective select functions based on the table name and the type provided by the 
+                this method calls the respective select functions based on the table name and the type provided by the
                 user. the 'type' is used as the key to proceed with the function.
-                the local variable count is incremented every time the required furniture type in the table is encountered 
+                the local variable count is incremented every time the required furniture type in the table is encountered
                 'count' represents the total number of elements that are present in the sql database of the required type
         */
         int count=0;
@@ -752,9 +790,9 @@ class DatabaseCalculation extends ProgramInput
     private String getManufacturers(String table)
     {
         /*
-            this method accesses the sql database and returns all the manufacturers of a certain furniture 
+            this method accesses the sql database and returns all the manufacturers of a certain furniture
             the list of manufacturers are written to the file in the final invoice of the transaction.
-          
+
             the steps to receive the required rows are as follows
             1. select all the ManuID's from the specified table.
             2. select all the manufacturers from the manufacturers table using the ManuID
@@ -799,7 +837,7 @@ class DatabaseCalculation extends ProgramInput
         /*
             this method deletes a specified row using the ID of the specified table.
             the deletion only takes place once the element has been used to construct the required furniture and therefore
-            is not available for further use anymore.        
+            is not available for further use anymore.
         */
         try
         {
@@ -963,11 +1001,11 @@ class DatabaseCalculation extends ProgramInput
         }
         return actualLowest; //instead of return pass the value
     }
-    
-    
+
+
     public static String numFormat(int i) {
         /*
-            this is a helper function used to properly format the output file , for example it changes the '1' to '1st' 
+            this is a helper function used to properly format the output file , for example it changes the '1' to '1st'
             '11' to '11th' and onwards.
         */
         String[] str = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
