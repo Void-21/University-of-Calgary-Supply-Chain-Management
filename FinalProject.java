@@ -195,7 +195,7 @@ class ProgramInput extends ConnectDatabase
             }
         }
 
-        if(!itemName.contains(" ")||countSpace>1)  //if the item name does not contain a space Re-enter the string
+        if(!itemName.contains(" ")||countSpace>1&&!itemName.equals("swing arm lamp"))  //if the item name does not contain a space Re-enter the string
         {
             System.out.println();
             System.out.println("Item does not exists please enter a valid item"); //remove later
