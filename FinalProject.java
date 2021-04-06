@@ -927,7 +927,10 @@ class DatabaseCalculation extends ProgramInput
                 deleteFromTable(getItemTable(),id);  //delete the specified row
                 //System.out.println("id : "+id);
                 //System.out.println("Lowest : "+tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);
-
+                counter++;
+                String value = numFormat(counter);
+                totalPrice+=Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);
+                output.add("• The lowest cost to manufacture "+value+" item of "+getItemType()+" "+getItemTable()+" is - "+tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]+".00 $ \n");
                 if(Integer.parseInt(getNumItems())>1)
                 {
                     setNumItems(String.valueOf(Integer.parseInt(getNumItems())-1));
