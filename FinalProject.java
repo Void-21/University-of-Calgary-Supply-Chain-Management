@@ -804,7 +804,7 @@ class DatabaseCalculation extends ProgramInput
         try
         {
             Statement myStmt = getDbconnect().createStatement();
-            setResults( myStmt.executeQuery("SELECT * FROM " + table));
+            setResults( myStmt.executeQuery("SELECT * FROM "+getItemTable()+" WHERE Type='"+getItemType()+"'"));
 
             while( getResults().next() )
             {
