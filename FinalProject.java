@@ -288,56 +288,9 @@ class DatabaseCalculation extends ProgramInput
             e.printStackTrace();
         }
     }
-
-
-    public String selectTable(String tablename)
-    {
-        /* This a method which displays the current state of the inventory database in MySQL */
-
-        StringBuffer all = new StringBuffer();
-        try {
-            Statement myStmt = getDbconnect().createStatement();
-            setResults(myStmt.executeQuery("SELECT * FROM " + tablename));
-            all.append(tablename);
-            all.append("\n");
-            if (tablename.equals("lamp")) {
-                while (getResults().next()) {
-                    all.append("(" + getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " + getResults().getString("Base") + " // " +getResults().getString("Bulb") + " // " +getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
-                    all.append("\n");
-                }
-            }
-            if (tablename.equals("manufacturer")) {
-                while (getResults().next()) {
-                    all.append("(" +getResults().getString("ManuID") + " // " + getResults().getString("Name") + " // " + getResults().getString("Phone") + " // " + getResults().getString("Province") + ")");
-                    all.append("\n");
-                }
-            }
-            if (tablename.equals("filing")) {
-                while (getResults().next()) {
-                    all.append("(" + getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " +getResults().getString("Rails") + " // " + getResults().getString("Drawers") + " // " + getResults().getString("Cabinet") + " // " + getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
-                    all.append("\n");
-                }
-            }
-            if (tablename.equals("desk")) {
-                while (getResults().next()) {
-                    all.append("(" + getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " + getResults().getString("Legs") + " // " + getResults().getString("Top") + " // " + getResults().getString("Drawer") + " // " + getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
-                    all.append("\n");
-                }
-            }
-            if (tablename.equals("chair")) {
-                while (getResults().next()) {
-                    all.append("(" +getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " + getResults().getString("Legs") + " // " + getResults().getString("Arms") + " // " + getResults().getString("Seat") + " // " + getResults().getString("Cushion") + " // " + getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
-                    all.append("\n");
-                }
-            }
-            myStmt.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return all.toString();
-    }
-    public String[][] filingSelect(String type, int count){
+    
+    
+    private String[][] filingSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of filing required by the user
             from the data base using 'type' as a key.
@@ -383,7 +336,7 @@ class DatabaseCalculation extends ProgramInput
         }
         return filing2d;
     }
-    public String[][] checkFiling(String[][] filing, int count) throws IOException {
+    private String[][] checkFiling(String[][] filing, int count) throws IOException {
         /*
             this method receives a 2d array from selectFiling method and uses it to check if the Filing can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
@@ -439,7 +392,8 @@ class DatabaseCalculation extends ProgramInput
             return null;
         }
     }
-    public String[][] lampSelect(String type, int count){
+    
+    private String[][] lampSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of lamp required by the user
             from the data base using 'type' as a key.
@@ -479,7 +433,8 @@ class DatabaseCalculation extends ProgramInput
         }
         return lamp2d;
     }
-    public String[][] checkLamp(String[][] lamp, int count) throws IOException {   int c1=0,c2=0;
+    
+    private String[][] checkLamp(String[][] lamp, int count) throws IOException {   int c1=0,c2=0;
         /*
             this method receives a 2d array from selectLamp method and uses it to check if the Lamp can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
@@ -530,7 +485,7 @@ class DatabaseCalculation extends ProgramInput
             return null;
         }
     }
-    public String[][] deskSelect(String type, int count){
+    private String[][] deskSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of desk required by the user
             from the data base using 'type' as a key.
@@ -571,7 +526,7 @@ class DatabaseCalculation extends ProgramInput
         }
         return desk2d;
     }
-    public String[][] checkDesk(String[][] desk, int count) throws IOException {   int c1=0,c2=0,c3=0;
+    private String[][] checkDesk(String[][] desk, int count) throws IOException {   int c1=0,c2=0,c3=0;
         /*
             this method receives a 2d array from selectDesk method and uses it to check if the Desk can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
@@ -626,7 +581,7 @@ class DatabaseCalculation extends ProgramInput
             return null;
         }
     }
-    public String[][] chairSelect(String type, int count){
+    private String[][] chairSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of chair required by the user
             from the data base using 'type' as a key.
@@ -669,7 +624,8 @@ class DatabaseCalculation extends ProgramInput
         }
         return chair2d;
     }
-    public String[][] checkChair(String[][] chair, int count) throws IOException {   int c1=0,c2=0,c3=0,c4=0;
+    
+    private String[][] checkChair(String[][] chair, int count) throws IOException {   int c1=0,c2=0,c3=0,c4=0;
         /*
             this method receives a 2d array from selectChair method and uses it to check if the Chair can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
@@ -728,6 +684,7 @@ class DatabaseCalculation extends ProgramInput
             return null;
         }
     }
+    
     public String[][] selectFurnitureType(String type, String tableName)
     {
         /*
@@ -774,18 +731,10 @@ class DatabaseCalculation extends ProgramInput
 
         return null;
     }
-    public void writeManufacturers(String table) throws IOException
-    {
-        //import java.io to use this function
-        File outFile = new File("orderform.txt");
-        FileWriter myWriter = new FileWriter(outFile);
-
-        myWriter.write("Order cannot be fulfilled based on current inventory.\n\n");
-        myWriter.write("Suggested manufacturers are: " + getManufacturers(table));
-        myWriter.close();
-    }
+    
+    
     //method called in writeManufacturers
-    private String getManufacturers(String table)
+    public String getManufacturers(String table)
     {
         /*
             this method accesses the sql database and returns all the manufacturers of a certain furniture
@@ -850,9 +799,8 @@ class DatabaseCalculation extends ProgramInput
         }
     }
 
-    public int calculateLowestPrice(String[][] tableData) throws IOException {
-
-
+    public int calculateLowestPrice(String[][] tableData) throws IOException 
+    {
        /*
         This method calculates the lowest int price for the passed tableData and returns a string value of it by
         following this approach:
@@ -1052,8 +1000,7 @@ class DatabaseCalculation extends ProgramInput
 
     }
 
-
-    public static String numFormat(int i) {
+    private static String numFormat(int i) {
         /*
             this is a helper function used to properly format the output file , for example it changes the '1' to '1st'
             '11' to '11th' and onwards.
