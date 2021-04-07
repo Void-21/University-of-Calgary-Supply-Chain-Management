@@ -2,6 +2,7 @@ package edu.ucalgary.ensf409;
 import java.sql.*;
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 class ConnectDatabase
 {
@@ -68,21 +69,21 @@ class ConnectDatabase
     public String getPassword()
     {
         //getter to get PASSWORD
-        
+
         return PASSWORD;
     }
 
     public Connection getDbconnect()
     {
         //getter to get dbconnect
-        
+
         return dbconnect;
     }
 
     public ResultSet getResults()
     {
         //getter to get results
-        
+
         return results;
     }
 }
@@ -93,61 +94,61 @@ class ProgramInput extends ConnectDatabase
     private String itemTable;           //contains the table of the item which the user wishes to buy
     private String numItems;            //contains the number of items entered by the user
     private int flagInput=0;            //flag to keep track of whether input operation has already been performed
-    private int reqValue=0;             //Stores integer value of numItems 
+    private int reqValue=0;             //Stores integer value of numItems
 
     public ProgramInput(String DBURL, String USERNAME, String PASSWORD) throws IOException
     {
         // Constructor which calls the super constructor of parent class
-        
+
         super(DBURL,USERNAME,PASSWORD);
     }
 
 
-    public void setNumItems(String numItems) 
+    public void setNumItems(String numItems)
     {
         //Setter to set the numItems
-        
+
         this.numItems = numItems;
     }
 
-    public void setItemTable(String itemTable) 
+    public void setItemTable(String itemTable)
     {
         //Setter to set itemTable
-        
+
         this.itemTable = itemTable;
     }
 
-    public void setItemType(String itemType) 
+    public void setItemType(String itemType)
     {
         //Setter to set itemType
-        
+
         this.itemType = itemType;
     }
 
-    public String getItemTable() 
+    public String getItemTable()
     {
         //Getter to get itemTable
-        
+
         return itemTable;
     }
 
-    public String getItemType() 
+    public String getItemType()
     {
         //Getter to get itemType
-        
+
         return itemType;
     }
 
-    public String getNumItems() 
+    public String getNumItems()
     {
         //Getter to get numItems
-        
+
         return numItems;
     }
     public int getReqValue()
     {
         //Getter to get reqValue
-        
+
         return reqValue;
     }
 
@@ -256,6 +257,8 @@ class DatabaseCalculation extends ProgramInput
 {
     private int counter=0;
     public String str ="";
+    public boolean firstTime=true;
+    public String manufacturers;
     int totalPrice=0;
     ArrayList<String> output = new ArrayList<String>();
     File outFile = new File("orderform.txt");
@@ -385,11 +388,9 @@ class DatabaseCalculation extends ProgramInput
             this method receives a 2d array from selectFiling method and uses it to check if the Filing can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
             if it cannot be constructed the else block of the code is executed.
-
             the way the method checks if the filing can be constructed is as follows,
             there are three counter variables set to zero in the beginning.
             whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
-
             only if all the counters are greater than zero the required furniture can be constructed.
          */
         int c1=0,c2=0,c3=0;
@@ -431,9 +432,9 @@ class DatabaseCalculation extends ProgramInput
                 output.add("'s cannot be constructed due to insufficient materials\n");
             }
             output.add("\nPlease contact one of the manufacturers mentioned below for more information.\n");
-            output.add("--------------------------------------------------------------------------------------------------------------------\n");
-            output.add(getManufacturers(getItemTable()));
-            output.add("--------------------------------------------------------------------------------------------------------------------\n");
+            output.add("------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+            output.add(manufacturers);
+            output.add("------------------------------------------------------------------------------------------------------------------------------------------------------\n");
             output.add("Sorry for the inconvenience.\n");
             return null;
         }
@@ -483,11 +484,9 @@ class DatabaseCalculation extends ProgramInput
             this method receives a 2d array from selectLamp method and uses it to check if the Lamp can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
             if it cannot be constructed the else block of the code is executed.
-
             the way the method checks if the lamp can be constructed is as follows,
             there are two counter variables set to zero in the beginning.
             whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
-
             only if all the counters are greater than zero the required furniture can be constructed.
          */
         boolean check = false;
@@ -524,9 +523,9 @@ class DatabaseCalculation extends ProgramInput
                 output.add("'s cannot be constructed due to insufficient materials\n");
             }
             output.add("\nPlease contact one of the manufacturers mentioned below for more information.\n");
-            output.add("--------------------------------------------------------------------------------------------------------------------\n");
-            output.add(getManufacturers(getItemTable()));
-            output.add("--------------------------------------------------------------------------------------------------------------------\n");
+            output.add("------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+            output.add(manufacturers);
+            output.add("------------------------------------------------------------------------------------------------------------------------------------------------------\n");
             output.add("Sorry for the inconvenience.\n");
             return null;
         }
@@ -577,11 +576,9 @@ class DatabaseCalculation extends ProgramInput
             this method receives a 2d array from selectDesk method and uses it to check if the Desk can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
             if it cannot be constructed the else block of the code is executed.
-
             the way the method checks if the Desk can be constructed is as follows,
             there are three counter variables set to zero in the beginning.
             whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
-
             only if all the counters are greater than zero the required furniture can be constructed.
          */
         boolean check = false;
@@ -622,9 +619,9 @@ class DatabaseCalculation extends ProgramInput
                 output.add("'s cannot be constructed due to insufficient materials\n");
             }
             output.add("\nPlease contact one of the manufacturers mentioned below for more information.\n");
-            output.add("--------------------------------------------------------------------------------------------------------------------\n");
-            output.add(getManufacturers(getItemTable()));
-            output.add("--------------------------------------------------------------------------------------------------------------------\n");
+            output.add("------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+            output.add(manufacturers);
+            output.add("------------------------------------------------------------------------------------------------------------------------------------------------------\n");
             output.add("Sorry for the inconvenience.\n");
             return null;
         }
@@ -635,7 +632,6 @@ class DatabaseCalculation extends ProgramInput
             from the data base using 'type' as a key.
             the method also creates a 2d array of type string that selects all the columns that have values of the form
             (Y/N), this new 2d array is passed to the method checkChair.
-
         */
         String[][] chair2d = new String[count][8];
         String[][] chair = new String[count][6];
@@ -678,11 +674,9 @@ class DatabaseCalculation extends ProgramInput
             this method receives a 2d array from selectChair method and uses it to check if the Chair can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
             if it cannot be constructed the else block of the code is executed.
-
             the way the method checks if the Chair can be constructed is as follows,
             there are four counter variables set to zero in the beginning.
             whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
-
             only if all the counters are greater than zero the required furniture can be constructed.
          */
         boolean check = false;
@@ -727,9 +721,9 @@ class DatabaseCalculation extends ProgramInput
                 output.add("'s cannot be constructed due to insufficient materials\n");
             }
             output.add("\nPlease contact one of the manufacturers mentioned below for more information.\n");
-            output.add("--------------------------------------------------------------------------------------------------------------------\n");
-            output.add(getManufacturers(getItemTable()));
-            output.add("--------------------------------------------------------------------------------------------------------------------\n");
+            output.add("------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+            output.add(manufacturers);
+            output.add("------------------------------------------------------------------------------------------------------------------------------------------------------\n");
             output.add("Sorry for the inconvenience.\n");
             return null;
         }
@@ -743,7 +737,11 @@ class DatabaseCalculation extends ProgramInput
                 'count' represents the total number of elements that are present in the sql database of the required type
         */
         int count=0;
-
+        if(firstTime)
+        {
+            manufacturers = getManufacturers(getItemTable());
+            firstTime=false;
+        }
         try
         {
             Statement myStmt =getDbconnect().createStatement();
@@ -792,7 +790,6 @@ class DatabaseCalculation extends ProgramInput
         /*
             this method accesses the sql database and returns all the manufacturers of a certain furniture
             the list of manufacturers are written to the file in the final invoice of the transaction.
-
             the steps to receive the required rows are as follows
             1. select all the ManuID's from the specified table.
             2. select all the manufacturers from the manufacturers table using the ManuID
@@ -804,7 +801,7 @@ class DatabaseCalculation extends ProgramInput
         try
         {
             Statement myStmt = getDbconnect().createStatement();
-            setResults( myStmt.executeQuery("SELECT * FROM "+getItemTable()+" WHERE Type='"+getItemType()+"'"));
+            setResults( myStmt.executeQuery("SELECT * FROM "+getItemTable()));
 
             while( getResults().next() )
             {
@@ -855,7 +852,7 @@ class DatabaseCalculation extends ProgramInput
 
     public int calculateLowestPrice(String[][] tableData) throws IOException {
 
-    
+
        /*
         This method calculates the lowest int price for the passed tableData and returns a string value of it by
         following this approach:
@@ -1079,10 +1076,13 @@ class DatabaseCalculation extends ProgramInput
             this method is used to write to the output file.
             main formatting of the output file takes place in this function.
         */
-        output.add(0,"--------------------------------------------------------------------------------------------------------------------\n");
-        output.add(1,"                                              \t          SALES INVOICE                             \n");
-        output.add(2,"--------------------------------------------------------------------------------------------------------------------\n");
-        output.add(3,"• The Item: " + getItemType() +" "+ getItemTable() +"\n• Number of Items Requested: "+getReqValue()+"\n");
+        output.add(0,"------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+        output.add(1,"                                              \t          \t\tSALES INVOICE                                               \n");
+        output.add(2,"------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+        output.add(3,"• Faculty Name: \n");
+        output.add(4,"• Contact: \n");
+        output.add(5,"• Date: \n");
+        output.add(6,"• The Item: " + getItemType() +" "+ getItemTable() +"\n• Number of Items Requested: "+getReqValue()+"\n");
         for(int i=0;i<output.size();i++)
         {
             myWriter.write(output.get(i));
@@ -1101,7 +1101,7 @@ public class FinalProject
     public static void main(String[] args) throws IOException
     {
 
-        DatabaseCalculation myJDBC = new DatabaseCalculation("jdbc:mysql://localhost/inventory","zee","Zeemaan1234@");
+        DatabaseCalculation myJDBC = new DatabaseCalculation("jdbc:mysql://localhost/inventory","NUMAN","TIGER");
         myJDBC.initializeConnection();
         myJDBC.userInput();
 
