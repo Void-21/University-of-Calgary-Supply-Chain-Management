@@ -855,7 +855,7 @@ class DatabaseCalculation extends ProgramInput
 
     public int calculateLowestPrice(String[][] tableData) throws IOException {
 
-         /*
+        /*
         This method calculates the lowest int price for the passed tableData and returns a string value of it by
         following this approach:
         * Step 1 : Start by considering the object with the most number of reusable parts (indicated by "Y").
@@ -872,137 +872,173 @@ class DatabaseCalculation extends ProgramInput
                     the next Item as long as numOfItems<=1
         */
 
-        String id=new String();
-        ArrayList<String> idTracker = new ArrayList<>();
-        int count = 0; //counting the number of Y's
-        ArrayList<Integer> rowCount = new ArrayList<>(); //count of Y in each row
-
-        for(int i=0;i<tableData.length;i++)
-        {
-            for(int j=0;j<tableData[0].length-2;j++)
-            {
-                if(tableData[i][j].contains("Y"))
-                {
-                    count++;    //Count Y in that row i
-                }
-            }
-            rowCount.add(count);  // add the count of each row as an element
-            count=0;
-        }
-
-
-        int highestNumY = Collections.max(rowCount);    //maximum number of Y's
-        ArrayList<Integer> rowsWithHighestNumY = new ArrayList<>();
         ArrayList<Integer> prices = new ArrayList<>();
-        ArrayList<Integer> collectionOfLowestPrices = new ArrayList<>(); // contains lowest price of each greatest Y
+        ArrayList<String> idTracker = new ArrayList<>();
 
-        //System.out.println(highestNumY);
+        int lowestPrice;
 
-        for(int i=0;i<tableData.length;i++)
+        if(tableData[0].length==6)
         {
-            if(rowCount.get(i)==highestNumY)
+            for(int i=0;i< tableData.length;i++)
             {
-                rowsWithHighestNumY.add(i);  // contains all rows with highest number of Y
-            }
-        }
-
-        //int rowWithHighestNumY= rowCount.indexOf(Collections.max(rowCount));  // row with greatest number of Y's
-        //System.out.println("Row with highest num Y "+rowWithHighestNumY);
-
-        int columnWithValN=20; //contains the column in row with high value of Y which has N, if it remains 20 after loop we already solved
-
-        for(int k=0;k<rowsWithHighestNumY.size();k++) {
-
-            for (int i = 0; i < tableData[0].length-2; i++) {
-                if (tableData[rowsWithHighestNumY.get(k)][i].contains("N")) {
-                    columnWithValN = i;
-                    break;
-                }
-            }
-
-
-            if (columnWithValN == 20)  //if it remain 20 problem was already solved
-            {
-                id = tableData[rowsWithHighestNumY.get(k)][tableData[0].length-1];  //id of the record to delete
-                deleteFromTable(getItemTable(),id);  //delete the specified row
-                //System.out.println("id : "+id);
-                //System.out.println("Lowest : "+tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);
-                counter++;
-                String value = numFormat(counter);
-                totalPrice+=Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);
-                output.add("• The lowest cost to manufacture "+value+" item of "+getItemType()+" "+getItemTable()+" is - "+tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]+".00 $ \n");
-                if(Integer.parseInt(getNumItems())>1)
+                for(int j=0;j< tableData.length;j++)
                 {
-                    setNumItems(String.valueOf(Integer.parseInt(getNumItems())-1));
-                    selectFurnitureType(getItemType(),getItemTable());
-                }
-
-                return Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);
-            }
-
-            ArrayList<Integer> trackIndexPrices = new ArrayList<>();  //tracks which rows from 2d array are selected prices
-
-            for (int i = 0; i < tableData.length; i++) {
-                if (tableData[i][columnWithValN].contains("Y")) {
-                    prices.add(Integer.parseInt(tableData[i][tableData[0].length - 2]));  //adds price of that column
-                    trackIndexPrices.add(i);
-                }
-            }
-
-            // if (prices.size()==0) not possible to calculate
-
-            //System.out.println(prices);
-
-
-            int lowestPriceY = prices.get(0);
-
-            for (int i = 0; i < prices.size(); i++) {
-                if (lowestPriceY > prices.get(i)) {
-                    lowestPriceY = prices.get(i);
+                    for(int k=0;k< tableData.length;k++)
+                    {
+                        for(int l=0;l<tableData.length;l++)
+                        {
+                            if(tableData[i][0].contains("Y")&&tableData[j][1].contains("Y")&&tableData[k][2].contains("Y")&&tableData[l][3].contains("Y"))
+                            {
+                                int rowsPrice=0;
+                                List<Integer> rows = new ArrayList<>();
+                                rows.add(i);
+                                rows.add(j);
+                                rows.add(k);
+                                rows.add(l);
+                                List<Integer> newList = rows.stream().distinct().collect(Collectors.toList());
+                                String id = new String();
+                                for(int m=0;m<newList.size();m++)
+                                {
+                                    rowsPrice+=Integer.parseInt(tableData[newList.get(m)][tableData[0].length-2]);
+                                    id+=newList.get(m)+" ";
+                                }
+                                prices.add(rowsPrice);
+                                idTracker.add(id);
+                            }
+                        }
+                    }
                 }
             }
 
-            idTracker.add(trackIndexPrices.get(prices.indexOf(lowestPriceY))+" "+rowsWithHighestNumY.get(k)); // keeps track of all indexes considered
+           lowestPrice=Collections.min(prices);
+            String tempId = idTracker.get(prices.indexOf(lowestPrice));
+            tempId=tempId.substring(0,tempId.length()-1);
 
-            //System.out.println(idTracker);
+            totalPrice += lowestPrice;
+            String[] strId = tempId.split(" ");
 
-            //System.out.println("lowest price of that col  " + lowestPriceY);
-
-
-            lowestPriceY+=Integer.parseInt(tableData[rowsWithHighestNumY.get(k)][tableData[0].length - 2]);  //will add the price of row with most Y with the remaining rows cheapest Y
-            collectionOfLowestPrices.add(lowestPriceY);  //contains lowest price of each highest Y row
-            prices = new ArrayList<>(); //set prices to default
-        }
-
-        int actualLowest = collectionOfLowestPrices.get(0);
-
-        for (int i = 0; i < collectionOfLowestPrices.size(); i++) {
-            if (actualLowest > collectionOfLowestPrices.get(i))
+            for(int i=0;i< strId.length;i++)
             {
-                actualLowest = collectionOfLowestPrices.get(i);
+                deleteFromTable(getItemTable(),tableData[Integer.parseInt(strId[i])][tableData[0].length-1]);
             }
+
+            counter++;
+            String value = numFormat(counter);
+            output.add("• The lowest cost to manufacture " + value + " item of " + getItemType() + " " + getItemTable() + " is - " + lowestPrice + ".00 $ \n");
+
+            if (Integer.parseInt(getNumItems()) > 1)
+            {
+                setNumItems(String.valueOf(Integer.parseInt(getNumItems()) - 1));
+                selectFurnitureType(getItemType(), getItemTable());
+            }
+
+            return lowestPrice;
+
         }
 
-        String tempId = idTracker.get(collectionOfLowestPrices.indexOf(actualLowest));
-        //System.out.println(tempId);
-        String idRow1=tableData[Integer.parseInt(tempId.substring(0,tempId.indexOf(" ")))][tableData[0].length-1];
-        String idRow2=tableData[Integer.parseInt(tempId.substring(tempId.indexOf(" ")+1))][tableData[0].length-1];
-        //System.out.println("id1 : "+idRow1);
-        //System.out.println("id2 : "+idRow2);
-        deleteFromTable(getItemTable(),idRow1); //delete the specified row
-        deleteFromTable(getItemTable(),idRow2); //delete the specified row
-
-        //System.out.println("Lowest:"+actualLowest);
-        counter++;
-        String value = numFormat(counter);
-        totalPrice+=actualLowest;
-        output.add("• The lowest cost to manufacture "+value+" item of "+getItemType()+" "+getItemTable()+" is - "+actualLowest+".00 $ \n");
-        if(Integer.parseInt(getNumItems())>1)
+        else if(tableData[0].length==5)
         {
-            setNumItems(String.valueOf(Integer.parseInt(getNumItems())-1));
-            selectFurnitureType(getItemType(),getItemTable());
+            for(int i=0;i< tableData.length;i++)
+            {
+                for(int j=0;j< tableData.length;j++)
+                {
+                    for(int k=0;k<tableData.length;k++)
+                    {
+                        if(tableData[i][0].contains("Y")&&tableData[j][1].contains("Y")&&tableData[k][2].contains("Y"))
+                        {
+                            int rowsPrice=0;
+                            List<Integer> rows = new ArrayList<>();
+                            rows.add(i);
+                            rows.add(j);
+                            rows.add(k);
+                            List<Integer> newList = rows.stream().distinct().collect(Collectors.toList());
+                            String id = new String();
+                            for(int m=0;m<newList.size();m++)
+                            {
+                                rowsPrice+=Integer.parseInt(tableData[newList.get(m)][tableData[0].length-2]);
+                                id+=newList.get(m)+" ";
+                            }
+                            prices.add(rowsPrice);
+                            idTracker.add(id);
+                        }
+                    }
+                }
+            }
+
+            lowestPrice=Collections.min(prices);
+            String tempId = idTracker.get(prices.indexOf(lowestPrice));
+            tempId=tempId.substring(0,tempId.length()-1);
+
+            totalPrice += lowestPrice;
+            String[] strId = tempId.split(" ");
+
+            for(int i=0;i< strId.length;i++)
+            {
+                deleteFromTable(getItemTable(),tableData[Integer.parseInt(strId[i])][tableData[0].length-1]);
+            }
+
+            counter++;
+            String value = numFormat(counter);
+            output.add("• The lowest cost to manufacture " + value + " item of " + getItemType() + " " + getItemTable() + " is - " + lowestPrice + ".00 $ \n");
+
+            if (Integer.parseInt(getNumItems()) > 1)
+            {
+                setNumItems(String.valueOf(Integer.parseInt(getNumItems()) - 1));
+                selectFurnitureType(getItemType(), getItemTable());
+            }
+
+            return lowestPrice;
         }
-        return actualLowest; //instead of return pass the value
+
+        else
+        {
+            for(int i=0;i< tableData.length;i++)
+            {
+                for(int j=0;j<tableData.length;j++)
+                {
+                    if(tableData[i][0].contains("Y")&&tableData[j][1].contains("Y"))
+                    {
+                        int rowsPrice=0;
+                        List<Integer> rows = new ArrayList<>();
+                        rows.add(i);
+                        rows.add(j);
+                        List<Integer> newList = rows.stream().distinct().collect(Collectors.toList());
+                        String id = new String();
+                        for(int m=0;m<newList.size();m++)
+                        {
+                            rowsPrice+=Integer.parseInt(tableData[newList.get(m)][tableData[0].length-2]);
+                            id+=newList.get(m)+" ";
+                        }
+                        prices.add(rowsPrice);
+                        idTracker.add(id);
+                    }
+                }
+            }
+
+            lowestPrice=Collections.min(prices);
+            String tempId = idTracker.get(prices.indexOf(lowestPrice));
+            tempId=tempId.substring(0,tempId.length()-1);
+
+            String[] strId = tempId.split(" ");
+
+            for(int i=0;i< strId.length;i++)
+            {
+                deleteFromTable(getItemTable(),tableData[Integer.parseInt(strId[i])][tableData[0].length-1]);
+            }
+
+            totalPrice += lowestPrice;
+            counter++;
+            String value = numFormat(counter);
+            output.add("• The lowest cost to manufacture " + value + " item of " + getItemType() + " " + getItemTable() + " is - " + lowestPrice + ".00 $ \n");
+
+            if (Integer.parseInt(getNumItems()) > 1)
+            {
+                setNumItems(String.valueOf(Integer.parseInt(getNumItems()) - 1));
+                selectFurnitureType(getItemType(), getItemTable());
+            }
+
+            return lowestPrice;
+        }
     }
 
 
