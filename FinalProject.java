@@ -855,7 +855,8 @@ class DatabaseCalculation extends ProgramInput
 
     public int calculateLowestPrice(String[][] tableData) throws IOException {
 
-        /*
+    
+       /*
         This method calculates the lowest int price for the passed tableData and returns a string value of it by
         following this approach:
         * Step 1 : Start by considering the object with the most number of reusable parts (indicated by "Y").
@@ -910,21 +911,25 @@ class DatabaseCalculation extends ProgramInput
                 }
             }
 
-           lowestPrice=Collections.min(prices);
+            lowestPrice=Collections.min(prices);
             String tempId = idTracker.get(prices.indexOf(lowestPrice));
             tempId=tempId.substring(0,tempId.length()-1);
 
             totalPrice += lowestPrice;
             String[] strId = tempId.split(" ");
+            String itemId ="";
 
             for(int i=0;i< strId.length;i++)
             {
+                itemId+=tableData[Integer.parseInt(strId[i])][tableData[0].length-1]+",";
                 deleteFromTable(getItemTable(),tableData[Integer.parseInt(strId[i])][tableData[0].length-1]);
             }
 
+            itemId=itemId.substring(0,itemId.length()-1);
+
             counter++;
             String value = numFormat(counter);
-            output.add("• The lowest cost to manufacture " + value + " item of " + getItemType() + " " + getItemTable() + " is - " + lowestPrice + ".00 $ \n");
+            output.add("• The lowest cost to manufacture " + value + " item of " + getItemType() + " " + getItemTable() + " is - " + lowestPrice + ".00 $ [Items Reused : "+itemId+"]\n");
 
             if (Integer.parseInt(getNumItems()) > 1)
             {
@@ -971,15 +976,19 @@ class DatabaseCalculation extends ProgramInput
 
             totalPrice += lowestPrice;
             String[] strId = tempId.split(" ");
+            String itemId ="";
 
             for(int i=0;i< strId.length;i++)
             {
+                itemId+=tableData[Integer.parseInt(strId[i])][tableData[0].length-1]+",";
                 deleteFromTable(getItemTable(),tableData[Integer.parseInt(strId[i])][tableData[0].length-1]);
             }
 
+            itemId=itemId.substring(0,itemId.length()-1);
+
             counter++;
             String value = numFormat(counter);
-            output.add("• The lowest cost to manufacture " + value + " item of " + getItemType() + " " + getItemTable() + " is - " + lowestPrice + ".00 $ \n");
+            output.add("• The lowest cost to manufacture " + value + " item of " + getItemType() + " " + getItemTable() + " is - " + lowestPrice + ".00 $ [Items Reused : "+itemId+"]\n");
 
             if (Integer.parseInt(getNumItems()) > 1)
             {
@@ -1019,17 +1028,21 @@ class DatabaseCalculation extends ProgramInput
             String tempId = idTracker.get(prices.indexOf(lowestPrice));
             tempId=tempId.substring(0,tempId.length()-1);
 
+            totalPrice += lowestPrice;
             String[] strId = tempId.split(" ");
+            String itemId ="";
 
             for(int i=0;i< strId.length;i++)
             {
+                itemId+=tableData[Integer.parseInt(strId[i])][tableData[0].length-1]+",";
                 deleteFromTable(getItemTable(),tableData[Integer.parseInt(strId[i])][tableData[0].length-1]);
             }
 
-            totalPrice += lowestPrice;
+            itemId=itemId.substring(0,itemId.length()-1);
+
             counter++;
             String value = numFormat(counter);
-            output.add("• The lowest cost to manufacture " + value + " item of " + getItemType() + " " + getItemTable() + " is - " + lowestPrice + ".00 $ \n");
+            output.add("• The lowest cost to manufacture " + value + " item of " + getItemType() + " " + getItemTable() + " is - " + lowestPrice + ".00 $ [Items Reused : "+itemId+"]\n");
 
             if (Integer.parseInt(getNumItems()) > 1)
             {
@@ -1039,6 +1052,7 @@ class DatabaseCalculation extends ProgramInput
 
             return lowestPrice;
         }
+
     }
 
 
