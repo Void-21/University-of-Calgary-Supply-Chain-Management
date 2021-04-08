@@ -441,16 +441,16 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("3");
+        testObj.setNumItems("1");
 
-        String[][] input= {{"C2483", "Executive", "Y", "Y", "N", "N", "175", "002"},
-                {"C5784", "Executive", "Y", "N", "N", "Y", "150", "004"},
-                {"C7268", "Executive", "N", "N", "Y", "N", "75", "004"}};
+        String[][] input= {{"Y", "Y", "N", "N", "175","C2483"},
+                {"Y", "N", "N", "Y", "150","C5784"},
+                {"N", "N", "Y", "N", "75", "C7268"}};
 
         int result=testObj.calculateLowestPrice(input);
-        int expected = 250;
+        int expected = 400;
          chair();
-        assertTrue("The lowest price calculated for Mesh chair is incorrect",result==expected);
+        assertTrue("The lowest price calculated for Executive chair is incorrect",result==expected);
 
     }
     @Test
@@ -465,16 +465,16 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("3");
+        testObj.setNumItems("1");
 
-        String[][] input= {{"C0914", "Task", "N", "N", "Y", "Y", "50", "002"},
-                {"C1148", "Task", "Y", "N", "Y", "Y", "125", "003"},
-                {"C3405", "Task", "Y", "Y", "N", "N", "100", "003"}};
+        String[][] input= {{"N", "N", "Y", "Y", "50","C0914"},
+                {"Y", "N", "Y", "Y", "125","C1148"},
+                {"Y", "Y", "N", "N", "100","C3405"}};
 
         int result=testObj.calculateLowestPrice(input);
         int expected = 150;
          chair();
-        assertTrue("The lowest price calculated for Mesh chair is incorrect",result==expected);
+        assertTrue("The lowest price calculated for Task chair is incorrect",result==expected);
 
     }
     @Test
@@ -489,12 +489,12 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("3");
+        testObj.setNumItems("1");
 
-        String[][] input= {{"C0942", "Mesh", "Y", "N", "Y", "Y", "175", "005"},
-                {"C6748", "Mesh", "Y", "N", "N", "N", "75", "003"},
-                {"C8138", "Mesh", "N", "N", "Y", "N", "75", "005"},
-                {"C9890", "Mesh", "N", "Y", "N", "Y", "50", "003"}};
+        String[][] input= {{"Y", "N", "Y", "Y", "175","C0942"},
+                {"Y", "N", "N", "N", "75","C6748" },
+                {"N", "N", "Y", "N", "75","C8138"},
+                {"N", "Y", "N", "Y", "50","C9890"}};
 
         int result=testObj.calculateLowestPrice(input);
         int expected = 200;
@@ -508,45 +508,117 @@ public class FinalProjectTest {
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
          */
 
-        String type = "Mesh";
+        String type = "Ergonomic";
         String table = "chair";
         DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("3");
+        testObj.setNumItems("1");
 
-        String[][] input= {{"C4839", "Ergonomic", "N", "N", "N", "Y", "50", "002"},
-                {"C5409", "Ergonomic", "Y", "Y", "Y", "N", "200", "003"},
-                {"C5789", "Ergonomic", "Y", "N", "N", "Y", "125", "003"}};
+        String[][] input= {{"N", "N", "N", "Y", "50","C4839"},
+                {"Y", "Y", "Y", "N", "200","C5409"},
+                {"Y", "N", "N", "Y", "125","C5789"}};
 
         int result=testObj.calculateLowestPrice(input);
         int expected = 250;
          chair();
-        assertTrue("The lowest price calculated for Mesh chair is incorrect",result==expected);
+        assertTrue("The lowest price calculated for Ergonomic chair is incorrect",result==expected);
 
     }
     @Test
-    public void rtest19_CalculateLowestPriceKneelingChair() throws IOException  , SQLException   {
+    public void qtest18_CalculateLowestPriceSmallFiling() throws IOException  , SQLException   {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
          */
-
-        String type = "Kneeling";
-        String table = "chair";
+        String type = "Small";
+        String table = "filing";
         DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("3");
+        testObj.setNumItems("2");
+        testObj.selectFurnitureType(type,table);
+        testObj.writeOrderForm();
+        testObj.closes();
 
-        String[][] input= {{"C1320", "Kneeling", "Y", "N", "N", "N", "50", "002"},
-                {"C3819", "Kneeling", "N", "N", "Y", "N", "75", "005"}};
+        String result1= readFile(9);
+        String expected1 ="• The lowest cost to manufacture 1st item of Small filing is - 100.00 $ [Items Reused : F001,F013]" ;
+        String result2 = readFile(10);
+        String expected2 ="• The lowest cost to manufacture 2nd item of Small filing is - 125.00 $ [Items Reused : F005,F006]";
+        filing();
+        System.out.println(result1+" "+result2);
+        assertTrue("The lowest price calculated for 1st Small filing is incorrect",result1.equals(expected1));
+        assertTrue("The lowest price calculated for Small filing is incorrect",result2.equals(expected2));
+    }
+    public void qtest18_CalculateLowestPriceMediumFiling() throws IOException  , SQLException   {
+        /*
+            Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+         */
 
-        int result=testObj.calculateLowestPrice(input);
-        int expected = 0;
-         chair();
-        assertTrue("The lowest price calculated for Mesh chair is incorrect",result==expected);
+        String type = "Medium";
+        String table = "filing";
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemType(type);
+        testObj.setItemTable(table);
+        testObj.setNumItems("1");
+
+        String[][] input= {{"N", "N", "N", "Y", "50","C4839"},
+                {"Y", "Y", "Y", "N", "200","C5409"},
+                {"Y", "N", "N", "Y", "125","C5789"}};
+
+        int result1=testObj.calculateLowestPrice(input);
+        int expected1 = 200;
+        int result2=testObj.calculateLowestPrice(input);
+        int expected2 = 200;
+        int result3=testObj.calculateLowestPrice(input);
+        int expected3 = 200;
+        filing();
+        assertTrue("The lowest price calculated for 1st Medium filing is incorrect",result1==expected1);
+        assertTrue("The lowest price calculated for 2nd Medium filing is incorrect",result2==expected2);
+        assertTrue("The lowest price calculated for 3rd Medium filing is incorrect",result3==expected3);
+    }
+    public void qtest18_CalculateLowestPriceLargeFiling() throws IOException  , SQLException   {
+        /*
+            Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+         */
+
+        String type = "Large";
+        String table = "filing";
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemType(type);
+        testObj.setItemTable(table);
+        testObj.setNumItems("1");
+
+        String[][] input= {{"N", "N", "N", "Y", "50","C4839"},
+                {"Y", "Y", "Y", "N", "200","C5409"},
+                {"Y", "N", "N", "Y", "125","C5789"}};
+
+        int result1=testObj.calculateLowestPrice(input);
+        int expected1 = 100;
+        int result2=testObj.calculateLowestPrice(input);
+        int expected2 = 125;
+        filing();
+        assertTrue("The lowest price calculated for 1st Small filing is incorrect",result1==expected1);
+        assertTrue("The lowest price calculated for Small filing is incorrect",result2==expected2);
+    }
+    public String readFile(int line) throws FileNotFoundException {
+            File file = new File("C:\\Users\\user\\Desktop\\ENSF409\\FinalProject\\orderform.txt");                  // input file
+            Scanner sc = new Scanner(file);// scanner to move through the input file
+            int counter=1;
+            String result=new String();
+        while(sc.hasNextLine())
+        {
+            if(counter==line)
+            {
+                result=sc.nextLine();
+            }
+                counter++;
+            sc.nextLine();
+        }
+        return result;
 
     }
     public void initializeConnection()
