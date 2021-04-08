@@ -79,7 +79,7 @@ public class FinalProjectTest {
         }
     }
     @Test
-    public void atest_Constructor() throws IOException {
+    public void testConstructor() throws IOException {
         /* Checks if the constructor initializes all the values correctly */
 
         DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
@@ -88,7 +88,7 @@ public class FinalProjectTest {
         assertTrue("PASSWORD is wrong", testObj.getPassword().equals(PASSWORD));
     }
     @Test
-    public void btest_SelectFurnitureTypeTaskChair() throws IOException  , SQLException {
+    public void testSelectFurnitureTypeTaskChair() throws IOException  , SQLException {
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the chairSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
@@ -102,7 +102,7 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("3");
+        testObj.setNumItems("1");
         String[][] result = testObj.selectFurnitureType(type, table);
         String[][] expected ={{"C0914", "Task", "N", "N", "Y", "Y", "50", "002"},
                 {"C1148", "Task", "Y", "N", "Y", "Y", "125", "003"},
@@ -111,7 +111,7 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Task Chair",result,expected);
     }
     @Test
-    public void ctest_SelectFurnitureTypeMeshChair() throws IOException  , SQLException {
+    public void testSelectFurnitureTypeMeshChair() throws IOException  , SQLException {
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the chairSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
@@ -125,7 +125,7 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("4");
+        testObj.setNumItems("1");
         String[][] result = testObj.selectFurnitureType(type, table);
         String[][] expected ={{"C0942", "Mesh", "Y", "N", "Y", "Y", "175", "005"},
                 {"C6748", "Mesh", "Y", "N", "N", "N", "75", "003"},
@@ -135,7 +135,7 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Mesh Chair",result,expected);
     }
     @Test
-    public void dtest_SelectFurnitureTypeKneelingChair() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeKneelingChair() throws IOException  , SQLException   {
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the chairSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
@@ -149,7 +149,7 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("2");
+        testObj.setNumItems("1");
         String[][] result = testObj.selectFurnitureType(type, table);
         String[][] expected =
                 {{"C1320", "Kneeling", "Y", "N", "N", "N", "50", "002"},
@@ -159,7 +159,7 @@ public class FinalProjectTest {
     }
 
     @Test
-    public void dtest_SelectFurnitureTypeErgonomicChair() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeErgonomicChair() throws IOException  , SQLException   {
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the chairSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
@@ -173,7 +173,7 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("3");
+        testObj.setNumItems("1");
         String[][] result = testObj.selectFurnitureType(type, table);
         String[][] expected ={{"C4839", "Ergonomic", "N", "N", "N", "Y", "50", "002"},
                 {"C5409", "Ergonomic", "Y", "Y", "Y", "N", "200", "003"},
@@ -182,7 +182,7 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Ergonomic Chair",result,expected);
     }
     @Test
-    public void ftest_SelectFurnitureTypeExecutiveChair() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeExecutiveChair() throws IOException  , SQLException   {
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the chairSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
@@ -196,7 +196,7 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("3");
+        testObj.setNumItems("1");
         String[][] result = testObj.selectFurnitureType(type, table);
         String[][] expected ={{"C2483", "Executive", "Y", "Y", "N", "N", "175", "002"},
                 {"C5784", "Executive", "Y", "N", "N", "Y", "150", "004"},
@@ -205,7 +205,7 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Executive Chair",result,expected);
     }
     @Test
-    public void etest_SelectFurnitureTypeSmallFiling() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeSmallFiling() throws IOException  , SQLException   {
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the filingSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
@@ -219,7 +219,7 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("5");
+        testObj.setNumItems("1");
         String[][] result = testObj.selectFurnitureType(type, table);
         String[][] expected ={{ "F001","Small","Y","Y","N","50","005"},
                 { "F004","Small","N","Y","Y","75","004"},
@@ -230,7 +230,7 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Small Filing",result,expected);
     }
     @Test
-    public void ftest_SelectFurnitureTypeMediumFiling() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeMediumFiling() throws IOException  , SQLException   {
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the filingSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
@@ -244,7 +244,7 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("3");
+        testObj.setNumItems("1");
         String[][] result = testObj.selectFurnitureType(type, table);
         String[][] expected ={{ "F002","Medium","N","N","Y","100","004"},
                 { "F007","Medium","N","Y","Y","150","002"},
@@ -255,7 +255,7 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Medium Filing",result,expected);
     }
     @Test
-    public void gtest_SelectFurnitureTypeLargeFiling() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeLargeFiling() throws IOException  , SQLException   {
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the filingSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
@@ -269,7 +269,7 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("3");
+        testObj.setNumItems("1");
         String[][] result = testObj.selectFurnitureType(type, table);
         String[][] expected ={{ "F003","Large","N","N","Y","150","002"},
                 { "F010","Large","Y","N","Y","225","002"},
@@ -280,7 +280,7 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Large Filing",result,expected);
     }
     @Test
-    public void htest_SelectFurnitureTypeDeskLamp() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeDeskLamp() throws IOException  , SQLException   {
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the lampSelect
          function by using the type and number of occurrences of the specific type of lamp, lampSelect returns a
@@ -294,7 +294,7 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("7");
+        testObj.setNumItems("1");
         String[][] result = testObj.selectFurnitureType(type, table);
         String[][] expected = {{"L013", "Desk", "Y", "N", "18", "004"},
                 {"L112", "Desk", "Y", "N", "18", "005"},
@@ -307,7 +307,7 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Desk Lamp", result, expected);
     }
     @Test
-    public void itest_SelectFurnitureTypeSwingArmLamp() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeSwingArmLamp() throws IOException  , SQLException   {
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the lampSelect
          function by using the type and number of occurrences of the specific type of lamp, lampSelect returns a
@@ -331,7 +331,7 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Swing Arm Lamp", result, expected);
     }
     @Test
-    public void jtest_SelectFurnitureTypeStudyLamp() throws IOException  , SQLException {
+    public void testSelectFurnitureTypeStudyLamp() throws IOException  , SQLException {
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the lampSelect
          function by using the type and number of occurrences of the specific type of lamp, lampSelect returns a
@@ -354,7 +354,7 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Study Lamp", result, expected);
     }
     @Test
-    public void ktest_SelectFurnitureTypeTraditionalDesk() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeTraditionalDesk() throws IOException  , SQLException   {
        /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the deskSelect
          function by using the type and number of occurrences of the specific type of desk, deskSelect returns a
@@ -378,7 +378,7 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Traditional Desk", result, expected);
     }
     @Test
-    public void ltest_SelectFurnitureTypeStandingDesk() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeStandingDesk() throws IOException  , SQLException   {
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the deskSelect
          function by using the type and number of occurrences of the specific type of desk, deskSelect returns a
@@ -403,7 +403,7 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Standing Desk", result, expected);
     }
     @Test
-    public void mtest_SelectFurnitureTypeAdjustableDesk() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeAdjustableDesk() throws IOException  , SQLException   {
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the deskSelect
          function by using the type and number of occurrences of the specific type of desk, deskSelect returns a
@@ -430,7 +430,7 @@ public class FinalProjectTest {
     }
 
     @Test
-    public void ntest_CalculateLowestPriceExecutiveChair() throws IOException  , SQLException   {
+    public void testCalculateLowestPriceExecutiveChair() throws IOException  , SQLException   {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
          */
@@ -442,19 +442,18 @@ public class FinalProjectTest {
         testObj.setItemType(type);
         testObj.setItemTable(table);
         testObj.setNumItems("1");
+        testObj.selectFurnitureType(type,table);
+        testObj.writeOrderForm();
+        testObj.closes();
 
-        String[][] input= {{"Y", "Y", "N", "N", "175","C2483"},
-                {"Y", "N", "N", "Y", "150","C5784"},
-                {"N", "N", "Y", "N", "75", "C7268"}};
-
-        int result=testObj.calculateLowestPrice(input);
-        int expected = 400;
-         chair();
-        assertTrue("The lowest price calculated for Executive chair is incorrect",result==expected);
+        String result1= readFile(9);
+        String expected1 ="• The lowest cost to manufacture 1st item of Executive chair is - 400.00 $ [Items Reused : C2483,C7268,C5784]" ;
+        chair();
+        assertTrue("The lowest price calculated for 1st Executive chair is incorrect",result1.equals(expected1));
 
     }
     @Test
-    public void otest_CalculateLowestPriceTaskChair() throws IOException  , SQLException   {
+    public void testCalculateLowestPriceTaskChair() throws IOException  , SQLException   {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
          */
@@ -466,19 +465,18 @@ public class FinalProjectTest {
         testObj.setItemType(type);
         testObj.setItemTable(table);
         testObj.setNumItems("1");
+        testObj.selectFurnitureType(type,table);
+        testObj.writeOrderForm();
+        testObj.closes();
 
-        String[][] input= {{"N", "N", "Y", "Y", "50","C0914"},
-                {"Y", "N", "Y", "Y", "125","C1148"},
-                {"Y", "Y", "N", "N", "100","C3405"}};
-
-        int result=testObj.calculateLowestPrice(input);
-        int expected = 150;
-         chair();
-        assertTrue("The lowest price calculated for Task chair is incorrect",result==expected);
+        String result1= readFile(9);
+        String expected1 ="• The lowest cost to manufacture 1st item of Task chair is - 150.00 $ [Items Reused : C3405,C0914]" ;
+        chair();
+        assertTrue("The lowest price calculated for 1st Task chair is incorrect",result1.equals(expected1));
 
     }
     @Test
-    public void ptest_CalculateLowestPriceMeshChair() throws IOException  , SQLException   {
+    public void testCalculateLowestPriceMeshChair() throws IOException  , SQLException   {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
          */
@@ -490,20 +488,18 @@ public class FinalProjectTest {
         testObj.setItemType(type);
         testObj.setItemTable(table);
         testObj.setNumItems("1");
+        testObj.selectFurnitureType(type,table);
+        testObj.writeOrderForm();
+        testObj.closes();
 
-        String[][] input= {{"Y", "N", "Y", "Y", "175","C0942"},
-                {"Y", "N", "N", "N", "75","C6748" },
-                {"N", "N", "Y", "N", "75","C8138"},
-                {"N", "Y", "N", "Y", "50","C9890"}};
-
-        int result=testObj.calculateLowestPrice(input);
-        int expected = 200;
-         chair();
-        assertTrue("The lowest price calculated for Mesh chair is incorrect",result==expected);
+        String result1= readFile(9);
+        String expected1 ="• The lowest cost to manufacture 1st item of Mesh chair is - 200.00 $ [Items Reused : C6748,C9890,C8138]" ;
+        chair();
+        assertTrue("The lowest price calculated for 1st Mesh chair is incorrect",result1.equals(expected1));
 
     }
     @Test
-    public void qtest18_CalculateLowestPriceErgonomicChair() throws IOException  , SQLException   {
+    public void testCalculateLowestPriceErgonomicChair() throws IOException  , SQLException   {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
          */
@@ -515,19 +511,18 @@ public class FinalProjectTest {
         testObj.setItemType(type);
         testObj.setItemTable(table);
         testObj.setNumItems("1");
+        testObj.selectFurnitureType(type,table);
+        testObj.writeOrderForm();
+        testObj.closes();
 
-        String[][] input= {{"N", "N", "N", "Y", "50","C4839"},
-                {"Y", "Y", "Y", "N", "200","C5409"},
-                {"Y", "N", "N", "Y", "125","C5789"}};
-
-        int result=testObj.calculateLowestPrice(input);
-        int expected = 250;
-         chair();
-        assertTrue("The lowest price calculated for Ergonomic chair is incorrect",result==expected);
+        String result1= readFile(9);
+        String expected1 ="• The lowest cost to manufacture 1st item of Ergonomic chair is - 250.00 $ [Items Reused : C5409,C4839]" ;
+        chair();
+        assertTrue("The lowest price calculated for 1st Ergonomic chair is incorrect",result1.equals(expected1));
 
     }
     @Test
-    public void qtest18_CalculateLowestPriceSmallFiling() throws IOException  , SQLException   {
+    public void testCalculateLowestPriceSmallFiling() throws IOException  , SQLException   {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
          */
@@ -547,11 +542,11 @@ public class FinalProjectTest {
         String result2 = readFile(10);
         String expected2 ="• The lowest cost to manufacture 2nd item of Small filing is - 125.00 $ [Items Reused : F005,F006]";
         filing();
-        System.out.println(result1+" "+result2);
-        assertTrue("The lowest price calculated for 1st Small filing is incorrect",result1.equals(expected1));
-        assertTrue("The lowest price calculated for Small filing is incorrect",result2.equals(expected2));
+        assertEquals("The lowest price calculated for 1st Small filing is incorrect",result1,expected1);
+        assertTrue("The lowest price calculated for 2nd Small filing is incorrect",result2.equals(expected2));
     }
-    public void qtest18_CalculateLowestPriceMediumFiling() throws IOException  , SQLException   {
+    @Test
+    public void testCalculateLowestPriceMediumFiling() throws IOException  , SQLException   {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
          */
@@ -562,24 +557,24 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("1");
+        testObj.setNumItems("3");
+        testObj.selectFurnitureType(type,table);
+        testObj.writeOrderForm();
+        testObj.closes();
 
-        String[][] input= {{"N", "N", "N", "Y", "50","C4839"},
-                {"Y", "Y", "Y", "N", "200","C5409"},
-                {"Y", "N", "N", "Y", "125","C5789"}};
-
-        int result1=testObj.calculateLowestPrice(input);
-        int expected1 = 200;
-        int result2=testObj.calculateLowestPrice(input);
-        int expected2 = 200;
-        int result3=testObj.calculateLowestPrice(input);
-        int expected3 = 200;
+        String result1= readFile(9);
+        String expected1 ="• The lowest cost to manufacture 1st item of Medium filing is - 200.00 $ [Items Reused : F008,F007]" ;
+        String result2 = readFile(10);
+        String expected2 ="• The lowest cost to manufacture 2nd item of Medium filing is - 200.00 $ [Items Reused : F009,F002]";
+        String result3 = readFile(11);
+        String expected3 ="• The lowest cost to manufacture 3rd item of Medium filing is - 200.00 $ [Items Reused : F014]";
         filing();
-        assertTrue("The lowest price calculated for 1st Medium filing is incorrect",result1==expected1);
-        assertTrue("The lowest price calculated for 2nd Medium filing is incorrect",result2==expected2);
-        assertTrue("The lowest price calculated for 3rd Medium filing is incorrect",result3==expected3);
+        assertTrue("The lowest price calculated for 1st Medium filing is incorrect", result1.equals(expected1));
+        assertTrue("The lowest price calculated for 2nd Medium filing is incorrect", result2.equals(expected2));
+        assertTrue("The lowest price calculated for 3rd Medium filing is incorrect", result3.equals(expected3));
     }
-    public void qtest18_CalculateLowestPriceLargeFiling() throws IOException  , SQLException   {
+    @Test
+    public void testCalculateLowestPriceLargeFiling() throws IOException  , SQLException   {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
          */
@@ -590,19 +585,187 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("1");
+        testObj.setNumItems("2");
+        testObj.selectFurnitureType(type,table);
+        testObj.writeOrderForm();
+        testObj.closes();
 
-        String[][] input= {{"N", "N", "N", "Y", "50","C4839"},
-                {"Y", "Y", "Y", "N", "200","C5409"},
-                {"Y", "N", "N", "Y", "125","C5789"}};
-
-        int result1=testObj.calculateLowestPrice(input);
-        int expected1 = 100;
-        int result2=testObj.calculateLowestPrice(input);
-        int expected2 = 125;
+        String result1= readFile(9);
+        String expected1 ="• The lowest cost to manufacture 1st item of Large filing is - 300.00 $ [Items Reused : F010,F012]" ;
+        String result2 = readFile(10);
+        String expected2 ="• The lowest cost to manufacture 2nd item of Large filing is - 300.00 $ [Items Reused : F015,F011]";
         filing();
-        assertTrue("The lowest price calculated for 1st Small filing is incorrect",result1==expected1);
-        assertTrue("The lowest price calculated for Small filing is incorrect",result2==expected2);
+        assertTrue("The lowest price calculated for 1st Large filing is incorrect", result1.equals(expected1));
+        assertTrue("The lowest price calculated for 2nd Large filing is incorrect", result2.equals(expected2));
+    }
+    @Test
+    public void testCalculateLowestPriceTraditionalDesk() throws IOException  , SQLException
+    {
+        /*
+            Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+         */
+        String type = "Traditional";
+        String table = "desk";
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemType(type);
+        testObj.setItemTable(table);
+        testObj.setNumItems("2");
+        testObj.selectFurnitureType(type,table);
+        testObj.writeOrderForm();
+        testObj.closes();
+
+        String result1= readFile(9);
+        String expected1 ="• The lowest cost to manufacture 1st item of Traditional desk is - 100.00 $ [Items Reused : D8675,D0890]" ;
+        String result2 = readFile(10);
+        String expected2 ="• The lowest cost to manufacture 2nd item of Traditional desk is - 125.00 $ [Items Reused : D9352,D4231]";
+        desk();
+ 
+        assertTrue("The lowest price calculated for 1st traditional desk is incorrect",result1.equals(expected1));
+        assertTrue("The lowest price calculated for 2nd traditional desk is incorrect",result2.equals(expected2));
+    }
+    @Test
+    public void testCalculateLowestPriceAdjustableDesk() throws IOException  , SQLException
+    {
+        /*
+            Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+         */
+        String type = "Adjustable";
+        String table = "desk";
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemType(type);
+        testObj.setItemTable(table);
+        testObj.setNumItems("3");
+        testObj.selectFurnitureType(type,table);
+        testObj.writeOrderForm();
+        testObj.closes();
+
+        String result1= readFile(9);
+        String expected1 ="• The lowest cost to manufacture 1st item of Adjustable desk is - 400.00 $ [Items Reused : D2746,D1030]";
+        String result2 = readFile(10);
+        String expected2 ="• The lowest cost to manufacture 2nd item of Adjustable desk is - 400.00 $ [Items Reused : D5437,D4475]";
+        String result3 = readFile(11);
+        String expected3 ="• The lowest cost to manufacture 3rd item of Adjustable desk is - 400.00 $ [Items Reused : D7373,D3682]";
+        desk();
+        assertTrue("The lowest price calculated for 1st Adjustable desk is incorrect",result1.equals(expected1));
+        assertTrue("The lowest price calculated for 2nd Adjustable desk is incorrect",result2.equals(expected2));
+        assertTrue("The lowest price calculated for 3rd Adjustable desk is incorrect",result3.equals(expected3));
+
+    }
+
+    @Test
+    public void testCalculateLowestPriceStandingDesk() throws IOException  , SQLException
+    {
+        /*
+            Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+         */
+        String type = "Standing";
+        String table = "desk";
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemType(type);
+        testObj.setItemTable(table);
+        testObj.setNumItems("2");
+        testObj.selectFurnitureType(type,table);
+        testObj.writeOrderForm();
+        testObj.closes();
+
+        String result1= readFile(9);
+        String expected1 ="• The lowest cost to manufacture 1st item of Standing desk is - 300.00 $ [Items Reused : D1927,D2341]";
+        String result2 = readFile(10);
+        String expected2 ="• The lowest cost to manufacture 2nd item of Standing desk is - 300.00 $ [Items Reused : D3820,D4438]";
+        desk();
+ 
+        assertTrue("The lowest price calculated for 1st Standing desk is incorrect",result1.equals(expected1));
+        assertTrue("The lowest price calculated for 2nd Standing desk is incorrect",result2.equals(expected2));
+
+    }
+
+    @Test
+    public void testCalculateLowestPriceDeskLamp() throws IOException  , SQLException
+    {
+        /*
+            Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+         */
+        String type = "Desk";
+        String table = "lamp";
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemType(type);
+        testObj.setItemTable(table);
+        testObj.setNumItems("3");
+        testObj.selectFurnitureType(type,table);
+        testObj.writeOrderForm();
+        testObj.closes();
+
+        String result1= readFile(9);
+        String expected1 ="• The lowest cost to manufacture 1st item of Desk lamp is - 20.00 $ [Items Reused : L013,L208]";
+        String result2 = readFile(10);
+        String expected2 ="• The lowest cost to manufacture 2nd item of Desk lamp is - 20.00 $ [Items Reused : L112,L342]";
+        String result3 = readFile(11);
+        String expected3 ="• The lowest cost to manufacture 3rd item of Desk lamp is - 20.00 $ [Items Reused : L564]";
+
+        lamp();
+ 
+        assertTrue("The lowest price calculated for 1st desk lamp is incorrect",result1.equals(expected1));
+        assertTrue("The lowest price calculated for 2nd desk lamp is incorrect",result2.equals(expected2));
+        assertTrue("The lowest price calculated for 3rd desk lamp is incorrect",result3.equals(expected3));
+    }
+
+    @Test
+    public void testCalculateLowestPriceSwingArmLamp() throws IOException  , SQLException
+    {
+        /*
+            Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+         */
+        String type = "Swing Arm";
+        String table = "lamp";
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemType(type);
+        testObj.setItemTable(table);
+        testObj.setNumItems("2");
+        testObj.selectFurnitureType(type,table);
+        testObj.writeOrderForm();
+        testObj.closes();
+
+        String result1= readFile(9);
+        String expected1 ="• The lowest cost to manufacture 1st item of Swing Arm lamp is - 30.00 $ [Items Reused : L053,L096]";
+        String result2 = readFile(10);
+        String expected2 ="• The lowest cost to manufacture 2nd item of Swing Arm lamp is - 30.00 $ [Items Reused : L487,L879]";
+        lamp();
+        assertTrue("The lowest price calculated for 1st swing arm lamp is incorrect",result1.equals(expected1));
+        assertTrue("The lowest price calculated for 2nd swing arm lamp is incorrect",result2.equals(expected2));
+
+    }
+
+    @Test
+    public void testCalculateLowestPriceStudyLamp() throws IOException  , SQLException
+    {
+        /*
+            Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+         */
+        String type = "Study";
+        String table = "lamp";
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemType(type);
+        testObj.setItemTable(table);
+        testObj.setNumItems("2");
+        testObj.selectFurnitureType(type,table);
+        testObj.writeOrderForm();
+        testObj.closes();
+
+        String result1= readFile(9);
+        String expected1 ="• The lowest cost to manufacture 1st item of Study lamp is - 10.00 $ [Items Reused : L928]";
+        String result2 = readFile(10);
+        String expected2 ="• The lowest cost to manufacture 2nd item of Study lamp is - 10.00 $ [Items Reused : L982,L223]";
+        lamp();
+ 
+        assertTrue("The lowest price calculated for 1st study lamp is incorrect",result1.equals(expected1));
+        assertTrue("The lowest price calculated for 2d study lamp is incorrect",result2.equals(expected2));
+
     }
     public String readFile(int line) throws FileNotFoundException {
             File file = new File("C:\\Users\\user\\Desktop\\ENSF409\\FinalProject\\orderform.txt");                  // input file
