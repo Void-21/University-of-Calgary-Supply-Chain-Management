@@ -441,15 +441,21 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("1");
+        testObj.setNumItems("13");
+        testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
         testObj.writeOrderForm();
         testObj.closes();
 
         String result1= readFile(9);
         String expected1 ="• The lowest cost to manufacture 1st item of Executive chair is - 400.00 $ [Items Reused : C2483,C7268,C5784]" ;
+        String numNotPossible=readFile(11);
+        numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
+        numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         chair();
         assertTrue("The lowest price calculated for 1st Executive chair is incorrect",result1.equals(expected1));
+        assertEquals("Unable to correctly calculate the number of Executive chairs not possible",Integer.parseInt(numNotPossible),12);
+
 
     }
     @Test
@@ -464,15 +470,21 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("1");
+        testObj.setNumItems("11");
+        testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
         testObj.writeOrderForm();
         testObj.closes();
 
         String result1= readFile(9);
         String expected1 ="• The lowest cost to manufacture 1st item of Task chair is - 150.00 $ [Items Reused : C3405,C0914]" ;
+        String numNotPossible=readFile(11);
+        numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
+        numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         chair();
         assertTrue("The lowest price calculated for 1st Task chair is incorrect",result1.equals(expected1));
+        assertEquals("Unable to correctly calculate the number of Task chairs not possible",Integer.parseInt(numNotPossible),10);
+
 
     }
     @Test
@@ -480,22 +492,28 @@ public class FinalProjectTest {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
          */
-
         String type = "Mesh";
         String table = "chair";
         DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("1");
+        testObj.setNumItems("15");
+        testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
         testObj.writeOrderForm();
         testObj.closes();
 
         String result1= readFile(9);
         String expected1 ="• The lowest cost to manufacture 1st item of Mesh chair is - 200.00 $ [Items Reused : C6748,C9890,C8138]" ;
+        String numNotPossible=readFile(11);
+          
+        numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
+        numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
+          
         chair();
         assertTrue("The lowest price calculated for 1st Mesh chair is incorrect",result1.equals(expected1));
+        assertEquals("Unable to correctly calculate the number of Mesh chairs not possible",Integer.parseInt(numNotPossible),14);
 
     }
     @Test
@@ -510,15 +528,49 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("1");
+        testObj.setNumItems("69");
+        testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
         testObj.writeOrderForm();
         testObj.closes();
 
         String result1= readFile(9);
         String expected1 ="• The lowest cost to manufacture 1st item of Ergonomic chair is - 250.00 $ [Items Reused : C5409,C4839]" ;
+        String numNotPossible=readFile(11);
+        numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
+        numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         chair();
         assertTrue("The lowest price calculated for 1st Ergonomic chair is incorrect",result1.equals(expected1));
+        assertEquals("Unable to correctly calculate the number of Ergonomic chairs not possible",Integer.parseInt(numNotPossible),68);
+
+
+    }
+    @Test
+    public void testCalculateLowestPriceKneelingChair() throws IOException  , SQLException   {
+        /*
+            Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+         */
+
+        String type = "Kneeling";
+        String table = "chair";
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemType(type);
+        testObj.setItemTable(table);
+        testObj.setNumItems("3");
+        testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
+        testObj.selectFurnitureType(type,table);
+        testObj.writeOrderForm();
+        testObj.closes();
+
+        String numNotPossible=readFile(10);
+          
+        numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
+        numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
+          
+        chair();
+        assertEquals("Unable to correctly calculate the number of Kneeling chairs not possible",Integer.parseInt(numNotPossible),3);
+
 
     }
     @Test
@@ -532,7 +584,8 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("2");
+        testObj.setNumItems("23");
+        testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
         testObj.writeOrderForm();
         testObj.closes();
@@ -541,9 +594,14 @@ public class FinalProjectTest {
         String expected1 ="• The lowest cost to manufacture 1st item of Small filing is - 100.00 $ [Items Reused : F001,F013]" ;
         String result2 = readFile(10);
         String expected2 ="• The lowest cost to manufacture 2nd item of Small filing is - 125.00 $ [Items Reused : F005,F006]";
+        String numNotPossible=readFile(12);
+        numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
+        numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         filing();
         assertEquals("The lowest price calculated for 1st Small filing is incorrect",result1,expected1);
         assertTrue("The lowest price calculated for 2nd Small filing is incorrect",result2.equals(expected2));
+        assertEquals("Unable to correctly calculate the number of Small filing not possible",Integer.parseInt(numNotPossible),21);
+
     }
     @Test
     public void testCalculateLowestPriceMediumFiling() throws IOException  , SQLException   {
@@ -557,7 +615,8 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("3");
+        testObj.setNumItems("9");
+        testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
         testObj.writeOrderForm();
         testObj.closes();
@@ -568,10 +627,15 @@ public class FinalProjectTest {
         String expected2 ="• The lowest cost to manufacture 2nd item of Medium filing is - 200.00 $ [Items Reused : F009,F002]";
         String result3 = readFile(11);
         String expected3 ="• The lowest cost to manufacture 3rd item of Medium filing is - 200.00 $ [Items Reused : F014]";
+        String numNotPossible=readFile(13);
+        numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
+        numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         filing();
         assertTrue("The lowest price calculated for 1st Medium filing is incorrect", result1.equals(expected1));
         assertTrue("The lowest price calculated for 2nd Medium filing is incorrect", result2.equals(expected2));
         assertTrue("The lowest price calculated for 3rd Medium filing is incorrect", result3.equals(expected3));
+        assertEquals("Unable to correctly calculate the number of Medium filing not possible",Integer.parseInt(numNotPossible),6);
+
     }
     @Test
     public void testCalculateLowestPriceLargeFiling() throws IOException  , SQLException   {
@@ -585,7 +649,8 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("2");
+        testObj.setNumItems("6");
+        testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
         testObj.writeOrderForm();
         testObj.closes();
@@ -594,9 +659,14 @@ public class FinalProjectTest {
         String expected1 ="• The lowest cost to manufacture 1st item of Large filing is - 300.00 $ [Items Reused : F010,F012]" ;
         String result2 = readFile(10);
         String expected2 ="• The lowest cost to manufacture 2nd item of Large filing is - 300.00 $ [Items Reused : F015,F011]";
+        String numNotPossible=readFile(12);
+        numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
+        numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         filing();
         assertTrue("The lowest price calculated for 1st Large filing is incorrect", result1.equals(expected1));
         assertTrue("The lowest price calculated for 2nd Large filing is incorrect", result2.equals(expected2));
+        assertEquals("Unable to correctly calculate the number of Large filing not possible",Integer.parseInt(numNotPossible),4);
+
     }
     @Test
     public void testCalculateLowestPriceTraditionalDesk() throws IOException  , SQLException
@@ -610,7 +680,8 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("2");
+        testObj.setNumItems("6");
+        testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
         testObj.writeOrderForm();
         testObj.closes();
@@ -619,10 +690,15 @@ public class FinalProjectTest {
         String expected1 ="• The lowest cost to manufacture 1st item of Traditional desk is - 100.00 $ [Items Reused : D8675,D0890]" ;
         String result2 = readFile(10);
         String expected2 ="• The lowest cost to manufacture 2nd item of Traditional desk is - 125.00 $ [Items Reused : D9352,D4231]";
+        String numNotPossible=readFile(12);
+        numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
+        numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         desk();
  
         assertTrue("The lowest price calculated for 1st traditional desk is incorrect",result1.equals(expected1));
         assertTrue("The lowest price calculated for 2nd traditional desk is incorrect",result2.equals(expected2));
+        assertEquals("Unable to correctly calculate the number of Traditional desk not possible",Integer.parseInt(numNotPossible),4);
+
     }
     @Test
     public void testCalculateLowestPriceAdjustableDesk() throws IOException  , SQLException
@@ -636,7 +712,8 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("3");
+        testObj.setNumItems("7");
+        testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
         testObj.writeOrderForm();
         testObj.closes();
@@ -647,10 +724,15 @@ public class FinalProjectTest {
         String expected2 ="• The lowest cost to manufacture 2nd item of Adjustable desk is - 400.00 $ [Items Reused : D5437,D4475]";
         String result3 = readFile(11);
         String expected3 ="• The lowest cost to manufacture 3rd item of Adjustable desk is - 400.00 $ [Items Reused : D7373,D3682]";
+        String numNotPossible=readFile(13);
+        numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
+        numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         desk();
         assertTrue("The lowest price calculated for 1st Adjustable desk is incorrect",result1.equals(expected1));
         assertTrue("The lowest price calculated for 2nd Adjustable desk is incorrect",result2.equals(expected2));
         assertTrue("The lowest price calculated for 3rd Adjustable desk is incorrect",result3.equals(expected3));
+        assertEquals("Unable to correctly calculate the number of Adjustable desk not possible",Integer.parseInt(numNotPossible),4);
+
 
     }
 
@@ -666,7 +748,8 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("2");
+        testObj.setNumItems("10");
+        testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
         testObj.writeOrderForm();
         testObj.closes();
@@ -675,10 +758,15 @@ public class FinalProjectTest {
         String expected1 ="• The lowest cost to manufacture 1st item of Standing desk is - 300.00 $ [Items Reused : D1927,D2341]";
         String result2 = readFile(10);
         String expected2 ="• The lowest cost to manufacture 2nd item of Standing desk is - 300.00 $ [Items Reused : D3820,D4438]";
+        String numNotPossible=readFile(12);
+        numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
+        numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         desk();
  
         assertTrue("The lowest price calculated for 1st Standing desk is incorrect",result1.equals(expected1));
         assertTrue("The lowest price calculated for 2nd Standing desk is incorrect",result2.equals(expected2));
+        assertEquals("Unable to correctly calculate the number of Standing desk not possible",Integer.parseInt(numNotPossible),8);
+
 
     }
 
@@ -694,7 +782,8 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("3");
+        testObj.setNumItems("13");
+        testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
         testObj.writeOrderForm();
         testObj.closes();
@@ -705,12 +794,16 @@ public class FinalProjectTest {
         String expected2 ="• The lowest cost to manufacture 2nd item of Desk lamp is - 20.00 $ [Items Reused : L112,L342]";
         String result3 = readFile(11);
         String expected3 ="• The lowest cost to manufacture 3rd item of Desk lamp is - 20.00 $ [Items Reused : L564]";
-
+        String numNotPossible=readFile(13);
+        numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
+        numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         lamp();
  
         assertTrue("The lowest price calculated for 1st desk lamp is incorrect",result1.equals(expected1));
         assertTrue("The lowest price calculated for 2nd desk lamp is incorrect",result2.equals(expected2));
         assertTrue("The lowest price calculated for 3rd desk lamp is incorrect",result3.equals(expected3));
+        assertEquals("Unable to correctly calculate the number of desk lamp not possible",Integer.parseInt(numNotPossible),10);
+
     }
 
     @Test
@@ -725,7 +818,8 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("2");
+        testObj.setNumItems("21");
+        testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
         testObj.writeOrderForm();
         testObj.closes();
@@ -734,9 +828,14 @@ public class FinalProjectTest {
         String expected1 ="• The lowest cost to manufacture 1st item of Swing Arm lamp is - 30.00 $ [Items Reused : L053,L096]";
         String result2 = readFile(10);
         String expected2 ="• The lowest cost to manufacture 2nd item of Swing Arm lamp is - 30.00 $ [Items Reused : L487,L879]";
+        String numNotPossible=readFile(12);
+        numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
+        numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         lamp();
         assertTrue("The lowest price calculated for 1st swing arm lamp is incorrect",result1.equals(expected1));
         assertTrue("The lowest price calculated for 2nd swing arm lamp is incorrect",result2.equals(expected2));
+        assertEquals("Unable to correctly calculate the number of swing arm lamp not possible",Integer.parseInt(numNotPossible),19);
+
 
     }
 
@@ -752,7 +851,8 @@ public class FinalProjectTest {
         testObj.initializeConnection();
         testObj.setItemType(type);
         testObj.setItemTable(table);
-        testObj.setNumItems("2");
+        testObj.setNumItems("8");
+        testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
         testObj.writeOrderForm();
         testObj.closes();
@@ -761,10 +861,15 @@ public class FinalProjectTest {
         String expected1 ="• The lowest cost to manufacture 1st item of Study lamp is - 10.00 $ [Items Reused : L928]";
         String result2 = readFile(10);
         String expected2 ="• The lowest cost to manufacture 2nd item of Study lamp is - 10.00 $ [Items Reused : L982,L223]";
+        String numNotPossible=readFile(12);
+        numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
+        numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         lamp();
  
         assertTrue("The lowest price calculated for 1st study lamp is incorrect",result1.equals(expected1));
         assertTrue("The lowest price calculated for 2d study lamp is incorrect",result2.equals(expected2));
+        assertEquals("Unable to correctly calculate the number of study lamp not possible",Integer.parseInt(numNotPossible),6);
+
 
     }
     public String readFile(int line) throws FileNotFoundException {
