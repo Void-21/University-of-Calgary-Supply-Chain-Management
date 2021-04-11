@@ -8,6 +8,34 @@ import java.util.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FinalProjectTest {
+    /**
+     *  DOCUMENTATION FOR JUNIT TESTING:
+     *  
+     *  initializeConnection(): is a method that establishes a connection between the .java files and the sql database.
+     *  
+     *  testConstructor() performs the following task:
+     *  It Checks if the constructor initializes all the values correctly and prints out an error message in the event of
+     *  failing any of the checks.
+     *  
+     *  chair() ,desk() ,filing() ,lamp() perform the following task:
+     *  These functions are called before each test to restore the database with the original contents, as the contents 
+     *  get manipulated by each test restoring the database after each test is necessary to ensure every test is able 
+     *  to perform its required task.
+     *  
+     *  testSelectFurnitureTypeTaskChair() and similar functions perform the following task:
+     *  Tests two functions, it first calls the selectFurnitureType() function, which calls the chairSelect
+     *  function by using the type and number of occurrences of the specific type of chair, chairSelect() function 
+     *  returns a 2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched 
+     *  with our expected output to complete the testing.
+     *  
+     *  testCalculateLowestPriceTaskChair() and similar functions perform the following task:
+     *  Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+     *  Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
+     *  checks if the output text file is correctly written to or not.
+     *  Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
+     *  is calculated correctly or not.
+     *  
+     */
 
     public final static String USERNAME = "NUMAN";              //USERNAME should be changed to match the one set by the user on their system
     public final static String PASSWORD = "TIGER";              //PASSWORD should be changed to match the one set by the user on their system
@@ -1051,6 +1079,7 @@ public class FinalProjectTest {
             helper function to read the contents of the file specified below.
             read the line specified as an argument.
          */
+         // input file path must be changed to match the filepath on the users system.(orderform.txt)
             File file = new File("C:\\Users\\user\\Desktop\\ENSF409\\FinalProject\\orderform.txt"); // input file
             Scanner sc = new Scanner(file);                     // scanner to move through the input file
             int counter=1;
