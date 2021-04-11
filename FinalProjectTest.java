@@ -8,7 +8,7 @@ import java.util.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FinalProjectTest {
-    /**
+    /** 
      *  DOCUMENTATION FOR JUNIT TESTING:
      *  
      *  initializeConnection(): is a method that establishes a connection between the .java files and the sql database.
