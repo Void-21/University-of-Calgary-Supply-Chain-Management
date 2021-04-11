@@ -9,12 +9,19 @@ import java.util.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FinalProjectTest {
 
-    public final static String USERNAME = "NUMAN";
-    public final static String PASSWORD = "TIGER";
-    public final static String DBURL = "jdbc:mysql://localhost/inventory";
+    public final static String USERNAME = "NUMAN";              //USERNAME should be changed to match the one set by the user on their system
+    public final static String PASSWORD = "TIGER";              //PASSWORD should be changed to match the one set by the user on their system
+    public final static String DBURL = "jdbc:mysql://localhost/inventory";           //DBURL should be changed to match the one set by the user on their system
     private Connection dbConnect;
-    private ResultSet results;
-    public void chair() throws SQLException {
+    public void chair() {
+        /*
+            ~ this method is used to restore the database with its original contents after execution of each test.
+              As each test calls a function and every function in our code is interlinked, this leads to calling several functions
+              which in response manipulate the database.
+            ~ restoring the database is necessary to ensure that the next test has all the table elements to be able to
+              perform its check for a different function
+            ~ this function in particular restores only the "chair" table with its original contents(which were provided by ensf409 dept.)
+         */
         try {
             initializeConnection();
             Statement myStmt1 = dbConnect.createStatement();
@@ -30,7 +37,15 @@ public class FinalProjectTest {
             throwables.printStackTrace();
         }
     }
-    public void desk() throws SQLException {
+    public void desk(){
+        /*
+            ~ this method is used to restore the database with its original contents after execution of each test.
+              As each test calls a function and every function in our code is interlinked, this leads to calling several functions
+              which in response manipulate the database.
+            ~ restoring the database is necessary to ensure that the next test has all the table elements to be able to
+              perform its check for a different function
+            ~ this function in particular restores only the "desk" table with its original contents(which were provided by ensf409 dept.)
+         */
         try {
             initializeConnection();
             Statement myStmt1 = dbConnect.createStatement();
@@ -46,7 +61,15 @@ public class FinalProjectTest {
             throwables.printStackTrace();
         }
     }
-    public void lamp() throws SQLException {
+    public void lamp(){
+        /*
+            ~ this method is used to restore the database with its original contents after execution of each test.
+              As each test calls a function and every function in our code is interlinked, this leads to calling several functions
+              which in response manipulate the database.
+            ~ restoring the database is necessary to ensure that the next test has all the table elements to be able to
+              perform its check for a different function
+            ~ this function in particular restores only the "lamp" table with its original contents(which were provided by ensf409 dept.)
+         */
         try {
             initializeConnection();
             Statement myStmt1 = dbConnect.createStatement();
@@ -62,7 +85,15 @@ public class FinalProjectTest {
             throwables.printStackTrace();
         }
     }
-    public void filing() throws SQLException {
+    public void filing(){
+        /*
+            ~ this method is used to restore the database with its original contents after execution of each test.
+              As each test calls a function and every function in our code is interlinked, this leads to calling several functions
+              which in response manipulate the database.
+            ~ restoring the database is necessary to ensure that the next test has all the table elements to be able to
+              perform its check for a different function
+            ~ this function in particular restores only the "filing" table with its original contents(which were provided by ensf409 dept.)
+         */
         try {
             initializeConnection();
             Statement myStmt1 = dbConnect.createStatement();
@@ -80,20 +111,24 @@ public class FinalProjectTest {
     }
     @Test
     public void testConstructor() throws IOException {
-        /* Checks if the constructor initializes all the values correctly */
+        /* Checks if the constructor initializes all the values correctly and prints out an error message in the event of
+           failing any of the checks.
+        */
 
         DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
-        assertTrue("DBURL is wrong", testObj.getDburl().equals(DBURL));
-        assertTrue("USERNAME is wrong", testObj.getUsername().equals(USERNAME));
-        assertTrue("PASSWORD is wrong", testObj.getPassword().equals(PASSWORD));
+        assertEquals("DBURL is wrong", testObj.getDburl(), DBURL);
+        assertEquals("USERNAME is wrong", testObj.getUsername(), USERNAME);
+        assertEquals("PASSWORD is wrong", testObj.getPassword(), PASSWORD);
     }
     @Test
-    public void testSelectFurnitureTypeTaskChair() throws IOException  , SQLException {
+    public void testSelectFurnitureTypeTaskChair() throws IOException{
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the chairSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
+
+         prints out an error message in the event of failing any of the checks.
          */
 
         String type = "Task";
@@ -111,12 +146,14 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Task Chair",result,expected);
     }
     @Test
-    public void testSelectFurnitureTypeMeshChair() throws IOException  , SQLException {
+    public void testSelectFurnitureTypeMeshChair() throws IOException{
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the chairSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
+
+         prints out an error message in the event of failing any of the checks.
          */
 
         String type = "Mesh";
@@ -135,12 +172,14 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Mesh Chair",result,expected);
     }
     @Test
-    public void testSelectFurnitureTypeKneelingChair() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeKneelingChair() throws IOException{
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the chairSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
+
+         prints out an error message in the event of failing any of the checks.
          */
 
         String type = "Kneeling";
@@ -159,12 +198,14 @@ public class FinalProjectTest {
     }
 
     @Test
-    public void testSelectFurnitureTypeErgonomicChair() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeErgonomicChair() throws IOException{
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the chairSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
+
+         prints out an error message in the event of failing any of the checks.
          */
 
         String type = "Ergonomic";
@@ -182,12 +223,14 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Ergonomic Chair",result,expected);
     }
     @Test
-    public void testSelectFurnitureTypeExecutiveChair() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeExecutiveChair() throws IOException{
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the chairSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
+
+         prints out an error message in the event of failing any of the checks.
          */
 
         String type = "Executive";
@@ -205,12 +248,14 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Executive Chair",result,expected);
     }
     @Test
-    public void testSelectFurnitureTypeSmallFiling() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeSmallFiling() throws IOException {
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the filingSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
+
+         prints out an error message in the event of failing any of the checks.
          */
 
         String type = "Small";
@@ -230,12 +275,14 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Small Filing",result,expected);
     }
     @Test
-    public void testSelectFurnitureTypeMediumFiling() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeMediumFiling() throws IOException{
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the filingSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
+
+         prints out an error message in the event of failing any of the checks.
          */
 
         String type = "Medium";
@@ -255,12 +302,14 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Medium Filing",result,expected);
     }
     @Test
-    public void testSelectFurnitureTypeLargeFiling() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeLargeFiling() throws IOException{
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the filingSelect
          function by using the type and number of occurrences of the specific type of chair, chairSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
+
+         prints out an error message in the event of failing any of the checks.
          */
 
         String type = "Large";
@@ -280,12 +329,14 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Large Filing",result,expected);
     }
     @Test
-    public void testSelectFurnitureTypeDeskLamp() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeDeskLamp() throws IOException{
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the lampSelect
          function by using the type and number of occurrences of the specific type of lamp, lampSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
+
+         prints out an error message in the event of failing any of the checks.
          */
 
         String type = "Desk";
@@ -307,12 +358,14 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Desk Lamp", result, expected);
     }
     @Test
-    public void testSelectFurnitureTypeSwingArmLamp() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeSwingArmLamp() throws IOException{
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the lampSelect
          function by using the type and number of occurrences of the specific type of lamp, lampSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
+
+         prints out an error message in the event of failing any of the checks.
          */
 
         String type = "Swing Arm";
@@ -331,12 +384,14 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Swing Arm Lamp", result, expected);
     }
     @Test
-    public void testSelectFurnitureTypeStudyLamp() throws IOException  , SQLException {
+    public void testSelectFurnitureTypeStudyLamp() throws IOException{
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the lampSelect
          function by using the type and number of occurrences of the specific type of lamp, lampSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
+
+         prints out an error message in the event of failing any of the checks.
          */
         String type = "Study";
         String table = "lamp";
@@ -354,12 +409,14 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Study Lamp", result, expected);
     }
     @Test
-    public void testSelectFurnitureTypeTraditionalDesk() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeTraditionalDesk() throws IOException{
        /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the deskSelect
          function by using the type and number of occurrences of the specific type of desk, deskSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
+
+         prints out an error message in the event of failing any of the checks. 
          */
 
         String type = "Traditional";
@@ -378,12 +435,14 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Traditional Desk", result, expected);
     }
     @Test
-    public void testSelectFurnitureTypeStandingDesk() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeStandingDesk() throws IOException{
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the deskSelect
          function by using the type and number of occurrences of the specific type of desk, deskSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
+         
+         prints out an error message in the event of failing any of the checks. 
          */
 
         String type = "Standing";
@@ -403,12 +462,14 @@ public class FinalProjectTest {
         assertEquals("selectFurnitureType does not return the correct rows for Standing Desk", result, expected);
     }
     @Test
-    public void testSelectFurnitureTypeAdjustableDesk() throws IOException  , SQLException   {
+    public void testSelectFurnitureTypeAdjustableDesk() throws IOException{
         /*
          This test , tests 2 functions, it first calls the selectFurnitureType function, which calls the deskSelect
          function by using the type and number of occurrences of the specific type of desk, deskSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
+         
+         prints out an error message in the event of failing any of the checks. 
          */
 
         String type = "Adjustable";
@@ -430,9 +491,17 @@ public class FinalProjectTest {
     }
 
     @Test
-    public void testCalculateLowestPriceExecutiveChair() throws IOException  , SQLException   {
+    public void testCalculateLowestPriceExecutiveChair() throws IOException{
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+            
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
+            checks if the output text file is correctly written to or not.          
+            
+            prints out an error message in the event of failing any of the checks. 
+            
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+            is calculated correctly or not
          */
 
         String type = "Executive";
@@ -459,9 +528,17 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceTaskChair() throws IOException  , SQLException   {
+    public void testCalculateLowestPriceTaskChair() throws IOException{
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+            
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
+            checks if the output text file is correctly written to or not.          
+            
+            prints out an error message in the event of failing any of the checks. 
+            
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+            is calculated correctly or not
          */
 
         String type = "Task";
@@ -488,9 +565,17 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceMeshChair() throws IOException  , SQLException   {
+    public void testCalculateLowestPriceMeshChair() throws IOException{
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+            
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
+            checks if the output text file is correctly written to or not.          
+            
+            prints out an error message in the event of failing any of the checks. 
+            
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+            is calculated correctly or not
          */
         String type = "Mesh";
         String table = "chair";
@@ -517,9 +602,17 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceErgonomicChair() throws IOException  , SQLException   {
+    public void testCalculateLowestPriceErgonomicChair() throws IOException{
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+            
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
+            checks if the output text file is correctly written to or not.          
+            
+            prints out an error message in the event of failing any of the checks. 
+            
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+            is calculated correctly or not
          */
 
         String type = "Ergonomic";
@@ -546,9 +639,17 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceKneelingChair() throws IOException  , SQLException   {
+    public void testCalculateLowestPriceKneelingChair() throws IOException  {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+            
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
+            checks if the output text file is correctly written to or not.          
+            
+            prints out an error message in the event of failing any of the checks. 
+            
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+            is calculated correctly or not
          */
 
         String type = "Kneeling";
@@ -574,9 +675,17 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceSmallFiling() throws IOException  , SQLException   {
+    public void testCalculateLowestPriceSmallFiling() throws IOException  {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+            
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
+            checks if the output text file is correctly written to or not.          
+            
+            prints out an error message in the event of failing any of the checks. 
+            
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+            is calculated correctly or not
          */
         String type = "Small";
         String table = "filing";
@@ -604,9 +713,18 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceMediumFiling() throws IOException  , SQLException   {
+    public void testCalculateLowestPriceMediumFiling() throws IOException  {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+            
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
+            checks if the output text file is correctly written to or not.          
+            
+            prints out an error message in the event of failing any of the checks. 
+            
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+            is calculated correctly or not
+            
          */
 
         String type = "Medium";
@@ -638,9 +756,17 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceLargeFiling() throws IOException  , SQLException   {
+    public void testCalculateLowestPriceLargeFiling() throws IOException  {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+            
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
+            checks if the output text file is correctly written to or not.          
+            
+            prints out an error message in the event of failing any of the checks. 
+            
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+            is calculated correctly or not
          */
 
         String type = "Large";
@@ -669,10 +795,18 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceTraditionalDesk() throws IOException  , SQLException
+    public void testCalculateLowestPriceTraditionalDesk() throws IOException
     {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+            
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
+            checks if the output text file is correctly written to or not.          
+            
+            prints out an error message in the event of failing any of the checks. 
+            
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+            is calculated correctly or not
          */
         String type = "Traditional";
         String table = "desk";
@@ -701,10 +835,18 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceAdjustableDesk() throws IOException  , SQLException
+    public void testCalculateLowestPriceAdjustableDesk() throws IOException
     {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+            
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
+            checks if the output text file is correctly written to or not.          
+            
+            prints out an error message in the event of failing any of the checks. 
+            
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+            is calculated correctly or not
          */
         String type = "Adjustable";
         String table = "desk";
@@ -737,10 +879,18 @@ public class FinalProjectTest {
     }
 
     @Test
-    public void testCalculateLowestPriceStandingDesk() throws IOException  , SQLException
+    public void testCalculateLowestPriceStandingDesk() throws IOException
     {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+            
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
+            checks if the output text file is correctly written to or not.          
+            
+            prints out an error message in the event of failing any of the checks. 
+            
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+            is calculated correctly or not
          */
         String type = "Standing";
         String table = "desk";
@@ -771,10 +921,18 @@ public class FinalProjectTest {
     }
 
     @Test
-    public void testCalculateLowestPriceDeskLamp() throws IOException  , SQLException
+    public void testCalculateLowestPriceDeskLamp() throws IOException
     {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+            
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
+            checks if the output text file is correctly written to or not.          
+            
+            prints out an error message in the event of failing any of the checks. 
+            
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+            is calculated correctly or not
          */
         String type = "Desk";
         String table = "lamp";
@@ -807,10 +965,18 @@ public class FinalProjectTest {
     }
 
     @Test
-    public void testCalculateLowestPriceSwingArmLamp() throws IOException  , SQLException
+    public void testCalculateLowestPriceSwingArmLamp() throws IOException    
     {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+            
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
+            checks if the output text file is correctly written to or not.          
+            
+            prints out an error message in the event of failing any of the checks. 
+            
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+            is calculated correctly or not
          */
         String type = "Swing Arm";
         String table = "lamp";
@@ -840,10 +1006,18 @@ public class FinalProjectTest {
     }
 
     @Test
-    public void testCalculateLowestPriceStudyLamp() throws IOException  , SQLException
+    public void testCalculateLowestPriceStudyLamp() throws IOException    
     {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
+            
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
+            checks if the output text file is correctly written to or not.          
+            
+            prints out an error message in the event of failing any of the checks. 
+            
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+            is calculated correctly or not
          */
         String type = "Study";
         String table = "lamp";
@@ -873,8 +1047,12 @@ public class FinalProjectTest {
 
     }
     public String readFile(int line) throws FileNotFoundException {
-            File file = new File("C:\\Users\\user\\Desktop\\ENSF409\\FinalProject\\orderform.txt");                  // input file
-            Scanner sc = new Scanner(file);// scanner to move through the input file
+        /*
+            helper function to read the contents of the file specified below.
+            read the line specified as an argument.
+         */
+            File file = new File("C:\\Users\\user\\Desktop\\ENSF409\\FinalProject\\orderform.txt"); // input file
+            Scanner sc = new Scanner(file);                     // scanner to move through the input file
             int counter=1;
             String result=new String();
         while(sc.hasNextLine())
