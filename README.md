@@ -16,6 +16,8 @@ This is an application to calculate the cheapest combination of available invent
 (3) Regardless of wether the object requested by the user can be created or not an output text file is created which display the status of the request.
 
 (4) The project includes a Test File which validates the functionality of each method in the FinalProject.java file.
+## UML Diagram
+![image](https://user-images.githubusercontent.com/53919885/114313596-2358d500-9b08-11eb-862d-d6b9678055a9.png)
 
 ## Java imports used 
 
