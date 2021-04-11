@@ -1,5 +1,0 @@
-F002, Medium, N, N, Y, 100, 004
-F007, Medium, N, Y, Y, 150, 002
-F008, Medium, Y, N, N, 50, 005
-F009, Medium, Y, Y, N, 150, 004
-F014, Medium, Y, Y, Y, 200, 002
