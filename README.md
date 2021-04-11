@@ -17,7 +17,7 @@ This is an application to calculate the cheapest combination of available invent
 
 (4) The project includes a Test File which validates the functionality of each method in the FinalProject.java file.
 ## UML Diagram
-UML Class (1).jpeg![image](https://user-images.githubusercontent.com/53919885/114313651-5a2eeb00-9b08-11eb-92cf-c17c692f7d80.png)
+![image](https://user-images.githubusercontent.com/53919885/114313651-5a2eeb00-9b08-11eb-92cf-c17c692f7d80.png)
 
 ## Java imports used 
 
