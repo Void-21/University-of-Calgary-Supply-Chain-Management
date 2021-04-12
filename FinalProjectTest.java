@@ -1393,6 +1393,12 @@ public class FinalProjectTest{
 
 
     }
+    @Test
+    public void testWriteFileWritesFile()
+    {
+        File file = new File("C:\\Users\\user\\Desktop\\ENSF409\\FinalProject\\orderform.txt");
+        assertTrue(file.exists());
+    }
     public String readFile(int line) throws FileNotFoundException {
         /*
             helper function to read the contents of the file specified below.
