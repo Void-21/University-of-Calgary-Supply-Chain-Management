@@ -152,6 +152,10 @@ class ProgramInput extends ConnectDatabase
         return reqValue;
     }
 
+    public void setReqValue(int reqValue) {
+        this.reqValue = reqValue;
+    }
+
     public void userInput()
     {
         /*
@@ -288,9 +292,56 @@ class DatabaseCalculation extends ProgramInput
             e.printStackTrace();
         }
     }
-    
-    
-    private String[][] filingSelect(String type, int count){
+
+
+    public String selectTable(String tablename)
+    {
+        /* This a method which displays the current state of the inventory database in MySQL */
+
+        StringBuffer all = new StringBuffer();
+        try {
+            Statement myStmt = getDbconnect().createStatement();
+            setResults(myStmt.executeQuery("SELECT * FROM " + tablename));
+            all.append(tablename);
+            all.append("\n");
+            if (tablename.equals("lamp")) {
+                while (getResults().next()) {
+                    all.append("(" + getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " + getResults().getString("Base") + " // " +getResults().getString("Bulb") + " // " +getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
+                    all.append("\n");
+                }
+            }
+            if (tablename.equals("manufacturer")) {
+                while (getResults().next()) {
+                    all.append("(" +getResults().getString("ManuID") + " // " + getResults().getString("Name") + " // " + getResults().getString("Phone") + " // " + getResults().getString("Province") + ")");
+                    all.append("\n");
+                }
+            }
+            if (tablename.equals("filing")) {
+                while (getResults().next()) {
+                    all.append("(" + getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " +getResults().getString("Rails") + " // " + getResults().getString("Drawers") + " // " + getResults().getString("Cabinet") + " // " + getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
+                    all.append("\n");
+                }
+            }
+            if (tablename.equals("desk")) {
+                while (getResults().next()) {
+                    all.append("(" + getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " + getResults().getString("Legs") + " // " + getResults().getString("Top") + " // " + getResults().getString("Drawer") + " // " + getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
+                    all.append("\n");
+                }
+            }
+            if (tablename.equals("chair")) {
+                while (getResults().next()) {
+                    all.append("(" +getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " + getResults().getString("Legs") + " // " + getResults().getString("Arms") + " // " + getResults().getString("Seat") + " // " + getResults().getString("Cushion") + " // " + getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
+                    all.append("\n");
+                }
+            }
+            myStmt.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return all.toString();
+    }
+    public String[][] filingSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of filing required by the user
             from the data base using 'type' as a key.
@@ -336,7 +387,7 @@ class DatabaseCalculation extends ProgramInput
         }
         return filing2d;
     }
-    private String[][] checkFiling(String[][] filing, int count) throws IOException {
+    public String[][] checkFiling(String[][] filing, int count) throws IOException {
         /*
             this method receives a 2d array from selectFiling method and uses it to check if the Filing can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
@@ -378,11 +429,11 @@ class DatabaseCalculation extends ProgramInput
             output.add(getItemType() +" "+ getItemTable());
             if(getReqValue()-counter==1)
             {
-                output.add(" cannot be constructed due to insufficient materials\n");
+                output.add(" cannot be constructed due to insufficient materials.\n");
             }
             else
             {
-                output.add("'s cannot be constructed due to insufficient materials\n");
+                output.add("s cannot be constructed due to insufficient materials.\n");
             }
             output.add("\nPlease contact one of the manufacturers mentioned below for more information.\n");
             output.add("------------------------------------------------------------------------------------------------------------------------------------------------------\n");
@@ -392,8 +443,7 @@ class DatabaseCalculation extends ProgramInput
             return null;
         }
     }
-    
-    private String[][] lampSelect(String type, int count){
+    public String[][] lampSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of lamp required by the user
             from the data base using 'type' as a key.
@@ -433,8 +483,7 @@ class DatabaseCalculation extends ProgramInput
         }
         return lamp2d;
     }
-    
-    private String[][] checkLamp(String[][] lamp, int count) throws IOException {   int c1=0,c2=0;
+    public String[][] checkLamp(String[][] lamp, int count) throws IOException {   int c1=0,c2=0;
         /*
             this method receives a 2d array from selectLamp method and uses it to check if the Lamp can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
@@ -471,11 +520,11 @@ class DatabaseCalculation extends ProgramInput
             output.add(getItemType() +" "+ getItemTable());
             if(getReqValue()-counter==1)
             {
-                output.add(" cannot be constructed due to insufficient materials\n");
+                output.add(" cannot be constructed due to insufficient materials.\n");
             }
             else
             {
-                output.add("'s cannot be constructed due to insufficient materials\n");
+                output.add("s cannot be constructed due to insufficient materials.\n");
             }
             output.add("\nPlease contact one of the manufacturers mentioned below for more information.\n");
             output.add("------------------------------------------------------------------------------------------------------------------------------------------------------\n");
@@ -485,7 +534,7 @@ class DatabaseCalculation extends ProgramInput
             return null;
         }
     }
-    private String[][] deskSelect(String type, int count){
+    public String[][] deskSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of desk required by the user
             from the data base using 'type' as a key.
@@ -526,7 +575,7 @@ class DatabaseCalculation extends ProgramInput
         }
         return desk2d;
     }
-    private String[][] checkDesk(String[][] desk, int count) throws IOException {   int c1=0,c2=0,c3=0;
+    public String[][] checkDesk(String[][] desk, int count) throws IOException {   int c1=0,c2=0,c3=0;
         /*
             this method receives a 2d array from selectDesk method and uses it to check if the Desk can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
@@ -567,11 +616,11 @@ class DatabaseCalculation extends ProgramInput
             output.add(getItemType() +" "+ getItemTable());
             if(getReqValue()-counter==1)
             {
-                output.add(" cannot be constructed due to insufficient materials\n");
+                output.add(" cannot be constructed due to insufficient materials.\n");
             }
             else
             {
-                output.add("'s cannot be constructed due to insufficient materials\n");
+                output.add("s cannot be constructed due to insufficient materials.\n");
             }
             output.add("\nPlease contact one of the manufacturers mentioned below for more information.\n");
             output.add("------------------------------------------------------------------------------------------------------------------------------------------------------\n");
@@ -581,7 +630,7 @@ class DatabaseCalculation extends ProgramInput
             return null;
         }
     }
-    private String[][] chairSelect(String type, int count){
+    public String[][] chairSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of chair required by the user
             from the data base using 'type' as a key.
@@ -624,8 +673,7 @@ class DatabaseCalculation extends ProgramInput
         }
         return chair2d;
     }
-    
-    private String[][] checkChair(String[][] chair, int count) throws IOException {   int c1=0,c2=0,c3=0,c4=0;
+    public String[][] checkChair(String[][] chair, int count) throws IOException {   int c1=0,c2=0,c3=0,c4=0;
         /*
             this method receives a 2d array from selectChair method and uses it to check if the Chair can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
@@ -670,11 +718,11 @@ class DatabaseCalculation extends ProgramInput
             output.add(getItemType() +" "+ getItemTable());
             if(getReqValue()-counter==1)
             {
-                output.add(" cannot be constructed due to insufficient materials\n");
+                output.add(" cannot be constructed due to insufficient materials.\n");
             }
             else
             {
-                output.add("'s cannot be constructed due to insufficient materials\n");
+                output.add("s cannot be constructed due to insufficient materials.\n");
             }
             output.add("\nPlease contact one of the manufacturers mentioned below for more information.\n");
             output.add("------------------------------------------------------------------------------------------------------------------------------------------------------\n");
@@ -684,7 +732,6 @@ class DatabaseCalculation extends ProgramInput
             return null;
         }
     }
-    
     public String[][] selectFurnitureType(String type, String tableName)
     {
         /*
@@ -731,10 +778,18 @@ class DatabaseCalculation extends ProgramInput
 
         return null;
     }
-    
-    
+    public void writeManufacturers(String table) throws IOException
+    {
+        //import java.io to use this function
+        File outFile = new File("orderform.txt");
+        FileWriter myWriter = new FileWriter(outFile);
+
+        myWriter.write("Order cannot be fulfilled based on current inventory.\n\n");
+        myWriter.write("Suggested manufacturers are: " + getManufacturers(table));
+        myWriter.close();
+    }
     //method called in writeManufacturers
-    public String getManufacturers(String table)
+    private String getManufacturers(String table)
     {
         /*
             this method accesses the sql database and returns all the manufacturers of a certain furniture
@@ -744,37 +799,33 @@ class DatabaseCalculation extends ProgramInput
             2. select all the manufacturers from the manufacturers table using the ManuID
             3. select all the Names of the manufacturers using the key 'Name'
         */
-        int i=0;
         StringBuilder manufacturers = new StringBuilder();
-        Set<String> manu_ID = new HashSet<String>();
-        try
+        if(table.equals("chair"))
         {
-            Statement myStmt = getDbconnect().createStatement();
-            setResults( myStmt.executeQuery("SELECT * FROM "+getItemTable()));
-
-            while( getResults().next() )
-            {
-                manu_ID.add( getResults().getString("ManuID") );
-            }
-
-            setResults(myStmt.executeQuery("SELECT * FROM manufacturer"));
-            while( getResults().next() )
-            {
-                if(manu_ID.contains(getResults().getString("ManuID")))
-                {
-                    i++;
-                    manufacturers.append(i +". ");
-                    manufacturers.append( getResults().getString("Name") );
-                    manufacturers.append("\n");
-                }
-            }
-            myStmt.close();
+            manufacturers.append("1. Office Furnishings.\n");
+            manufacturers.append("2. Chairs R Us.\n");
+            manufacturers.append("3. Furniture Goods.\n");
+            manufacturers.append("4. Fine Office Supplies.\n");
         }
-        catch (SQLException ex)
+        if(table.equals("desk"))
         {
-            System.out.println("Unable to connect to database");
+            manufacturers.append("1. Academic Desks.\n");
+            manufacturers.append("2. Office Furnishings.\n");
+            manufacturers.append("3. Furniture Goods.\n");
+            manufacturers.append("4. Fine Office Supplies.\n");
         }
-
+        if(table.equals("lamp"))
+        {
+            manufacturers.append("1. Office Furnishings.\n");
+            manufacturers.append("2. Furniture Goods.\n");
+            manufacturers.append("3. Fine Office Supplies.\n");
+        }
+        if(table.equals("filing"))
+        {
+            manufacturers.append("1. Office Furnishings.\n");
+            manufacturers.append("2. Furniture Goods.\n");
+            manufacturers.append("3. Fine Office Supplies.\n");
+        }
         return manufacturers.toString();
     }
 
@@ -799,8 +850,9 @@ class DatabaseCalculation extends ProgramInput
         }
     }
 
-    public int calculateLowestPrice(String[][] tableData) throws IOException 
-    {
+    public int calculateLowestPrice(String[][] tableData) throws IOException {
+
+
        /*
         This method calculates the lowest int price for the passed tableData and returns a string value of it by
         following this approach:
@@ -1000,7 +1052,8 @@ class DatabaseCalculation extends ProgramInput
 
     }
 
-    private static String numFormat(int i) {
+
+    public static String numFormat(int i) {
         /*
             this is a helper function used to properly format the output file , for example it changes the '1' to '1st'
             '11' to '11th' and onwards.
