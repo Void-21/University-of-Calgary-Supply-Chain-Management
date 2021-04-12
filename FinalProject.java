@@ -1,3 +1,16 @@
+/**
+ * This project is completed by group 60 (ENSF 409)
+ *
+ * @author Zeeshan Chougle <a href="mailto:zeeshan.chougle@ucalgary.ca">Zeeshan.chougle@ucalgary.ca</a>
+ * @author Mohamed Numan <a href="mailto:mohamed.numan@ucalgary.ca">mohamed.numan@ucalgary.ca</a>
+ * @author Mahtab Khan <a href="mohammadmahtab.khan@ucalgary.ca">mohammadmahtab.khan@ucalgary.ca</a>
+ * @author Umar Baloch <a href="mailto:"umarbaloch84@gmail.com">umarbaloch84@gmail.com</a>
+ * @version 3.1
+ * @since 1.0
+ */
+
+
+
 package edu.ucalgary.ensf409;
 import java.sql.*;
 import java.io.*;
@@ -6,6 +19,15 @@ import java.util.stream.Collectors;
 
 class ConnectDatabase
 {
+
+    /**
+     * ConnectDatabase class contains methods and instances to establish connection with the database
+     *
+     * Note : DBURL,USERNAME and PASSWORD have to be passed through the constructor to establish connection to
+     * the database on the User's System
+     * 
+     */
+
     public final String DBURL;      //store the database url information
     public final String USERNAME;   //store the user's account username
     public final String PASSWORD;   //store the user's account password
@@ -90,6 +112,14 @@ class ConnectDatabase
 
 class ProgramInput extends ConnectDatabase
 {
+
+    /**
+     * ProgramInput class inherits from ConnectDatabase
+     * 
+     * This class is responsible obtaining the input from the user via command line and checking the validity of the input
+     */
+
+
     private String itemType;            //Type of item user wishes to buy
     private String itemTable;           //contains the table of the item which the user wishes to buy
     private String numItems;            //contains the number of items entered by the user
@@ -259,6 +289,17 @@ class ProgramInput extends ConnectDatabase
 
 class DatabaseCalculation extends ProgramInput
 {
+    /**
+     * 
+     * DatabaseCalculation class inherits from ProgramInput
+     * 
+     * This class is responsible for all the MySQL operations which include : extraction of data from the database and 
+     * modifying the table after certain orders are satisfied. It even contains calculateLowestPrice which is the key function
+     * responsible for calculating the lowest price. Finally, it is even responsible for writing the results to the output file.
+     *
+     */
+    
+    
     private int counter=0;
     public String str ="";
     public boolean firstTime=true;
@@ -292,55 +333,7 @@ class DatabaseCalculation extends ProgramInput
             e.printStackTrace();
         }
     }
-
-
-    public String selectTable(String tablename)
-    {
-        /* This a method which displays the current state of the inventory database in MySQL */
-
-        StringBuffer all = new StringBuffer();
-        try {
-            Statement myStmt = getDbconnect().createStatement();
-            setResults(myStmt.executeQuery("SELECT * FROM " + tablename));
-            all.append(tablename);
-            all.append("\n");
-            if (tablename.equals("lamp")) {
-                while (getResults().next()) {
-                    all.append("(" + getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " + getResults().getString("Base") + " // " +getResults().getString("Bulb") + " // " +getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
-                    all.append("\n");
-                }
-            }
-            if (tablename.equals("manufacturer")) {
-                while (getResults().next()) {
-                    all.append("(" +getResults().getString("ManuID") + " // " + getResults().getString("Name") + " // " + getResults().getString("Phone") + " // " + getResults().getString("Province") + ")");
-                    all.append("\n");
-                }
-            }
-            if (tablename.equals("filing")) {
-                while (getResults().next()) {
-                    all.append("(" + getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " +getResults().getString("Rails") + " // " + getResults().getString("Drawers") + " // " + getResults().getString("Cabinet") + " // " + getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
-                    all.append("\n");
-                }
-            }
-            if (tablename.equals("desk")) {
-                while (getResults().next()) {
-                    all.append("(" + getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " + getResults().getString("Legs") + " // " + getResults().getString("Top") + " // " + getResults().getString("Drawer") + " // " + getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
-                    all.append("\n");
-                }
-            }
-            if (tablename.equals("chair")) {
-                while (getResults().next()) {
-                    all.append("(" +getResults().getString("ID") + " // " + getResults().getString("TYPE") + " // " + getResults().getString("Legs") + " // " + getResults().getString("Arms") + " // " + getResults().getString("Seat") + " // " + getResults().getString("Cushion") + " // " + getResults().getString("Price") + " // " + getResults().getString("ManuID") + ")");
-                    all.append("\n");
-                }
-            }
-            myStmt.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return all.toString();
-    }
+    
     public String[][] filingSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of filing required by the user
@@ -778,16 +771,7 @@ class DatabaseCalculation extends ProgramInput
 
         return null;
     }
-    public void writeManufacturers(String table) throws IOException
-    {
-        //import java.io to use this function
-        File outFile = new File("orderform.txt");
-        FileWriter myWriter = new FileWriter(outFile);
-
-        myWriter.write("Order cannot be fulfilled based on current inventory.\n\n");
-        myWriter.write("Suggested manufacturers are: " + getManufacturers(table));
-        myWriter.close();
-    }
+    
     //method called in writeManufacturers
     private String getManufacturers(String table)
     {
@@ -854,20 +838,13 @@ class DatabaseCalculation extends ProgramInput
 
 
        /*
-        This method calculates the lowest int price for the passed tableData and returns a string value of it by
+        This method calculates the lowest int price for the passed tableData and returns a integer value of it by
         following this approach:
-        * Step 1 : Start by considering the object with the most number of reusable parts (indicated by "Y").
-        * Step 2 : Calculate all the possible cost options for this object and append the cheapest option to collectionOfLowestItem ArrayList
-        * Step 3 : Using ArrayLists idTracker and trackIndexPrices to contain the ids of all the cheapest options considered in each iteration
-                   for the objects with this specific number of "Y" (reusable parts)
-        * Step 4 : repeat Step 1,2 and 3 to determine the lowest possible options for the objects containing the second most
-                    ,third most,4th most and so on... reusable parts
-        * Step 5 : Extract the smallest element in the collectionOfLowestItem ArrayList which will be the Lowest
-                    possible price
-        * Step 6 : Extract the corresponding ids for the lowest prices from idTracker ArrayList and delete these records
-                    from the database
-        * Step 7 : Finally if the numOfItems requested by user is >1 call setfurniture again to repeat all the steps for
-                    the next Item as long as numOfItems<=1
+        * Step 1 : It firstly checks if the 2D string (the table for this item) passed has 4,5 or 6 columns.
+        * Step 2 : For the specific table it then uses multiple nested loops to append the prices of all possible combinations to "prices" arraylist
+        * Step 3 : It then returns the lowest integer element in the arraylist which is the lowest price for our item.
+        * Step 4 : the algorithm simaltaneously keeps track of the IDs of those prices and then calls the deleteFromTable()
+                    to delete the rows whose prices togather cost the lowest price for that item.
         */
 
         ArrayList<Integer> prices = new ArrayList<>();
@@ -1097,6 +1074,17 @@ class DatabaseCalculation extends ProgramInput
 
 public class FinalProject
 {
+
+    /**
+     * This class contains only the main function which creates objects of all the other classes to carry out the
+     * functionalities of the code by calling their member functions
+     *
+     * A description on how to run the code is added in the read me file.
+     *
+     * @param args
+     * @throws IOException
+     */
+
 
     public static void main(String[] args) throws IOException
     {
