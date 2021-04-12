@@ -7,34 +7,34 @@ import java.sql.*;
 import java.util.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class FinalProjectTest {
-    /** 
+public class FinalProjectTest{
+    /**
      *  DOCUMENTATION FOR JUNIT TESTING:
-     *  
+     *
      *  initializeConnection(): is a method that establishes a connection between the .java files and the sql database.
-     *  
+     *
      *  testConstructor() performs the following task:
      *  It Checks if the constructor initializes all the values correctly and prints out an error message in the event of
      *  failing any of the checks.
-     *  
+     *
      *  chair() ,desk() ,filing() ,lamp() perform the following task:
-     *  These functions are called before each test to restore the database with the original contents, as the contents 
-     *  get manipulated by each test restoring the database after each test is necessary to ensure every test is able 
+     *  These functions are called before each test to restore the database with the original contents, as the contents
+     *  get manipulated by each test restoring the database after each test is necessary to ensure every test is able
      *  to perform its required task.
-     *  
+     *
      *  testSelectFurnitureTypeTaskChair() and similar functions perform the following task:
      *  Tests two functions, it first calls the selectFurnitureType() function, which calls the chairSelect
-     *  function by using the type and number of occurrences of the specific type of chair, chairSelect() function 
-     *  returns a 2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched 
+     *  function by using the type and number of occurrences of the specific type of chair, chairSelect() function
+     *  returns a 2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched
      *  with our expected output to complete the testing.
-     *  
+     *
      *  testCalculateLowestPriceTaskChair() and similar functions perform the following task:
      *  Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
      *  Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
      *  checks if the output text file is correctly written to or not.
      *  Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
      *  is calculated correctly or not.
-     *  
+     *
      */
 
     public final static String USERNAME = "NUMAN";              //USERNAME should be changed to match the one set by the user on their system
@@ -142,11 +142,330 @@ public class FinalProjectTest {
         /* Checks if the constructor initializes all the values correctly and prints out an error message in the event of
            failing any of the checks.
         */
-
         DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
         assertEquals("DBURL is wrong", testObj.getDburl(), DBURL);
         assertEquals("USERNAME is wrong", testObj.getUsername(), USERNAME);
         assertEquals("PASSWORD is wrong", testObj.getPassword(), PASSWORD);
+    }
+    @Test
+    public void testCalculateLowestPriceMeshChair() throws IOException
+    {
+        /*
+           This test checks the return value of the calculateLowestPrice function and compares
+           the return value with the expected value.
+           The testing process involves passing a 2D array of all the boolean values and the price of the specific table and type
+           which then returns an integer
+        */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemTable("chair");
+        testObj.setItemType("mesh");
+        testObj.setNumItems("1");
+        testObj.setReqValue(1);
+        String[][] input ={{"Y", "N", "Y", "Y", "175","C0942"},
+                {"Y", "N", "N", "N", "75", "C6748"},
+                {"N", "N", "Y", "N", "75", "C8138"},
+                {"N", "Y", "N", "Y", "50", "C9890"}};
+        int result = testObj.calculateLowestPrice(input);
+        chair();
+        assertEquals("lowest price calculated is incorrect",result,200);
+
+    }
+
+    @Test
+    public void testCalculateLowestPriceTaskChair() throws IOException
+    {
+        /*
+           This test checks the return value of the calculateLowestPrice function and compares
+           the return value with the expected value.
+           The testing process involves passing a 2D array of all the boolean values and the price of the specific table and type
+           which then returns an integer
+        */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemTable("chair");
+        testObj.setItemType("task");
+        testObj.setNumItems("1");
+        testObj.setReqValue(1);
+        String[][] input ={{ "N", "N", "Y", "Y", "50", "C0914"},
+                {"Y", "N", "Y", "Y", "125", "C1148"},
+                {"Y", "Y", "N", "N", "100","C3405"}};
+        int result = testObj.calculateLowestPrice(input);
+        chair();
+        assertEquals("lowest price calculated is incorrect",result,150);
+
+    }
+
+    @Test
+    public void testCalculateLowestPriceErgonomicChair() throws IOException
+    {
+        /*
+           This test checks the return value of the calculateLowestPrice function and compares
+           the return value with the expected value.
+           The testing process involves passing a 2D array of all the boolean values and the price of the specific table and type
+           which then returns an integer
+        */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemTable("chair");
+        testObj.setItemType("ergonomic");
+        testObj.setNumItems("1");
+        testObj.setReqValue(1);
+        String[][] input ={{"N", "N", "N", "Y", "50","C4839"},
+                {"Y", "Y", "Y", "N", "200","C5409"},
+                {"Y", "N", "N", "Y", "125","C5789"}};
+        int result = testObj.calculateLowestPrice(input);
+        chair();
+        assertEquals("lowest price calculated is incorrect",result,250);
+
+    }
+
+    @Test
+    public void testCalculateLowestPriceExecutiveChair() throws IOException
+    {
+        /*
+           This test checks the return value of the calculateLowestPrice function and compares
+           the return value with the expected value.
+           The testing process involves passing a 2D array of all the boolean values and the price of the specific table and type
+           which then returns an integer
+        */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemTable("chair");
+        testObj.setItemType("executive");
+        testObj.setNumItems("1");
+        testObj.setReqValue(1);
+        String[][] input ={{"Y", "Y", "N", "N", "175","C2483"},
+                {"Y", "N", "N", "Y", "150", "C5784"},
+                {"N", "N", "Y", "N", "75", "C7268"}};
+        int result = testObj.calculateLowestPrice(input);
+        chair();
+        assertEquals("lowest price calculated is incorrect",result,400);
+
+    }
+
+    @Test
+    public void testCalculateLowestPriceSwingArmLamp() throws IOException
+    {
+        /*
+           This test checks the return value of the calculateLowestPrice function and compares
+           the return value with the expected value.
+           The testing process involves passing a 2D array of all the boolean values and the price of the specific table and type
+           which then returns an integer
+        */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemTable("lamp");
+        testObj.setItemType("swing arm");
+        testObj.setNumItems("1");
+        testObj.setReqValue(1);
+        String[][] input ={{ "Y", "N", "27", "L053"},
+                {"N", "Y" ,"3" ,"002","L096"},
+                {"Y", "N", "27", "002","L487"},
+                {"N", "Y", "3","L879"}};
+        int result = testObj.calculateLowestPrice(input);
+        lamp();
+        assertEquals("lowest price calculated is incorrect",result,30);
+
+    }
+
+    @Test
+    public void testCalculateLowestPriceDeskLamp() throws IOException
+    {
+        /*
+           This test checks the return value of the calculateLowestPrice function and compares
+           the return value with the expected value.
+           The testing process involves passing a 2D array of all the boolean values and the price of the specific table and type
+           which then returns an integer
+        */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemTable("lamp");
+        testObj.setItemType("desk");
+        testObj.setNumItems("1");
+        testObj.setReqValue(1);
+        String[][] input ={{"Y", "N", "18","L013"},
+                {"Y", "N", "18","L112"},
+                {"Y", "N", "18","L132"},
+                {"N", "Y", "2","L208",},
+                {"N", "Y", "2", "L342"},
+                {"Y", "Y", "20", "L564"},
+                {"Y", "N", "18", "L649"}};
+        int result = testObj.calculateLowestPrice(input);
+        lamp();
+        assertEquals("lowest price calculated is incorrect",result,20);
+
+    }
+
+    @Test
+    public void testCalculateLowestPriceStudyLamp() throws IOException
+    {
+        /*
+           This test checks the return value of the calculateLowestPrice function and compares
+           the return value with the expected value.
+           The testing process involves passing a 2D array of all the boolean values and the price of the specific table and type
+           which then returns an integer
+        */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemTable("lamp");
+        testObj.setItemType("study");
+        testObj.setNumItems("1");
+        testObj.setReqValue(1);
+        String[][] input ={{"N", "Y", "2", "L223"},
+                {"Y", "Y", "10", "L928"},
+                {"N", "Y", "2", "L980"},
+                {"Y", "N", "8", "L982"}};
+        int result = testObj.calculateLowestPrice(input);
+        lamp();
+        assertEquals("lowest price calculated is incorrect",result,10);
+
+    }
+
+    @Test
+    public void testCalculateLowestPriceTraditionalDesk() throws IOException
+    {
+        /*
+           This test checks the return value of the calculateLowestPrice function and compares
+           the return value with the expected value.
+           The testing process involves passing a 2D array of all the boolean values and the price of the specific table and type
+           which then returns an integer
+        */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemTable("desk");
+        testObj.setItemType("traditional");
+        testObj.setNumItems("1");
+        testObj.setReqValue(1);
+        String[][] input = {{"N", "N", "Y" ,"25", "D0890"},
+                {"N", "Y", "Y", "50", "D4231"},
+                {"Y" ,"Y", "N", "75", "D8675"},
+                {"Y" ,"N", "Y", "75" ,"D9352"}};
+        int result = testObj.calculateLowestPrice(input);
+        desk();
+        assertEquals("lowest price calculated is incorrect",result,100);
+    }
+    @Test
+    public void testCalculateLowestPriceStandingDesk() throws IOException
+    {
+        /*
+           This test checks the return value of the calculateLowestPrice function and compares
+           the return value with the expected value.
+           The testing process involves passing a 2D array of all the boolean values and the price of the specific table and type
+           which then returns an integer
+        */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemTable("desk");
+        testObj.setItemType("stading");
+        testObj.setNumItems("1");
+        testObj.setReqValue(1);
+        String[][] input = {{"Y", "N", "Y", "200", "D1927"},
+                {"N", "Y", "N", "100", "D2341"},
+                {"Y", "N" ,"N", "150", "D8675"},
+                {"N", "Y", "Y", "150", "D4438"},
+                {"Y", "Y", "N", "250", "D9387"}};
+        int result = testObj.calculateLowestPrice(input);
+        desk();
+        assertEquals("lowest price calculated is incorrect",result,300);
+    }
+    @Test
+    public void testCalculateLowestPriceAdjustableDesk() throws IOException
+    {
+        /*
+           This test checks the return value of the calculateLowestPrice function and compares
+           the return value with the expected value.
+           The testing process involves passing a 2D array of all the boolean values and the price of the specific table and type
+           which then returns an integer
+        */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemTable("desk");
+        testObj.setItemType("adjustable");
+        testObj.setNumItems("1");
+        testObj.setReqValue(1);
+        String[][] input = {{"N", "Y", "N", "150", "D1030"},
+                {"Y", "N", "Y", "250", "D2746"},
+                {"N", "N", "Y", "50", "D3682"},
+                {"N", "Y", "Y", "200", "D4475"},
+                {"Y", "N", "N", "200", "D5437"},
+                {"Y" ,"Y", "N" ,"350", "D7373"} };
+        int result = testObj.calculateLowestPrice(input);
+        desk();
+        assertEquals("lowest price calculated is incorrect",result,400);
+    }
+    @Test
+    public void testCalculateLowestPriceMediumFiling() throws IOException
+    {
+        /*
+           This test checks the return value of the calculateLowestPrice function and compares
+           the return value with the expected value.
+           The testing process involves passing a 2D array of all the boolean values and the price of the specific table and type
+           which then returns an integer
+        */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemTable("filing");
+        testObj.setItemType("medium");
+        testObj.setNumItems("1");
+        testObj.setReqValue(1);
+        String[][] input ={{ "N","N","Y","100","F002"},
+                { "N","Y","Y","150","F007"},
+                { "Y","N","N","50","F008"},
+                { "Y","Y","N","100","F009"},
+                { "Y","Y","Y","200","F014"}};
+        int result = testObj.calculateLowestPrice(input);
+        filing();
+        assertEquals("lowest price calculated is incorrect",result,200);
+    }
+    @Test
+    public void testCalculateLowestPriceSmallFiling() throws IOException
+    {
+        /*
+           This test checks the return value of the calculateLowestPrice function and compares
+           the return value with the expected value.
+           The testing process involves passing a 2D array of all the boolean values and the price of the specific table and type
+           which then returns an integer
+        */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemTable("filing");
+        testObj.setItemType("small");
+        testObj.setNumItems("1");
+        testObj.setReqValue(1);
+        String[][] input ={{ "Y","Y","N","50","F001"},
+                { "N","Y","Y","75","F004"},
+                { "Y","N","Y","75","F005"},
+                { "Y","Y","N","50","F006"},
+                { "N","N","Y","50","F013"}};
+        int result = testObj.calculateLowestPrice(input);
+        filing();
+        assertEquals("lowest price calculated is incorrect",result,100);
+    }
+    @Test
+    public void testCalculateLowestPriceLargeFiling() throws IOException
+    {
+        /*
+           This test checks the return value of the calculateLowestPrice function and compares
+           the return value with the expected value.
+           The testing process involves passing a 2D array of all the boolean values and the price of the specific table and type
+           which then returns an integer
+        */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        testObj.setItemTable("filing");
+        testObj.setItemType("large");
+        testObj.setNumItems("1");
+        testObj.setReqValue(1);
+        String[][] input ={{ "N","N","Y","150","F003"},
+                { "Y","N","Y","225","F010"},
+                { "N","Y","Y","225","F011"},
+                { "N","Y","N","75","F012"},
+                { "Y","N","N","75","F015"}};
+        int result = testObj.calculateLowestPrice(input);
+        filing();
+        assertEquals("lowest price calculated is incorrect",result,300);
     }
     @Test
     public void testSelectFurnitureTypeTaskChair() throws IOException{
@@ -247,7 +566,7 @@ public class FinalProjectTest {
         String[][] expected ={{"C4839", "Ergonomic", "N", "N", "N", "Y", "50", "002"},
                 {"C5409", "Ergonomic", "Y", "Y", "Y", "N", "200", "003"},
                 {"C5789", "Ergonomic", "Y", "N", "N", "Y", "125", "003"}};
-         
+         chair();
         assertEquals("selectFurnitureType does not return the correct rows for Ergonomic Chair",result,expected);
     }
     @Test
@@ -444,7 +763,7 @@ public class FinalProjectTest {
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
 
-         prints out an error message in the event of failing any of the checks. 
+         prints out an error message in the event of failing any of the checks.
          */
 
         String type = "Traditional";
@@ -469,8 +788,8 @@ public class FinalProjectTest {
          function by using the type and number of occurrences of the specific type of desk, deskSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
-         
-         prints out an error message in the event of failing any of the checks. 
+
+         prints out an error message in the event of failing any of the checks.
          */
 
         String type = "Standing";
@@ -496,8 +815,8 @@ public class FinalProjectTest {
          function by using the type and number of occurrences of the specific type of desk, deskSelect returns a
          2D string which is then returned by selectFurnitureType. this final returned 2D string is then matched with our
          expected output to complete the testing.
-         
-         prints out an error message in the event of failing any of the checks. 
+
+         prints out an error message in the event of failing any of the checks.
          */
 
         String type = "Adjustable";
@@ -519,16 +838,16 @@ public class FinalProjectTest {
     }
 
     @Test
-    public void testCalculateLowestPriceExecutiveChair() throws IOException{
+    public void test_CheckOutputFileExecutiveChair() throws IOException{
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
-            
-            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
-            checks if the output text file is correctly written to or not.          
-            
-            prints out an error message in the event of failing any of the checks. 
-            
-            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
+            checks if the output text file is correctly written to or not.
+
+            prints out an error message in the event of failing any of the checks.
+
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
             is calculated correctly or not
          */
 
@@ -556,16 +875,16 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceTaskChair() throws IOException{
+    public void test_CheckOutputFileTaskChair() throws IOException{
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
-            
-            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
-            checks if the output text file is correctly written to or not.          
-            
-            prints out an error message in the event of failing any of the checks. 
-            
-            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
+            checks if the output text file is correctly written to or not.
+
+            prints out an error message in the event of failing any of the checks.
+
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
             is calculated correctly or not
          */
 
@@ -593,16 +912,16 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceMeshChair() throws IOException{
+    public void test_CheckOutputFileMeshChair() throws IOException{
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
-            
-            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
-            checks if the output text file is correctly written to or not.          
-            
-            prints out an error message in the event of failing any of the checks. 
-            
-            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
+            checks if the output text file is correctly written to or not.
+
+            prints out an error message in the event of failing any of the checks.
+
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
             is calculated correctly or not
          */
         String type = "Mesh";
@@ -630,16 +949,16 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceErgonomicChair() throws IOException{
+    public void test_CheckOutputFileErgonomicChair() throws IOException{
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
-            
-            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
-            checks if the output text file is correctly written to or not.          
-            
-            prints out an error message in the event of failing any of the checks. 
-            
-            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
+            checks if the output text file is correctly written to or not.
+
+            prints out an error message in the event of failing any of the checks.
+
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
             is calculated correctly or not
          */
 
@@ -667,16 +986,16 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceKneelingChair() throws IOException  {
+    public void test_CheckOutputFileKneelingChair() throws IOException  {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
-            
-            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
-            checks if the output text file is correctly written to or not.          
-            
-            prints out an error message in the event of failing any of the checks. 
-            
-            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
+            checks if the output text file is correctly written to or not.
+
+            prints out an error message in the event of failing any of the checks.
+
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
             is calculated correctly or not
          */
 
@@ -703,16 +1022,16 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceSmallFiling() throws IOException  {
+    public void test_CheckOutputFileSmallFiling() throws IOException  {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
-            
-            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
-            checks if the output text file is correctly written to or not.          
-            
-            prints out an error message in the event of failing any of the checks. 
-            
-            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
+            checks if the output text file is correctly written to or not.
+
+            prints out an error message in the event of failing any of the checks.
+
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
             is calculated correctly or not
          */
         String type = "Small";
@@ -741,18 +1060,18 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceMediumFiling() throws IOException  {
+    public void test_CheckOutputFileMediumFiling() throws IOException  {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
-            
-            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
-            checks if the output text file is correctly written to or not.          
-            
-            prints out an error message in the event of failing any of the checks. 
-            
-            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
+            checks if the output text file is correctly written to or not.
+
+            prints out an error message in the event of failing any of the checks.
+
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
             is calculated correctly or not
-            
+
          */
 
         String type = "Medium";
@@ -784,16 +1103,16 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceLargeFiling() throws IOException  {
+    public void test_CheckOutputFileLargeFiling() throws IOException  {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
-            
-            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
-            checks if the output text file is correctly written to or not.          
-            
-            prints out an error message in the event of failing any of the checks. 
-            
-            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
+            checks if the output text file is correctly written to or not.
+
+            prints out an error message in the event of failing any of the checks.
+
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
             is calculated correctly or not
          */
 
@@ -823,17 +1142,17 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceTraditionalDesk() throws IOException
+    public void test_CheckOutputFileTraditionalDesk() throws IOException
     {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
-            
-            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
-            checks if the output text file is correctly written to or not.          
-            
-            prints out an error message in the event of failing any of the checks. 
-            
-            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
+            checks if the output text file is correctly written to or not.
+
+            prints out an error message in the event of failing any of the checks.
+
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
             is calculated correctly or not
          */
         String type = "Traditional";
@@ -863,17 +1182,17 @@ public class FinalProjectTest {
 
     }
     @Test
-    public void testCalculateLowestPriceAdjustableDesk() throws IOException
+    public void test_CheckOutputFileAdjustableDesk() throws IOException
     {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
-            
-            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
-            checks if the output text file is correctly written to or not.          
-            
-            prints out an error message in the event of failing any of the checks. 
-            
-            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
+            checks if the output text file is correctly written to or not.
+
+            prints out an error message in the event of failing any of the checks.
+
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
             is calculated correctly or not
          */
         String type = "Adjustable";
@@ -907,17 +1226,17 @@ public class FinalProjectTest {
     }
 
     @Test
-    public void testCalculateLowestPriceStandingDesk() throws IOException
+    public void test_CheckOutputFileStandingDesk() throws IOException
     {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
-            
-            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
-            checks if the output text file is correctly written to or not.          
-            
-            prints out an error message in the event of failing any of the checks. 
-            
-            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
+            checks if the output text file is correctly written to or not.
+
+            prints out an error message in the event of failing any of the checks.
+
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
             is calculated correctly or not
          */
         String type = "Standing";
@@ -949,17 +1268,17 @@ public class FinalProjectTest {
     }
 
     @Test
-    public void testCalculateLowestPriceDeskLamp() throws IOException
+    public void test_CheckOutputFileDeskLamp() throws IOException
     {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
-            
-            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
-            checks if the output text file is correctly written to or not.          
-            
-            prints out an error message in the event of failing any of the checks. 
-            
-            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
+            checks if the output text file is correctly written to or not.
+
+            prints out an error message in the event of failing any of the checks.
+
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
             is calculated correctly or not
          */
         String type = "Desk";
@@ -993,17 +1312,17 @@ public class FinalProjectTest {
     }
 
     @Test
-    public void testCalculateLowestPriceSwingArmLamp() throws IOException    
+    public void test_CheckOutputFileSwingArmLamp() throws IOException
     {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
-            
-            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
-            checks if the output text file is correctly written to or not.          
-            
-            prints out an error message in the event of failing any of the checks. 
-            
-            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
+            checks if the output text file is correctly written to or not.
+
+            prints out an error message in the event of failing any of the checks.
+
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
             is calculated correctly or not
          */
         String type = "Swing Arm";
@@ -1034,17 +1353,17 @@ public class FinalProjectTest {
     }
 
     @Test
-    public void testCalculateLowestPriceStudyLamp() throws IOException    
+    public void test_CheckOutputFileStudyLamp() throws IOException
     {
         /*
             Tests all the possible lowest prices for the provided item in the appropriate order (Cheapest to most Expensive option)
-            
-            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously 
-            checks if the output text file is correctly written to or not.          
-            
-            prints out an error message in the event of failing any of the checks. 
-            
-            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials) 
+
+            Test is carried out by comparing the output text file with the expected answer. Therefore the Test simultaneously
+            checks if the output text file is correctly written to or not.
+
+            prints out an error message in the event of failing any of the checks.
+
+            Test is also designed to check if the number of items that were not manufactured (due to inadequate materials)
             is calculated correctly or not
          */
         String type = "Study";
@@ -1079,7 +1398,8 @@ public class FinalProjectTest {
             helper function to read the contents of the file specified below.
             read the line specified as an argument.
          */
-         // input file path must be changed to match the filepath on the users system.(orderform.txt)
+
+        // input file path must be changed to match the filepath on the users system.(orderform.txt)
             File file = new File("C:\\Users\\user\\Desktop\\ENSF409\\FinalProject\\orderform.txt"); // input file
             Scanner sc = new Scanner(file);                     // scanner to move through the input file
             int counter=1;
