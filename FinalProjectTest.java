@@ -40,6 +40,7 @@ public class FinalProjectTest{
     public final static String USERNAME = "NUMAN";              //USERNAME should be changed to match the one set by the user on their system
     public final static String PASSWORD = "TIGER";              //PASSWORD should be changed to match the one set by the user on their system
     public final static String DBURL = "jdbc:mysql://localhost/inventory";           //DBURL should be changed to match the one set by the user on their system
+    public final static String filePath ="C:\\Users\\user\\Desktop\\ENSF409\\FinalProject\\orderform.txt";
     private Connection dbConnect;
     public void chair() {
         /*
@@ -1406,7 +1407,7 @@ public class FinalProjectTest{
          */
 
         // input file path must be changed to match the filepath on the users system.(orderform.txt)
-            File file = new File("C:\\Users\\user\\Desktop\\ENSF409\\FinalProject\\orderform.txt"); // input file
+            File file = new File(filePath); // input file
             Scanner sc = new Scanner(file);                     // scanner to move through the input file
             int counter=1;
             String result=new String();
