@@ -37,10 +37,10 @@ public class FinalProjectTest{
      *
      */
 
-    public final static String USERNAME = "NUMAN";              //USERNAME should be changed to match the one set by the user on their system
-    public final static String PASSWORD = "TIGER";              //PASSWORD should be changed to match the one set by the user on their system
-    public final static String DBURL = "jdbc:mysql://localhost/inventory";           //DBURL should be changed to match the one set by the user on their system
-    public final static String filePath ="C:\\Users\\user\\Desktop\\ENSF409\\FinalProject\\orderform.txt";
+    public final static String USERNAME = "NUMAN";    //USERNAME should be changed to match the one set by the user on their system
+    public final static String PASSWORD = "TIGER";    //PASSWORD should be changed to match the one set by the user on their system
+    public final static String DBURL = "jdbc:mysql://localhost/inventory";  //DBURL should be changed to match the one set by the user on their system
+    public final static String filePath ="C:\\Users\\user\\Desktop\\ENSF409\\FinalProject\\orderform.txt";  //File path to open the file for reading
     private Connection dbConnect;
     public void chair() {
         /*
