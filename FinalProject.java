@@ -788,29 +788,29 @@ class DatabaseCalculation extends ProgramInput
         StringBuilder manufacturers = new StringBuilder();
         if(table.equals("chair"))
         {
-            manufacturers.append("1. Office Furnishings.\n");
-            manufacturers.append("2. Chairs R Us.\n");
-            manufacturers.append("3. Furniture Goods.\n");
-            manufacturers.append("4. Fine Office Supplies.\n");
+            manufacturers.append("1. Office Furnishings   : 587-890-4387\n");
+            manufacturers.append("2. Chairs R Us          : 705-667-9481\n");
+            manufacturers.append("3. Furniture Goods      : 306-512-5508\n");
+            manufacturers.append("4. Fine Office Supplies : 403-980-9876\n");
         }
         if(table.equals("desk"))
         {
-            manufacturers.append("1. Academic Desks.\n");
-            manufacturers.append("2. Office Furnishings.\n");
-            manufacturers.append("3. Furniture Goods.\n");
-            manufacturers.append("4. Fine Office Supplies.\n");
+            manufacturers.append("1. Academic Desks       : 236-145-2542\n");
+            manufacturers.append("2. Office Furnishings   : 587-890-4387\n");
+            manufacturers.append("3. Furniture Goods      : 306-512-5508\n");
+            manufacturers.append("4. Fine Office Supplies : 403-980-9876\n");
         }
         if(table.equals("lamp"))
         {
-            manufacturers.append("1. Office Furnishings.\n");
-            manufacturers.append("2. Furniture Goods.\n");
-            manufacturers.append("3. Fine Office Supplies.\n");
+            manufacturers.append("1. Office Furnishings   : 587-890-4387\n");
+            manufacturers.append("2. Furniture Goods      : 306-512-5508\n");
+            manufacturers.append("3. Fine Office Supplies : 403-980-9876\n");
         }
         if(table.equals("filing"))
         {
-            manufacturers.append("1. Office Furnishings.\n");
-            manufacturers.append("2. Furniture Goods.\n");
-            manufacturers.append("3. Fine Office Supplies.\n");
+            manufacturers.append("1. Office Furnishings   : 587-890-4387\n");
+            manufacturers.append("2. Furniture Goods      : 306-512-5508\n");
+            manufacturers.append("3. Fine Office Supplies : 403-980-9876\n");
         }
         return manufacturers.toString();
     }
