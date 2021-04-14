@@ -25,7 +25,7 @@ class ConnectDatabase
      *
      * Note : DBURL,USERNAME and PASSWORD have to be passed through the constructor to establish connection to
      * the database on the User's System
-     * 
+     *
      */
 
     public final String DBURL;      //store the database url information
@@ -115,8 +115,9 @@ class ProgramInput extends ConnectDatabase
 
     /**
      * ProgramInput class inherits from ConnectDatabase
-     * 
-     * This class is responsible obtaining the input from the user via command line and checking the validity of the input
+     *
+     * This class is responsible for obtaining the input from the user via command line and checking the validity of the
+     * input
      */
 
 
@@ -230,8 +231,11 @@ class ProgramInput extends ConnectDatabase
             }
         }
 
-        if(!itemName.contains(" ")||countSpace>1&&!itemName.equals("swing arm lamp"))  //if the item name does not contain a space Re-enter the string
+        if(!itemName.contains(" ")||countSpace>1&&!itemName.equals("swing arm lamp"))
         {
+            /*if the item name does not contain a space Re-enter the string or if it contains a space it should be
+            "swing arm lamp"*/
+
             System.out.println();
             System.out.println("Item does not exists please enter a valid item"); //remove later
             System.out.println();
@@ -290,16 +294,16 @@ class ProgramInput extends ConnectDatabase
 class DatabaseCalculation extends ProgramInput
 {
     /**
-     * 
-     * DatabaseCalculation class inherits from ProgramInput
-     * 
-     * This class is responsible for all the MySQL operations which include : extraction of data from the database and 
-     * modifying the table after certain orders are satisfied. It even contains calculateLowestPrice which is the key function
-     * responsible for calculating the lowest price. Finally, it is even responsible for writing the results to the output file.
      *
+     * DatabaseCalculation class inherits from ProgramInput
+     *
+     * This class is responsible for all the MySQL operations which include : extraction of data from the database and
+     * modifying the table after certain orders are satisfied. It even contains calculateLowestPrice which is the key
+     * function responsible for calculating the lowest price. Finally, it is responsible for writing the results
+     * to the output file.
      */
-    
-    
+
+
     private int counter=0;
     public String str ="";
     public boolean firstTime=true;
@@ -333,7 +337,7 @@ class DatabaseCalculation extends ProgramInput
             e.printStackTrace();
         }
     }
-    
+
     public String[][] filingSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of filing required by the user
@@ -387,8 +391,8 @@ class DatabaseCalculation extends ProgramInput
             if it cannot be constructed the else block of the code is executed.
             the way the method checks if the filing can be constructed is as follows,
             there are three counter variables set to zero in the beginning.
-            whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
-            only if all the counters are greater than zero the required furniture can be constructed.
+            whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of
+            furniture exists, only if all the counters are greater than zero the required furniture can be constructed.
          */
         int c1=0,c2=0,c3=0;
         boolean check = false;
@@ -483,8 +487,8 @@ class DatabaseCalculation extends ProgramInput
             if it cannot be constructed the else block of the code is executed.
             the way the method checks if the lamp can be constructed is as follows,
             there are two counter variables set to zero in the beginning.
-            whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
-            only if all the counters are greater than zero the required furniture can be constructed.
+            whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part
+            of furniture exists. only if all the counters are greater than zero the required furniture can be constructed.
          */
         boolean check = false;
         for(int i=0;i<count;i++)
@@ -575,8 +579,8 @@ class DatabaseCalculation extends ProgramInput
             if it cannot be constructed the else block of the code is executed.
             the way the method checks if the Desk can be constructed is as follows,
             there are three counter variables set to zero in the beginning.
-            whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
-            only if all the counters are greater than zero the required furniture can be constructed.
+            whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of
+            furniture exists. only if all the counters are greater than zero the required furniture can be constructed.
          */
         boolean check = false;
         for(int i=0;i<count;i++)
@@ -673,8 +677,8 @@ class DatabaseCalculation extends ProgramInput
             if it cannot be constructed the else block of the code is executed.
             the way the method checks if the Chair can be constructed is as follows,
             there are four counter variables set to zero in the beginning.
-            whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of furniture exists.
-            only if all the counters are greater than zero the required furniture can be constructed.
+            whenever a 'Y' is encountered in a row , its respective counter is incremented. 'Y' depicts that the part of
+            furniture exists. only if all the counters are greater than zero the required furniture can be constructed.
          */
         boolean check = false;
         for(int i=0;i<count;i++)
@@ -771,7 +775,7 @@ class DatabaseCalculation extends ProgramInput
 
         return null;
     }
-    
+
     //method called in writeManufacturers
     private String getManufacturers(String table)
     {
@@ -841,7 +845,8 @@ class DatabaseCalculation extends ProgramInput
         This method calculates the lowest int price for the passed tableData and returns a integer value of it by
         following this approach:
         * Step 1 : It firstly checks if the 2D string (the table for this item) passed has 4,5 or 6 columns.
-        * Step 2 : For the specific table it then uses multiple nested loops to append the prices of all possible combinations to "prices" arraylist
+        * Step 2 : For the specific table it then uses multiple nested loops to append the prices of all possible
+                   combinations to "prices" arraylist.
         * Step 3 : It then returns the lowest integer element in the arraylist which is the lowest price for our item.
         * Step 4 : the algorithm simaltaneously keeps track of the IDs of those prices and then calls the deleteFromTable()
                     to delete the rows whose prices togather cost the lowest price for that item.
@@ -862,7 +867,8 @@ class DatabaseCalculation extends ProgramInput
                     {
                         for(int l=0;l<tableData.length;l++)
                         {
-                            if(tableData[i][0].contains("Y")&&tableData[j][1].contains("Y")&&tableData[k][2].contains("Y")&&tableData[l][3].contains("Y"))
+                            if(tableData[i][0].contains("Y")&&tableData[j][1].contains("Y")&&tableData[k][2].contains("Y")
+                                    &&tableData[l][3].contains("Y"))
                             {
                                 int rowsPrice=0;
                                 List<Integer> rows = new ArrayList<>();
@@ -903,7 +909,8 @@ class DatabaseCalculation extends ProgramInput
 
             counter++;
             String value = numFormat(counter);
-            output.add("• The lowest cost to manufacture " + value + " item of " + getItemType() + " " + getItemTable() + " is - " + lowestPrice + ".00 $ [Items Reused : "+itemId+"]\n");
+            output.add("• The lowest cost to manufacture " + value + " item of " + getItemType() + " " + getItemTable()
+                    + " is - " + lowestPrice + ".00 $ [Items Reused : "+itemId+"]\n");
 
             if (Integer.parseInt(getNumItems()) > 1)
             {
@@ -962,7 +969,8 @@ class DatabaseCalculation extends ProgramInput
 
             counter++;
             String value = numFormat(counter);
-            output.add("• The lowest cost to manufacture " + value + " item of " + getItemType() + " " + getItemTable() + " is - " + lowestPrice + ".00 $ [Items Reused : "+itemId+"]\n");
+            output.add("• The lowest cost to manufacture " + value + " item of " + getItemType() + " " + getItemTable()
+                    + " is - " + lowestPrice + ".00 $ [Items Reused : "+itemId+"]\n");
 
             if (Integer.parseInt(getNumItems()) > 1)
             {
@@ -1016,7 +1024,8 @@ class DatabaseCalculation extends ProgramInput
 
             counter++;
             String value = numFormat(counter);
-            output.add("• The lowest cost to manufacture " + value + " item of " + getItemType() + " " + getItemTable() + " is - " + lowestPrice + ".00 $ [Items Reused : "+itemId+"]\n");
+            output.add("• The lowest cost to manufacture " + value + " item of " + getItemType() + " " + getItemTable()
+                    + " is - " + lowestPrice + ".00 $ [Items Reused : "+itemId+"]\n");
 
             if (Integer.parseInt(getNumItems()) > 1)
             {
@@ -1059,7 +1068,8 @@ class DatabaseCalculation extends ProgramInput
         output.add(3,"• Faculty Name: \n");
         output.add(4,"• Contact: \n");
         output.add(5,"• Date: \n");
-        output.add(6,"• The Item: " + getItemType() +" "+ getItemTable() +"\n• Number of Items Requested: "+getReqValue()+"\n");
+        output.add(6,"• The Item: " + getItemType() +" "+ getItemTable() +"\n• Number of Items Requested: "
+                +getReqValue()+"\n");
         for(int i=0;i<output.size();i++)
         {
             myWriter.write(output.get(i));
@@ -1089,7 +1099,7 @@ public class FinalProject
     public static void main(String[] args) throws IOException
     {
 
-        DatabaseCalculation myJDBC = new DatabaseCalculation("jdbc:mysql://localhost/inventory","NUMAN","TIGER");
+        DatabaseCalculation myJDBC = new DatabaseCalculation("jdbc:mysql://localhost/inventory","zee","Zeemaan1234@");
         myJDBC.initializeConnection();
         myJDBC.userInput();
 
