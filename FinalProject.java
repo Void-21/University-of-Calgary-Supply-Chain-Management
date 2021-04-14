@@ -335,7 +335,7 @@ class DatabaseCalculation extends ProgramInput
         }
     }
 
-    public String[][] filingSelect(String type, int count){
+    private String[][] filingSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of filing required by the user
             from the data base using 'type' as a key.
