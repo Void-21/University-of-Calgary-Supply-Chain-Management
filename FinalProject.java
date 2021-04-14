@@ -4,7 +4,7 @@
  * @author Zeeshan Chougle <a href="mailto:zeeshan.chougle@ucalgary.ca">Zeeshan.chougle@ucalgary.ca</a>
  * @author Mohamed Numan <a href="mailto:mohamed.numan@ucalgary.ca">mohamed.numan@ucalgary.ca</a>
  * @author Mahtab Khan <a href="mohammadmahtab.khan@ucalgary.ca">mohammadmahtab.khan@ucalgary.ca</a>
- * @author Umar Baloch <a href="mailto:"umarbaloch84@gmail.com">umarbaloch84@gmail.com</a>
+ * @author Umer Baloch <a href="mailto:"muhammad.baloch@ucalgary.ca">muhammad.baloch@ucalgary.ca</a>
  * @version 3.1
  * @since 1.0
  *
@@ -42,7 +42,6 @@ class ConnectDatabase
         this.DBURL = DBURL;
         this.USERNAME = USERNAME;
         this.PASSWORD = PASSWORD;
-
     }
 
 
@@ -302,12 +301,12 @@ class DatabaseCalculation extends ProgramInput
 
 
     private int counter=0;
-    public boolean firstTime=true;
-    public String manufacturers;
-    int totalPrice=0;
-    ArrayList<String> output = new ArrayList<String>();
-    File outFile = new File("orderform.txt");
-    FileWriter myWriter = new FileWriter(outFile);
+    private boolean firstTime=true;
+    private String manufacturers;
+    private int totalPrice=0;
+    private ArrayList<String> output = new ArrayList<String>();
+    private FileWriter myWriter;
+    private File outFile;
 
     public DatabaseCalculation(String DBURL, String USERNAME, String PASSWORD) throws IOException
     {
@@ -317,8 +316,20 @@ class DatabaseCalculation extends ProgramInput
 
         super(DBURL,USERNAME,PASSWORD);
 
-    }
 
+    }
+    public void writeFile(String fn) throws IOException
+    {
+        /*
+            this method creates a FileWriter object and then calls the writeOrderForm to write to the file.
+         */
+        outFile = new File(fn);
+        myWriter = new FileWriter(outFile);
+        writeOrderForm();
+    }
+    public File getOutFile() {
+        return outFile;
+    }
 
     public void closes()
     {
@@ -334,7 +345,7 @@ class DatabaseCalculation extends ProgramInput
         }
     }
 
-    public String[][] filingSelect(String type, int count){
+    private String[][] filingSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of filing required by the user
             from the data base using 'type' as a key.
@@ -787,29 +798,29 @@ class DatabaseCalculation extends ProgramInput
         StringBuilder manufacturers = new StringBuilder();
         if(table.equals("chair"))
         {
-            manufacturers.append("1. Office Furnishings.\n");
-            manufacturers.append("2. Chairs R Us.\n");
-            manufacturers.append("3. Furniture Goods.\n");
-            manufacturers.append("4. Fine Office Supplies.\n");
+            manufacturers.append("1. Office Furnishings   : 587-890-4387\n");
+            manufacturers.append("2. Chairs R Us          : 705-667-9481\n");
+            manufacturers.append("3. Furniture Goods      : 306-512-5508\n");
+            manufacturers.append("4. Fine Office Supplies : 403-980-9876\n");
         }
         if(table.equals("desk"))
         {
-            manufacturers.append("1. Academic Desks.\n");
-            manufacturers.append("2. Office Furnishings.\n");
-            manufacturers.append("3. Furniture Goods.\n");
-            manufacturers.append("4. Fine Office Supplies.\n");
+            manufacturers.append("1. Academic Desks       : 236-145-2542\n");
+            manufacturers.append("2. Office Furnishings   : 587-890-4387\n");
+            manufacturers.append("3. Furniture Goods      : 306-512-5508\n");
+            manufacturers.append("4. Fine Office Supplies : 403-980-9876\n");
         }
         if(table.equals("lamp"))
         {
-            manufacturers.append("1. Office Furnishings.\n");
-            manufacturers.append("2. Furniture Goods.\n");
-            manufacturers.append("3. Fine Office Supplies.\n");
+            manufacturers.append("1. Office Furnishings   : 587-890-4387\n");
+            manufacturers.append("2. Furniture Goods      : 306-512-5508\n");
+            manufacturers.append("3. Fine Office Supplies : 403-980-9876\n");
         }
         if(table.equals("filing"))
         {
-            manufacturers.append("1. Office Furnishings.\n");
-            manufacturers.append("2. Furniture Goods.\n");
-            manufacturers.append("3. Fine Office Supplies.\n");
+            manufacturers.append("1. Office Furnishings   : 587-890-4387\n");
+            manufacturers.append("2. Furniture Goods      : 306-512-5508\n");
+            manufacturers.append("3. Fine Office Supplies : 403-980-9876\n");
         }
         return manufacturers.toString();
     }
@@ -1053,7 +1064,7 @@ class DatabaseCalculation extends ProgramInput
         }
     }
 
-    public void writeOrderForm() throws IOException
+    private void writeOrderForm() throws IOException
     {
        /*
             this method is used to write to the output file.
@@ -1100,7 +1111,7 @@ public class FinalProject
         myJDBC.initializeConnection();
         myJDBC.userInput();
         myJDBC.selectFurnitureType(myJDBC.getItemType(),myJDBC.getItemTable());
-        myJDBC.writeOrderForm();
+        myJDBC.writeFile("orderform.txt");
         myJDBC.closes();
 
     }
