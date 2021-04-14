@@ -302,7 +302,6 @@ class DatabaseCalculation extends ProgramInput
 
 
     private int counter=0;
-    public String str ="";
     public boolean firstTime=true;
     public String manufacturers;
     int totalPrice=0;
