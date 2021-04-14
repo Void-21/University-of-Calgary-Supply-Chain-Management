@@ -30,7 +30,7 @@ class ConnectDatabase
     public final String DBURL;      //store the database url information
     public final String USERNAME;   //store the user's account username
     public final String PASSWORD;   //store the user's account password
-    private Connection dbconnect;   //data member to establish connection with the database
+    private Connection dbConnect;   //data member to establish connection with the database
     private ResultSet results;      // results contains the results from MySQL query
 
     public ConnectDatabase(String DBURL, String USERNAME, String PASSWORD) throws IOException
@@ -51,17 +51,17 @@ class ConnectDatabase
         //this establishes a connection between the java files and the database
         try
         {
-            dbconnect = DriverManager.getConnection(getDburl(),getUsername(),getPassword());
+            dbConnect = DriverManager.getConnection(getDburl(),getUsername(),getPassword());
         } catch (SQLException e){
             e.printStackTrace();
         }
     }
-    
-    public void setDbconnect(Connection dbconnect)
-    {
-        //setter to set dbconnect
 
-        this.dbconnect = dbconnect;
+    public void setDbConnect(Connection dbConnect)
+    {
+        //setter to set dbConnect
+
+        this.dbConnect = dbConnect;
     }
 
     public void setResults(ResultSet results)
@@ -92,11 +92,11 @@ class ConnectDatabase
         return PASSWORD;
     }
 
-    public Connection getDbconnect()
+    public Connection getDbConnect()
     {
-        //getter to get dbconnect
+        //getter to get dbConnect
 
-        return dbconnect;
+        return dbConnect;
     }
 
     public ResultSet getResults()
@@ -256,7 +256,7 @@ class ProgramInput extends ConnectDatabase
 
         int count=0;
         try {
-            Statement myStmt = getDbconnect().createStatement();
+            Statement myStmt = getDbConnect().createStatement();
 
             setResults(myStmt.executeQuery("SELECT * FROM "+table+" WHERE type = '"+ itemType + "'"));
             while (getResults().next())
@@ -327,14 +327,14 @@ class DatabaseCalculation extends ProgramInput
         try {
             myWriter.close();
             getResults().close();
-            getDbconnect().close();
+            getDbConnect().close();
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    private String[][] filingSelect(String type, int count){
+    public String[][] filingSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of filing required by the user
             from the data base using 'type' as a key.
@@ -346,7 +346,7 @@ class DatabaseCalculation extends ProgramInput
         int c =count;
         try
         {
-            Statement myStmt = getDbconnect().createStatement();
+            Statement myStmt = getDbConnect().createStatement();
             setResults(myStmt.executeQuery("SELECT * FROM filing WHERE Type ='"+type+"'"));
             int i=0;
             while(getResults().next())
@@ -380,7 +380,7 @@ class DatabaseCalculation extends ProgramInput
         }
         return filing2d;
     }
-    
+
     private String[][] checkFiling(String[][] filing, int count) throws IOException {
         /*
             this method receives a 2d array from selectFiling method and uses it to check if the Filing can be constructed
@@ -449,7 +449,7 @@ class DatabaseCalculation extends ProgramInput
         int c =count;
         try
         {
-            Statement myStmt = getDbconnect().createStatement();
+            Statement myStmt = getDbConnect().createStatement();
             setResults(myStmt.executeQuery("SELECT * FROM lamp WHERE Type ='"+type+"'"));
             int i=0;
             while(getResults().next())
@@ -540,7 +540,7 @@ class DatabaseCalculation extends ProgramInput
         int c =count;
         try
         {
-            Statement myStmt = getDbconnect().createStatement();
+            Statement myStmt = getDbConnect().createStatement();
             setResults( myStmt.executeQuery("SELECT * FROM desk WHERE Type ='"+type+"'"));
             int i=0;
             while(getResults().next())
@@ -636,7 +636,7 @@ class DatabaseCalculation extends ProgramInput
         int c =count;
         try
         {
-            Statement myStmt = getDbconnect().createStatement();
+            Statement myStmt = getDbConnect().createStatement();
             setResults(myStmt.executeQuery("SELECT * FROM chair WHERE Type = '"+type+"'"));
             int i=0;
             while(getResults().next())
@@ -742,7 +742,7 @@ class DatabaseCalculation extends ProgramInput
         }
         try
         {
-            Statement myStmt =getDbconnect().createStatement();
+            Statement myStmt =getDbConnect().createStatement();
             //results = myStmt.executeQuery("SELECT COUNT(ID) FROM "+tableName+" WHERE Type='"+type+"'");
             setResults(myStmt.executeQuery("SELECT * FROM "+tableName+" WHERE Type='"+type+"'"));
             while (getResults().next()){
@@ -787,29 +787,29 @@ class DatabaseCalculation extends ProgramInput
         StringBuilder manufacturers = new StringBuilder();
         if(table.equals("chair"))
         {
-            manufacturers.append("1. Office Furnishings   : 587-890-4387\n");
-            manufacturers.append("2. Chairs R Us          : 705-667-9481\n");
-            manufacturers.append("3. Furniture Goods      : 306-512-5508\n");
-            manufacturers.append("4. Fine Office Supplies : 403-980-9876\n");
+            manufacturers.append("1. Office Furnishings.\n");
+            manufacturers.append("2. Chairs R Us.\n");
+            manufacturers.append("3. Furniture Goods.\n");
+            manufacturers.append("4. Fine Office Supplies.\n");
         }
         if(table.equals("desk"))
         {
-            manufacturers.append("1. Academic Desks       : 236-145-2542\n");
-            manufacturers.append("2. Office Furnishings   : 587-890-4387\n");
-            manufacturers.append("3. Furniture Goods      : 306-512-5508\n");
-            manufacturers.append("4. Fine Office Supplies : 403-980-9876\n");
+            manufacturers.append("1. Academic Desks.\n");
+            manufacturers.append("2. Office Furnishings.\n");
+            manufacturers.append("3. Furniture Goods.\n");
+            manufacturers.append("4. Fine Office Supplies.\n");
         }
         if(table.equals("lamp"))
         {
-            manufacturers.append("1. Office Furnishings   : 587-890-4387\n");
-            manufacturers.append("2. Furniture Goods      : 306-512-5508\n");
-            manufacturers.append("3. Fine Office Supplies : 403-980-9876\n");
+            manufacturers.append("1. Office Furnishings.\n");
+            manufacturers.append("2. Furniture Goods.\n");
+            manufacturers.append("3. Fine Office Supplies.\n");
         }
         if(table.equals("filing"))
         {
-            manufacturers.append("1. Office Furnishings   : 587-890-4387\n");
-            manufacturers.append("2. Furniture Goods      : 306-512-5508\n");
-            manufacturers.append("3. Fine Office Supplies : 403-980-9876\n");
+            manufacturers.append("1. Office Furnishings.\n");
+            manufacturers.append("2. Furniture Goods.\n");
+            manufacturers.append("3. Fine Office Supplies.\n");
         }
         return manufacturers.toString();
     }
@@ -824,7 +824,7 @@ class DatabaseCalculation extends ProgramInput
         try
         {
             String query = "DELETE FROM "+ table +" WHERE ID = ?";
-            PreparedStatement myStmt = getDbconnect().prepareStatement(query);
+            PreparedStatement myStmt = getDbConnect().prepareStatement(query);
             myStmt.setString(1,objectID);
             myStmt.executeUpdate();
             myStmt.close();
@@ -1099,7 +1099,6 @@ public class FinalProject
         DatabaseCalculation myJDBC = new DatabaseCalculation("jdbc:mysql://localhost/inventory","scm","ensf409");
         myJDBC.initializeConnection();
         myJDBC.userInput();
-
         myJDBC.selectFurnitureType(myJDBC.getItemType(),myJDBC.getItemTable());
         myJDBC.writeOrderForm();
         myJDBC.closes();
