@@ -1099,7 +1099,7 @@ public class FinalProject
     public static void main(String[] args) throws IOException
     {
 
-        DatabaseCalculation myJDBC = new DatabaseCalculation("jdbc:mysql://localhost/inventory","zee","Zeemaan1234@");
+        DatabaseCalculation myJDBC = new DatabaseCalculation("jdbc:mysql://localhost/inventory","scm","ensf409");
         myJDBC.initializeConnection();
         myJDBC.userInput();
 
