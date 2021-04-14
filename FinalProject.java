@@ -1039,7 +1039,7 @@ class DatabaseCalculation extends ProgramInput
     }
 
 
-    public static String numFormat(int i) {
+    private static String numFormat(int i) {
         /*
             this is a helper function used to properly format the output file , for example it changes the '1' to '1st'
             '11' to '11th' and onwards.
