@@ -4,10 +4,10 @@
  * @author Zeeshan Chougle <a href="mailto:zeeshan.chougle@ucalgary.ca">Zeeshan.chougle@ucalgary.ca</a>
  * @author Mohamed Numan <a href="mailto:mohamed.numan@ucalgary.ca">mohamed.numan@ucalgary.ca</a>
  * @author Mahtab Khan <a href="mohammadmahtab.khan@ucalgary.ca">mohammadmahtab.khan@ucalgary.ca</a>
- * @author Umar Baloch <a href="mailto:"umarbaloch84@gmail.com">umarbaloch84@gmail.com</a>
+ * @author Umer Baloch <a href="mailto:"muhammad.baloch@ucalgary.ca">muhammad.baloch@ucalgary.ca</a>
  * @version 1.6
  * @since 1.0
- * 
+ *
  */
 
 package edu.ucalgary.ensf409;
@@ -49,10 +49,10 @@ public class FinalProjectTest{
      *
      */
 
-    public final static String USERNAME = "scm";    //USERNAME should be changed to match the one set by the user on their system
-    public final static String PASSWORD = "ensf409";    //PASSWORD should be changed to match the one set by the user on their system
-    public final static String DBURL = "jdbc:mysql://localhost/inventory";  //DBURL should be changed to match the one set by the user on their system
-    public final static String filePath ="orderform.txt";  //File path to open the file for reading
+    private final static String USERNAME = "scm";    //USERNAME should be changed to match the one set by the user on their system
+    private final static String PASSWORD = "ensf409";    //PASSWORD should be changed to match the one set by the user on their system
+    private final static String DBURL = "jdbc:mysql://localhost/inventory";  //DBURL should be changed to match the one set by the user on their system
+    private final static String filePath ="orderform.txt";  //File path to open the file for reading
     private Connection dbConnect;
     public void chair() {
         /*
@@ -152,14 +152,51 @@ public class FinalProjectTest{
     }
     @Test
     public void testConstructor() throws IOException {
-        /* Checks if the constructor initializes all the values correctly and prints out an error message in the event of
-           failing any of the checks.
+        /* Checks if the constructor initializes all the values correctly by passing values to its super constructor and
+           prints out an error message in the event of failing any of the checks.
         */
         DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
         testObj.initializeConnection();
         assertEquals("DBURL is wrong", testObj.getDburl(), DBURL);
         assertEquals("USERNAME is wrong", testObj.getUsername(), USERNAME);
         assertEquals("PASSWORD is wrong", testObj.getPassword(), PASSWORD);
+    }
+    @Test
+    public void testInitializeConnection() throws IOException, SQLException {
+        /*
+              this test checks if the connection the database was successful or not
+              gives an error statement if the connection isnt established
+         */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        Statement myStmt = testObj.getDbConnect().createStatement();
+
+        testObj.setResults(myStmt.executeQuery("SELECT * FROM chair WHERE type = 'mesh'"));
+        assertFalse("the connection to database was not established",testObj.getResults()==null);
+    }
+    @Test
+    public void testResultsClosed() throws IOException, SQLException {
+        /*
+            this test checks if the resultset closes properly by closes() function.
+         */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.initializeConnection();
+        Statement myStmt = testObj.getDbConnect().createStatement();
+        testObj.setResults(myStmt.executeQuery("SELECT * FROM chair WHERE type = 'mesh'"));
+        testObj.writeFile(filePath);
+        testObj.closes();
+        assertTrue("The resultset is not closed",testObj.getResults().isClosed());
+    }
+    @Test
+    // writeFile creates a file
+    public void testWriteFileWritesFile() throws IOException {
+        /*
+            this test checks whether writesFile function successfully creates an output file for writing.
+         */
+        DatabaseCalculation testObj = new DatabaseCalculation(DBURL, USERNAME, PASSWORD);
+        testObj.writeFile(filePath);
+
+        assertTrue("File " + filePath + " was not created by writeFile()", testObj.getOutFile().exists());
     }
     @Test
     public void testCalculateLowestPriceMeshChair() throws IOException
@@ -553,7 +590,7 @@ public class FinalProjectTest{
         String[][] expected =
                 {{"C1320", "Kneeling", "Y", "N", "N", "N", "50", "002"},
                         {"C3819", "Kneeling", "N", "N", "Y", "N", "75", "005"}};
-         chair();
+        chair();
         assertEquals("selectFurnitureType does not return the correct rows for Kneeling Chair",result,expected);
     }
 
@@ -579,7 +616,7 @@ public class FinalProjectTest{
         String[][] expected ={{"C4839", "Ergonomic", "N", "N", "N", "Y", "50", "002"},
                 {"C5409", "Ergonomic", "Y", "Y", "Y", "N", "200", "003"},
                 {"C5789", "Ergonomic", "Y", "N", "N", "Y", "125", "003"}};
-         chair();
+        chair();
         assertEquals("selectFurnitureType does not return the correct rows for Ergonomic Chair",result,expected);
     }
     @Test
@@ -604,7 +641,7 @@ public class FinalProjectTest{
         String[][] expected ={{"C2483", "Executive", "Y", "Y", "N", "N", "175", "002"},
                 {"C5784", "Executive", "Y", "N", "N", "Y", "150", "004"},
                 {"C7268", "Executive", "N", "N", "Y", "N", "75", "004"}};
-         chair();
+        chair();
         assertEquals("selectFurnitureType does not return the correct rows for Executive Chair",result,expected);
     }
     @Test
@@ -631,7 +668,7 @@ public class FinalProjectTest{
                 { "F005","Small","Y","N","Y","75","005"},
                 { "F006","Small","Y","Y","N","50","005"},
                 { "F013","Small","N","N","Y","50","002"}};
-         filing();
+        filing();
         assertEquals("selectFurnitureType does not return the correct rows for Small Filing",result,expected);
     }
     @Test
@@ -658,7 +695,7 @@ public class FinalProjectTest{
                 { "F008","Medium","Y","N","N","50","005"},
                 { "F009","Medium","Y","Y","N","100","004"},
                 { "F014","Medium","Y","Y","Y","200","002"}};
-         filing();
+        filing();
         assertEquals("selectFurnitureType does not return the correct rows for Medium Filing",result,expected);
     }
     @Test
@@ -685,7 +722,7 @@ public class FinalProjectTest{
                 { "F011","Large","N","Y","Y","225","005"},
                 { "F012","Large","N","Y","N","75","005"},
                 { "F015","Large","Y","N","N","75","004"}};
-         filing();
+        filing();
         assertEquals("selectFurnitureType does not return the correct rows for Large Filing",result,expected);
     }
     @Test
@@ -714,7 +751,7 @@ public class FinalProjectTest{
                 {"L342", "Desk", "N", "Y", "2", "002"},
                 {"L564", "Desk", "Y", "Y", "20", "004"},
                 {"L649", "Desk", "Y", "N", "18", "004"}};
-         lamp();
+        lamp();
         assertEquals("selectFurnitureType does not return the correct rows for Desk Lamp", result, expected);
     }
     @Test
@@ -740,7 +777,7 @@ public class FinalProjectTest{
                 {"L096", "Swing Arm" ,"N", "Y" ,"3" ,"002"},
                 {"L487", "Swing Arm", "Y", "N", "27", "002"},
                 {"L879" ,"Swing Arm" ,"N", "Y", "3", "005"}};
-         lamp();
+        lamp();
         assertEquals("selectFurnitureType does not return the correct rows for Swing Arm Lamp", result, expected);
     }
     @Test
@@ -791,7 +828,7 @@ public class FinalProjectTest{
                 {"D4231", "Traditional" ,"N", "Y", "Y", "50", "005"},
                 {"D8675", "Traditional" ,"Y" ,"Y", "N", "75", "001"},
                 {"D9352" ,"Traditional" ,"Y" ,"N", "Y", "75" ,"002"}};
-         desk();
+        desk();
         assertEquals("selectFurnitureType does not return the correct rows for Traditional Desk", result, expected);
     }
     @Test
@@ -818,7 +855,7 @@ public class FinalProjectTest{
                 {"D3820", "Standing", "Y", "N" ,"N", "150", "001"},
                 {"D4438", "Standing", "N", "Y", "Y", "150", "004"},
                 {"D9387", "Standing", "Y", "Y", "N", "250", "004"}};
-         desk();
+        desk();
         assertEquals("selectFurnitureType does not return the correct rows for Standing Desk", result, expected);
     }
     @Test
@@ -846,7 +883,7 @@ public class FinalProjectTest{
                 {"D4475" ,"Adjustable", "N", "Y", "Y", "200", "002"},
                 {"D5437", "Adjustable", "Y", "N", "N", "200", "001"},
                 {"D7373" ,"Adjustable" ,"Y" ,"Y", "N" ,"350", "005"} };
-         desk();
+        desk();
         assertEquals("selectFurnitureType does not return the correct rows for Adjustable Desk", result, expected);
     }
 
@@ -873,7 +910,7 @@ public class FinalProjectTest{
         testObj.setNumItems("13");
         testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
-        testObj.writeOrderForm();
+        testObj.writeFile(filePath);
         testObj.closes();
 
         String result1= readFile(9);
@@ -910,7 +947,7 @@ public class FinalProjectTest{
         testObj.setNumItems("11");
         testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
-        testObj.writeOrderForm();
+        testObj.writeFile(filePath);
         testObj.closes();
 
         String result1= readFile(9);
@@ -946,16 +983,16 @@ public class FinalProjectTest{
         testObj.setNumItems("15");
         testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
-        testObj.writeOrderForm();
+        testObj.writeFile(filePath);
         testObj.closes();
 
         String result1= readFile(9);
         String expected1 ="• The lowest cost to manufacture 1st item of Mesh chair is - 200.00 $ [Items Reused : C6748,C9890,C8138]" ;
         String numNotPossible=readFile(11);
-          
+
         numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
         numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
-          
+
         chair();
         assertTrue("The lowest price calculated for 1st Mesh chair is incorrect",result1.equals(expected1));
         assertEquals("Unable to correctly calculate the number of Mesh chairs not possible",Integer.parseInt(numNotPossible),14);
@@ -984,7 +1021,7 @@ public class FinalProjectTest{
         testObj.setNumItems("69");
         testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
-        testObj.writeOrderForm();
+        testObj.writeFile(filePath);
         testObj.closes();
 
         String result1= readFile(9);
@@ -1021,14 +1058,14 @@ public class FinalProjectTest{
         testObj.setNumItems("3");
         testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
-        testObj.writeOrderForm();
+        testObj.writeFile(filePath);
         testObj.closes();
 
         String numNotPossible=readFile(10);
-          
+
         numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
         numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
-          
+
         chair();
         assertEquals("Unable to correctly calculate the number of Kneeling chairs not possible",Integer.parseInt(numNotPossible),3);
 
@@ -1056,7 +1093,7 @@ public class FinalProjectTest{
         testObj.setNumItems("23");
         testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
-        testObj.writeOrderForm();
+        testObj.writeFile(filePath);
         testObj.closes();
 
         String result1= readFile(9);
@@ -1096,7 +1133,7 @@ public class FinalProjectTest{
         testObj.setNumItems("9");
         testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
-        testObj.writeOrderForm();
+        testObj.writeFile(filePath);
         testObj.closes();
 
         String result1= readFile(9);
@@ -1138,7 +1175,7 @@ public class FinalProjectTest{
         testObj.setNumItems("6");
         testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
-        testObj.writeOrderForm();
+        testObj.writeFile(filePath);
         testObj.closes();
 
         String result1= readFile(9);
@@ -1177,7 +1214,7 @@ public class FinalProjectTest{
         testObj.setNumItems("6");
         testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
-        testObj.writeOrderForm();
+        testObj.writeFile(filePath);
         testObj.closes();
 
         String result1= readFile(9);
@@ -1188,7 +1225,7 @@ public class FinalProjectTest{
         numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
         numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         desk();
- 
+
         assertTrue("The lowest price calculated for 1st traditional desk is incorrect",result1.equals(expected1));
         assertTrue("The lowest price calculated for 2nd traditional desk is incorrect",result2.equals(expected2));
         assertEquals("Unable to correctly calculate the number of Traditional desk not possible",Integer.parseInt(numNotPossible),4);
@@ -1217,7 +1254,7 @@ public class FinalProjectTest{
         testObj.setNumItems("7");
         testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
-        testObj.writeOrderForm();
+        testObj.writeFile(filePath);
         testObj.closes();
 
         String result1= readFile(9);
@@ -1261,7 +1298,7 @@ public class FinalProjectTest{
         testObj.setNumItems("10");
         testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
-        testObj.writeOrderForm();
+        testObj.writeFile(filePath);
         testObj.closes();
 
         String result1= readFile(9);
@@ -1272,7 +1309,7 @@ public class FinalProjectTest{
         numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
         numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         desk();
- 
+
         assertTrue("The lowest price calculated for 1st Standing desk is incorrect",result1.equals(expected1));
         assertTrue("The lowest price calculated for 2nd Standing desk is incorrect",result2.equals(expected2));
         assertEquals("Unable to correctly calculate the number of Standing desk not possible",Integer.parseInt(numNotPossible),8);
@@ -1303,7 +1340,7 @@ public class FinalProjectTest{
         testObj.setNumItems("13");
         testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
-        testObj.writeOrderForm();
+        testObj.writeFile(filePath);
         testObj.closes();
 
         String result1= readFile(9);
@@ -1316,7 +1353,7 @@ public class FinalProjectTest{
         numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
         numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         lamp();
- 
+
         assertTrue("The lowest price calculated for 1st desk lamp is incorrect",result1.equals(expected1));
         assertTrue("The lowest price calculated for 2nd desk lamp is incorrect",result2.equals(expected2));
         assertTrue("The lowest price calculated for 3rd desk lamp is incorrect",result3.equals(expected3));
@@ -1347,7 +1384,7 @@ public class FinalProjectTest{
         testObj.setNumItems("21");
         testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
-        testObj.writeOrderForm();
+        testObj.writeFile(filePath);
         testObj.closes();
 
         String result1= readFile(9);
@@ -1388,7 +1425,7 @@ public class FinalProjectTest{
         testObj.setNumItems("8");
         testObj.setReqValue(Integer.parseInt(testObj.getNumItems()));
         testObj.selectFurnitureType(type,table);
-        testObj.writeOrderForm();
+        testObj.writeFile(filePath);
         testObj.closes();
 
         String result1= readFile(9);
@@ -1399,18 +1436,12 @@ public class FinalProjectTest{
         numNotPossible=numNotPossible.substring(numNotPossible.indexOf(" ")+1);
         numNotPossible=numNotPossible.substring(0,numNotPossible.indexOf(" "));
         lamp();
- 
+
         assertTrue("The lowest price calculated for 1st study lamp is incorrect",result1.equals(expected1));
         assertTrue("The lowest price calculated for 2d study lamp is incorrect",result2.equals(expected2));
         assertEquals("Unable to correctly calculate the number of study lamp not possible",Integer.parseInt(numNotPossible),6);
 
 
-    }
-    @Test
-    public void testWriteFileWritesFile()
-    {
-        File file = new File("C:\\Users\\user\\Desktop\\ENSF409\\FinalProject\\orderform.txt");
-        assertTrue(file.exists());
     }
     public String readFile(int line) throws FileNotFoundException {
         /*
@@ -1419,17 +1450,17 @@ public class FinalProjectTest{
          */
 
         // input file path must be changed to match the filepath on the users system.(orderform.txt)
-            File file = new File(filePath); // input file
-            Scanner sc = new Scanner(file);                     // scanner to move through the input file
-            int counter=1;
-            String result=new String();
+        File file = new File(filePath); // input file
+        Scanner sc = new Scanner(file);                     // scanner to move through the input file
+        int counter=1;
+        String result=new String();
         while(sc.hasNextLine())
         {
             if(counter==line)
             {
                 result=sc.nextLine();
             }
-                counter++;
+            counter++;
             sc.nextLine();
         }
         return result;
