@@ -7,9 +7,8 @@
  * @author Umar Baloch <a href="mailto:"umarbaloch84@gmail.com">umarbaloch84@gmail.com</a>
  * @version 3.1
  * @since 1.0
+ *
  */
-
-
 
 package edu.ucalgary.ensf409;
 import java.sql.*;
@@ -57,9 +56,7 @@ class ConnectDatabase
             e.printStackTrace();
         }
     }
-
-
-
+    
     public void setDbconnect(Connection dbconnect)
     {
         //setter to set dbconnect
@@ -211,7 +208,7 @@ class ProgramInput extends ConnectDatabase
         }
     }
 
-    public void checkValidItem(String itemName)
+    private void checkValidItem(String itemName)
     {
         /*
             This function checks the validity of the Item name entered by the user by comparing the item Type and Table
@@ -384,7 +381,8 @@ class DatabaseCalculation extends ProgramInput
         }
         return filing2d;
     }
-    public String[][] checkFiling(String[][] filing, int count) throws IOException {
+    
+    private String[][] checkFiling(String[][] filing, int count) throws IOException {
         /*
             this method receives a 2d array from selectFiling method and uses it to check if the Filing can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
@@ -440,7 +438,7 @@ class DatabaseCalculation extends ProgramInput
             return null;
         }
     }
-    public String[][] lampSelect(String type, int count){
+    private String[][] lampSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of lamp required by the user
             from the data base using 'type' as a key.
@@ -480,7 +478,7 @@ class DatabaseCalculation extends ProgramInput
         }
         return lamp2d;
     }
-    public String[][] checkLamp(String[][] lamp, int count) throws IOException {   int c1=0,c2=0;
+    private String[][] checkLamp(String[][] lamp, int count) throws IOException {   int c1=0,c2=0;
         /*
             this method receives a 2d array from selectLamp method and uses it to check if the Lamp can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
@@ -531,7 +529,7 @@ class DatabaseCalculation extends ProgramInput
             return null;
         }
     }
-    public String[][] deskSelect(String type, int count){
+    private String[][] deskSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of desk required by the user
             from the data base using 'type' as a key.
@@ -572,7 +570,7 @@ class DatabaseCalculation extends ProgramInput
         }
         return desk2d;
     }
-    public String[][] checkDesk(String[][] desk, int count) throws IOException {   int c1=0,c2=0,c3=0;
+    private String[][] checkDesk(String[][] desk, int count) throws IOException {   int c1=0,c2=0,c3=0;
         /*
             this method receives a 2d array from selectDesk method and uses it to check if the Desk can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
@@ -627,7 +625,7 @@ class DatabaseCalculation extends ProgramInput
             return null;
         }
     }
-    public String[][] chairSelect(String type, int count){
+    private String[][] chairSelect(String type, int count){
         /*
             this method selects all the tuples/rows that match the type of chair required by the user
             from the data base using 'type' as a key.
@@ -670,7 +668,7 @@ class DatabaseCalculation extends ProgramInput
         }
         return chair2d;
     }
-    public String[][] checkChair(String[][] chair, int count) throws IOException {   int c1=0,c2=0,c3=0,c4=0;
+    private String[][] checkChair(String[][] chair, int count) throws IOException {   int c1=0,c2=0,c3=0,c4=0;
         /*
             this method receives a 2d array from selectChair method and uses it to check if the Chair can be constructed
             if it can be constructed it passes the 2d array further to the method calculateLowestPrice
@@ -817,7 +815,7 @@ class DatabaseCalculation extends ProgramInput
         return manufacturers.toString();
     }
 
-    public void deleteFromTable(String table, String objectID)
+    private void deleteFromTable(String table, String objectID)
     {
         /*
             this method deletes a specified row using the ID of the specified table.
