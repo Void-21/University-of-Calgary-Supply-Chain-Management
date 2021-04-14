@@ -1,3 +1,15 @@
+/**
+ * This project is completed by group 60 (ENSF 409)
+ *
+ * @author Zeeshan Chougle <a href="mailto:zeeshan.chougle@ucalgary.ca">Zeeshan.chougle@ucalgary.ca</a>
+ * @author Mohamed Numan <a href="mailto:mohamed.numan@ucalgary.ca">mohamed.numan@ucalgary.ca</a>
+ * @author Mahtab Khan <a href="mohammadmahtab.khan@ucalgary.ca">mohammadmahtab.khan@ucalgary.ca</a>
+ * @author Umar Baloch <a href="mailto:"umarbaloch84@gmail.com">umarbaloch84@gmail.com</a>
+ * @version 1.6
+ * @since 1.0
+ * 
+ */
+
 package edu.ucalgary.ensf409;
 import static org.junit.Assert.*;
 import org.junit.*;
