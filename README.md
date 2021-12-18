@@ -1,6 +1,7 @@
 # University-of-Calgary-Supply-Chain-Management (HYL 2021)
 ENSF409 FINAL TEAM PROJECT - WINTER 2021
-
+![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
 ## Description
 
 This is an application to calculate the cheapest combination of available inventory items that can be used to fill a specific order. It utilizes a MySQL database (inventory) provided by HYL, to extract data pertaining to the availability of reusbale parts to create user requested objects. The application updates the database when certain products are purchased to recylce its parts.
