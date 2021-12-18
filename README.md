@@ -23,17 +23,13 @@ This is an application to calculate the cheapest combination of available invent
 
 ## **Java imports used** 
 
-(1) import java.sql.*
+- import java.sql.*
+- import java.io.*
+- import java.util.*
+- import org.junit.*
+- import static org.junit.Assert.*
 
-(2) import java.io.*
-
-(3) import java.util.*
-
-(4) import org.junit.*
-
-(5) import static org.junit.Assert.*
-
-## **How to run**
+## **How to Install and Run the Project**
 
 (1) Clone the repository
 
@@ -41,7 +37,7 @@ This is an application to calculate the cheapest combination of available invent
 
 (3) Run the FinalProjectTest.java for Unit Testing purposes.
 
-## **Done by :** 
+## **Team Members:** 
 
 1. Zeeshan Chougle - 30094417
 2. Muhammed Umar - 30062451
